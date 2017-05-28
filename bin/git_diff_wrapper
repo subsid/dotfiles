@@ -1,0 +1,3 @@
+#!/bin/sh
+
+/usr/local/bin/mvimdiff -v -d "$2" "$5"

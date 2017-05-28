@@ -3,6 +3,7 @@
 # Make vim the default editor.
 export EDITOR='vim';
 
+export NODE_PATH=$NODE_PATH:/usr/local/lib/node_modules/:./node_modules/vi-ng-build/node_modules:./node_modules/react-build/node_modules
 # Enable persistent REPL history for `node`.
 export NODE_REPL_HISTORY=~/.node_history;
 # Allow 32³ entries; the default is 1000.
@@ -28,3 +29,5 @@ export LESS_TERMCAP_md="${yellow}";
 
 # Don’t clear the screen after quitting a manual page.
 export MANPAGER='less -X';
+export CDPATH=.:~:/Users/siddharth/SI:/Users/siddharth/workspace
+
