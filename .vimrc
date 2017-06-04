@@ -259,5 +259,9 @@ nnoremap <leader><leader>t :CtrlP<Space>
 nnoremap <leader>h :set hlsearch<CR>
 nnoremap <leader>n :set nohlsearch<CR>
 
+" vim sometimes detects tex files and sets filetype plaintex. This is to avoid
+" that. (From vimtext docs)
+let g:tex_flavor = 'latex'
+
 set history=1000
 
