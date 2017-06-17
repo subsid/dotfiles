@@ -3,9 +3,9 @@ tap "homebrew/bundle"
 tap "homebrew/core"
 tap "homebrew/science"
 tap "homebrew/services"
-tap "synthinet/synthinet"
 
 # Java stuff
+cask "java"
 brew "gradle"
 brew "maven"
 brew "sbt"
