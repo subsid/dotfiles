@@ -13,17 +13,17 @@ brew "scala"
 
 # Databases
 brew "mysql", restart_service: true
-brew "mongodb", [restart_service: true]
+brew "mongodb", restart_service: true
 
 brew "rbenv"
 brew "rbenv-default-gems"
 brew "rbenv-gemset"
 
 # AWS
-brew install git-secrets
+brew "git-secrets"
 
 # Editors
-brew "macvim", [with-override-system-vim]
+brew "macvim", args: ["with-override-system-vim"]
 brew "emacs", args: ["with-cocoa"]
 
 # python
@@ -42,3 +42,10 @@ brew "ack"
 brew "autossh"
 brew "bash-completion"
 brew "openssh", args: ["with-keychain-support"]
+brew "wget", args: ["with-iri"]
+
+# brew tap bramstein/webfonttools
+tap "bramstein/webfonttools"
+brew "sfnt2woff"
+brew "sfnt2woff-zopfli"
+brew "woff2"
