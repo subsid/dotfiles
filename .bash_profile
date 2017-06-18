@@ -17,16 +17,19 @@ unset file
 eval "$(hub alias -s)"
 
 ## nvm
-source "/usr/local/Cellar/nvm/0.25.4/nvm.sh"
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
+[[ -r $NVM_DIR/bash_completion ]] && . $NVM_DIR/bash_completion
 
 ## virtualenv settings
 source /usr/local/bin/virtualenvwrapper.sh
-source /usr/local/bin/activate.sh
+## For autoenv
+echo "source $(brew --prefix autoenv)/activate.sh" >> ~/.bash_profile
 if [ -e ./.env ]
 then
   source ./.env
 else
-  source /Users/siddharth/.env
+  source ~/.env
 fi
 
 function git_diff() {
