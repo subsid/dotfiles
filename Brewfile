@@ -22,11 +22,15 @@ brew "rbenv-gemset"
 # AWS
 brew "git-secrets"
 
+# git
+brew "hub"
+
 # Editors
 brew "macvim", args: ["with-override-system-vim"]
 brew "emacs", args: ["with-cocoa"]
 
 # python
+brew "python"
 brew "python3"
 brew "autoenv"
 
@@ -37,12 +41,14 @@ brew "flow"
 # Tools
 brew "tree"
 brew "ack"
+brew "cmake"
+brew "wget", args: ["with-iri"]
 
 # Unclassified stuff (which I am lazy to classify and always becomes hard to manage)
 brew "autossh"
+brew "bash"
 brew "bash-completion"
 brew "openssh", args: ["with-keychain-support"]
-brew "wget", args: ["with-iri"]
 
 # brew tap bramstein/webfonttools
 tap "bramstein/webfonttools"

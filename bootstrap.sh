@@ -12,7 +12,7 @@ function copyDotFiles() {
                 --exclude "bootstrap.sh" \
                 --exclude "README.md" \
                 --exclude "LICENSE-MIT.txt" \
-                -avh --no-perms .vim .vimrc .vimrc.bundles .aliases .bash_profile .bash_prompt .path, .exports  ~;
+                -avh --no-perms .gitconfig .git-completion.bash .vim .vimrc .vimrc.bundles .aliases .bash_profile .bash_prompt .path .exports  ~;
         source ~/.bash_profile;
 }
 
@@ -29,10 +29,18 @@ function copyDotDirectories() {
 
 function installStuff() {
         # Install Vundle for managing vim dependencies. (hmm, where should this be??)
-        git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-        # Install YouCompleteMe
-        ~/.vim/bundle/YouCompleteMe/install.py --clang-completer
+        if [ -e ~/.vim/bundle/Vundle.vim ]
+        then
+          :
+        else
+          git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+        fi
 
+        # TODO this belongs somewhere...
+        # Install YouCompleteMe
+        # ~/.vim/bundle/YouCompleteMe/install.py --clang-completer
+
+        cp -r bin/ ~/bin
         source ~/.bash_profile;
 }
 

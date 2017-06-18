@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 
-GO_PATH=$HOME/Library/go/bin
 PATH=$PATH:$EC2_HOME/bin
 PATH=/usr/local/share/npm/bin:$PATH
-PATH=$PATH:/Users/siddharth/bin
+PATH=$HOME/bin:$PATH
 PATH=/usr/local/share/python:$PATH
 PATH=$PATH:/usr/local/smlnj/bin
 PATH=$PATH:$GO_PATH
 CHROME_DRIVER_PATH=$HOME/workspace/chromedriver/chromedriver
 PATH=$CHROME_DRIVER_PATH:$PATH
+PATH=$HOME/bin:$PATH
 
 export PATH
 
