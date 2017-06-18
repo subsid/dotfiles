@@ -31,3 +31,5 @@ export LESS_TERMCAP_md="${yellow}";
 export MANPAGER='less -X';
 export CDPATH=.:~:/Users/siddharth/SI:/Users/siddharth/workspace
 
+# WORKON_HOME for virtualenv
+export WORKON_HOME="~/.virtualenvs"
