@@ -14,6 +14,7 @@ brew "scala"
 # Databases
 brew "mysql", restart_service: true
 brew "mongodb", restart_service: true
+cask "mongohub"
 
 brew "rbenv"
 brew "rbenv-default-gems"
@@ -55,3 +56,10 @@ tap "bramstein/webfonttools"
 brew "sfnt2woff"
 brew "sfnt2woff-zopfli"
 brew "woff2"
+
+# GNUPG
+brew "gnupg"
+
+# silver-searcher
+brew "the_silver_searcher"
+

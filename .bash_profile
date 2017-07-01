@@ -1,6 +1,6 @@
 eval "$(rbenv init -)"
 alias pg="pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log"
-export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_92.jdk/Contents/Home"
+export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home"
 if [ -f ~/.git-completion.bash ]; then
     . ~/.git-completion.bash
 fi
@@ -24,7 +24,7 @@ export NVM_DIR="$HOME/.nvm"
 ## virtualenv settings
 source /usr/local/bin/virtualenvwrapper.sh
 ## For autoenv
-echo "source $(brew --prefix autoenv)/activate.sh" >> ~/.bash_profile
+source $(brew --prefix autoenv)/activate.sh
 if [ -e ./.env ]
 then
   source ./.env

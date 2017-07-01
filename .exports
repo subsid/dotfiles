@@ -29,7 +29,7 @@ export LESS_TERMCAP_md="${yellow}";
 
 # Don’t clear the screen after quitting a manual page.
 export MANPAGER='less -X';
-export CDPATH=.:~:/Users/siddharth/SI:/Users/siddharth/workspace
+export CDPATH=.:~:$HOME/SI:$HOME/workspace
 
 # WORKON_HOME for virtualenv
 export WORKON_HOME="~/.virtualenvs"
