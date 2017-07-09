@@ -28,7 +28,7 @@ brew "hub"
 
 # Editors
 brew "macvim", args: ["with-override-system-vim"]
-brew "emacs", args: ["with-cocoa"]
+cask "emacs"
 
 # python
 brew "python"
@@ -40,6 +40,7 @@ brew "nvm"
 brew "flow"
 
 # Tools
+brew "ledger"
 brew "tree"
 brew "ack"
 brew "cmake"
