@@ -3,6 +3,10 @@ tap "homebrew/bundle"
 tap "homebrew/core"
 tap "homebrew/science"
 tap "homebrew/services"
+tap "buo/cask-upgrade"
+
+# Clang stuff
+brew "gcc48"
 
 # Java stuff
 cask "java"
@@ -58,9 +62,9 @@ brew "sfnt2woff"
 brew "sfnt2woff-zopfli"
 brew "woff2"
 
-# GNUPG
-brew "gnupg"
-
 # silver-searcher
 brew "the_silver_searcher"
+
+# javascript
+brew "yarn", args: ["without-node"]
 
