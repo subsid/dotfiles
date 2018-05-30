@@ -6,7 +6,7 @@ tap "homebrew/services"
 tap "buo/cask-upgrade"
 
 # Clang stuff
-brew "gcc48"
+brew "gcc"
 
 # Java stuff
 cask "java"
@@ -39,6 +39,9 @@ brew "python"
 brew "python3"
 brew "autoenv"
 
+# R
+brew "r"
+
 # JS
 brew "nvm"
 brew "flow"
@@ -49,6 +52,8 @@ brew "tree"
 brew "ack"
 brew "cmake"
 brew "wget", args: ["with-iri"]
+brew "wiki"
+brew "fast-cli"
 
 # Unclassified stuff (which I am lazy to classify and always becomes hard to manage)
 brew "autossh"

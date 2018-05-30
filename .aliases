@@ -22,11 +22,10 @@ alias ..2="cd ../.."
 alias ..3="cd ../../.."
 alias ..4="cd ../../../.."
 alias ..5="cd ../../../../.."
-alias gcc='gcc-4.8'
 alias cc='gcc-4.8'
-alias g++='g++-4.8'
 alias c++='c++-4.8'
 alias vi='mvim -v'
 alias vim='mvim -v'
 alias ipy='ipython qtconsole --ConsoleWidget.font_family="Consolas" --ConsoleWidget.font_size=13'
+alias ng="npm list -g --depth=0 2>/dev/null"
 

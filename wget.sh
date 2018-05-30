@@ -12,6 +12,7 @@ wget -nc "https://get.skype.com/go/getskype-macosx" -P ~/Downloads/software
 wget -nc "https://dl.google.com/dl/androidjumper/mtp/current/androidfiletransfer.dmg" -P ~/Downloads/software
 wget -nc "https://download-installer.cdn.mozilla.net/pub/firefox/releases/54.0/mac/en-US/Firefox%2054.0.dmg" -P ~/Downloads/software
 wget -nc "https://www.rescuetime.com/installers/RescueTimeInstaller.dmg" -P ~/Downloads/software
+wget -nc "https://download1.rstudio.org/RStudio-1.1.414.dmg" -P ~/Downloads/software
 
 if hash nvm 2>/dev/null;
 then

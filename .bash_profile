@@ -22,7 +22,12 @@ export NVM_DIR="$HOME/.nvm"
 [[ -r $NVM_DIR/bash_completion ]] && . $NVM_DIR/bash_completion
 
 ## virtualenv settings
+export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv
+export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'
+export WORKON_HOME=$HOME/.virtualenvs
+export VIRTUALENVWRAPPER_PYTHON="/usr/local/bin/python2.7"
 source /usr/local/bin/virtualenvwrapper.sh
+
 ## For autoenv
 source $(brew --prefix autoenv)/activate.sh
 if [ -e ./.env ]

@@ -172,9 +172,6 @@ let g:UltiSnipsListSnippets="<c-h>"
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
 
-" Ignore angular directives, syntastic
-let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
-
 ""function for swaping windows in split views.
 function! MarkWindowSwap()
     let g:markedWinNum = winnr()
@@ -229,9 +226,6 @@ endfunc
 nnoremap <leader><leader>r :call NumberToggle()<cr>
 nnoremap <leader><leader>p :call TogglePaste()<cr>
 
-"ignore angular stuff, syntastic
-let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
-
 "coffeescript fold by indentation
 autocmd BufNewFile,BufReadPost *.coffee setl foldmethod=indent nofoldenable
 
@@ -241,8 +235,8 @@ endfunction
 
 "jsx syntastic
 let b:syntastic_javascript_eslint_exec = StrTrim(system('npm-which eslint'))
-" hmm, some error in flow plugin
-let g:syntastic_javascript_checkers = ['eslint', 'flow']
+let g:jsx_ext_required = 0 " Allow JSX in normal JS files
+let g:syntastic_javascript_checkers = ['eslint']
 " Use Node.js for JavaScript interpretation
 let $JS_CMD='node'
 
