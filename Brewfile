@@ -1,7 +1,6 @@
 tap "caskroom/cask"
 tap "homebrew/bundle"
 tap "homebrew/core"
-tap "homebrew/science"
 tap "homebrew/services"
 tap "buo/cask-upgrade"
 
@@ -18,7 +17,7 @@ brew "scala"
 # Databases
 brew "mysql", restart_service: true
 brew "mongodb", restart_service: true
-cask "mongohub"
+cask "jeromelebel-mongohub"
 
 brew "rbenv"
 brew "rbenv-default-gems"
@@ -58,7 +57,7 @@ brew "wiki"
 # Unclassified stuff (which I am lazy to classify and always becomes hard to manage)
 brew "autossh"
 brew "bash"
-brew "bash-completion@2"
+brew "bash-completion"
 brew "openssh", args: ["with-keychain-support"]
 
 # brew tap bramstein/webfonttools
