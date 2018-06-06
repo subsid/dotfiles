@@ -53,7 +53,6 @@ brew "ack"
 brew "cmake"
 brew "wget", args: ["with-iri"]
 brew "wiki"
-brew "fast-cli"
 
 # Unclassified stuff (which I am lazy to classify and always becomes hard to manage)
 brew "autossh"
@@ -72,4 +71,8 @@ brew "the_silver_searcher"
 
 # javascript
 brew "yarn", args: ["without-node"]
+
+# k8s
+cask "virtualbox"
+cask "minikube"
 
