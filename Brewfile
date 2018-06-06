@@ -54,6 +54,9 @@ brew "cmake"
 brew "wget", args: ["with-iri"]
 brew "wiki"
 
+# Commandline json processor
+brew "jq"
+
 # Unclassified stuff (which I am lazy to classify and always becomes hard to manage)
 brew "autossh"
 brew "bash"
