@@ -26,6 +26,7 @@ brew "rbenv-gemset"
 
 # AWS
 brew "git-secrets"
+brew "awscli"
 
 # git
 brew "hub"
@@ -58,7 +59,7 @@ brew "fast-cli"
 # Unclassified stuff (which I am lazy to classify and always becomes hard to manage)
 brew "autossh"
 brew "bash"
-brew "bash-completion"
+brew "bash-completion@2"
 brew "openssh", args: ["with-keychain-support"]
 
 # brew tap bramstein/webfonttools
