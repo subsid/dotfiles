@@ -78,4 +78,5 @@ brew "yarn", args: ["without-node"]
 # k8s
 cask "virtualbox"
 cask "minikube"
+brew "kubernetes-helm"
 

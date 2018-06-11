@@ -28,4 +28,6 @@ alias vi='mvim -v'
 alias vim='mvim -v'
 alias ipy='ipython qtconsole --ConsoleWidget.font_family="Consolas" --ConsoleWidget.font_size=13'
 alias ng="npm list -g --depth=0 2>/dev/null"
+alias kc="kubectl"
+alias mk="minikube"
 
