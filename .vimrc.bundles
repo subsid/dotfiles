@@ -39,4 +39,6 @@ Plugin 'junegunn/vim-easy-align'
 Plugin 'moll/vim-node'
 Plugin 'mtscout6/syntastic-local-eslint.vim'
 Plugin 'jiangmiao/auto-pairs'
-
+Plugin 'shime/vim-livedown'
+Plugin 'gabrielelana/vim-markdown'
+Plugin 'andrewstuart/vim-kubernetes'
