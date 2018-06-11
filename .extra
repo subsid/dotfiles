@@ -1,0 +1,19 @@
+## History stuff from rmn
+#
+# don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
+HISTCONTROL=ignoreboth
+ 
+# append to the history file, don't overwrite it
+shopt -s histappend
+ 
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=100000
+HISTFILESIZE=100000
+ 
+# single command history across all shells
+# PROMPT_COMMAND="history -a; history -c; history -r; chown YOURUSERNAME \${HISTFILE}; $PROMPT_COMMAND"
+  
+# make up arrow and down arrow search
+bind '"\e[A":history-search-backward'
+bind '"\e[B":history-search-forward'

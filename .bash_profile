@@ -26,6 +26,7 @@ export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv
 export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'
 export WORKON_HOME=$HOME/.virtualenvs
 export VIRTUALENVWRAPPER_PYTHON="/usr/local/bin/python2.7"
+
 source /usr/local/bin/virtualenvwrapper.sh
 
 ## For autoenv
@@ -33,8 +34,6 @@ source $(brew --prefix autoenv)/activate.sh
 if [ -e ./.env ]
 then
   source ./.env
-else
-  source ~/.env
 fi
 
 function git_diff() {

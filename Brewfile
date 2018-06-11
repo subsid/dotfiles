@@ -1,7 +1,6 @@
 tap "caskroom/cask"
 tap "homebrew/bundle"
 tap "homebrew/core"
-tap "homebrew/science"
 tap "homebrew/services"
 tap "buo/cask-upgrade"
 
@@ -18,7 +17,7 @@ brew "scala"
 # Databases
 brew "mysql", restart_service: true
 brew "mongodb", restart_service: true
-cask "mongohub"
+cask "jeromelebel-mongohub"
 
 brew "rbenv"
 brew "rbenv-default-gems"
@@ -26,6 +25,7 @@ brew "rbenv-gemset"
 
 # AWS
 brew "git-secrets"
+brew "awscli"
 
 # git
 brew "hub"
@@ -53,6 +53,9 @@ brew "ack"
 brew "cmake"
 brew "wget", args: ["with-iri"]
 brew "wiki"
+
+# Commandline json processor
+brew "jq"
 
 # Unclassified stuff (which I am lazy to classify and always becomes hard to manage)
 brew "autossh"
