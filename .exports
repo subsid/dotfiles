@@ -33,3 +33,6 @@ export CDPATH=.:~:$HOME/SI:$HOME/workspace
 
 # WORKON_HOME for virtualenv
 export WORKON_HOME="~/.virtualenvs"
+
+# JAVAHOME
+export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_171.jdk/Contents/Home"

@@ -1,6 +1,5 @@
 eval "$(rbenv init -)"
 alias pg="pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log"
-export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home"
 if [ -f ~/.git-completion.bash ]; then
     . ~/.git-completion.bash
 fi

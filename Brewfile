@@ -27,6 +27,9 @@ brew "rbenv-gemset"
 brew "git-secrets"
 brew "awscli"
 
+#go
+brew "go"
+
 # git
 brew "hub"
 
