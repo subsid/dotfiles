@@ -54,4 +54,4 @@ export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
 # Finished adapting your PATH environment variable for use with MacPorts.
 
 # bash-completion for respecting CDPATH- homebrew
-[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
+[ -f /usr/local/etc/bash_completion ] && LC_ALL=C . /usr/local/etc/bash_completion
