@@ -1,20 +1,21 @@
 [alias]
   # Show verbose output about tags, branches or remotes
   tags = tag -l
+  lg = log --graph --pretty=format:'%C(red)%h%Creset - %C(yellow)%s %Creset%C(green)(%an) %Creset%C(cyan)%ar%Creset'
   branches = branch -a
   remotes = remote -v
   # Pretty log output
   hist = log --graph --pretty=format:'%Cred%h%Creset %s%C(yellow)%d%Creset %Cgreen(%cr)%Creset [%an]' --abbrev-commit --date=relative
-	co = checkout
-	st = status --short --branch
-	br = branch
-	ci = commit
-	last = log -1 HEAD
-	unstage = reset HEAD
-	please = push --force-with-lease
-	it = !git init && git commit -m “root” --allow-empty
-	grog = log --graph --abbrev-commit --decorate --all --format=format:\"%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(dim white) - %an%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n %C(white)%s%C(reset)\"
-	d = difftool
+  co = checkout
+  st = status --short --branch
+  br = branch
+  ci = commit
+  last = log -1 HEAD
+  unstage = reset HEAD
+  please = push --force-with-lease
+  it = !git init && git commit -m “root” --allow-empty
+  grog = log --graph --abbrev-commit --decorate --all --format=format:\"%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(dim white) - %an%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n %C(white)%s%C(reset)\"
+  d = difftool
 
 [color]
   # Use colors in Git commands that are capable of colored output when outputting to the terminal
@@ -40,7 +41,7 @@
 
 [user]
 	name = Siddharth
-	email = sidharth3930@gmail.com
+	email = ss01679@rmn.com
 [core]
 	editor = mvim -v
 
@@ -55,4 +56,6 @@
 	prompt = false
 [push]
 	followTags = true
-	default = simple
+	default = tracking
+[branch]
+	autosetuprebase = always
