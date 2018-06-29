@@ -35,7 +35,7 @@ export CDPATH=.:~:$HOME/SI:$HOME/workspace
 export WORKON_HOME="~/.virtualenvs"
 
 # JAVAHOME
-export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_171.jdk/Contents/Home"
+export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_172.jdk/Contents/Home"
 
 # KUBECONFIGS
 export KUBECONFIG="/Users/ss01679/.kube/config:/Users/ss01679/.kube/config-blh-dev-nonprod"
