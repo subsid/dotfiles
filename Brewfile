@@ -84,3 +84,6 @@ cask "virtualbox"
 cask "minikube"
 brew "kubernetes-helm"
 
+# secrets
+brew "vault"
+
