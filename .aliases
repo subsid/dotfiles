@@ -33,6 +33,12 @@ alias ng="npm list -g --depth=0 2>/dev/null"
 alias kc="kubectl"
 alias mk="minikube"
 
+# docker
+alias d="docker"
+
 # terraform
 alias tf="terraform"
+
+# rmn alias
+alias bd="aws-assume blh-dev"
 

@@ -4,6 +4,10 @@ tap "homebrew/core"
 tap "homebrew/services"
 tap "buo/cask-upgrade"
 
+# brew deps
+brew "mercurial"
+brew "glide"
+
 # Clang stuff
 brew "gcc"
 
@@ -29,6 +33,7 @@ brew "awscli"
 
 #go
 brew "go"
+brew "dep"
 
 # git
 brew "hub"
@@ -44,10 +49,6 @@ brew "autoenv"
 
 # R
 brew "r"
-
-# JS
-brew "nvm"
-brew "flow"
 
 # Tools
 brew "ledger"
@@ -78,12 +79,14 @@ brew "the_silver_searcher"
 
 # javascript
 brew "yarn", args: ["without-node"]
+brew "nvm"
+
 
 # k8s
 cask "virtualbox"
 cask "minikube"
 brew "kubernetes-helm"
 
-# secrets
+# Vault
 brew "vault"
 
