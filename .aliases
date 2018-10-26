@@ -39,6 +39,3 @@ alias d="docker"
 # terraform
 alias tf="terraform"
 
-# rmn alias
-alias bd="aws-assume blh-dev"
-
