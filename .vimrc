@@ -263,4 +263,6 @@ let g:terraform_fold_sections=1
 let g:terraform_remap_spacebar=1
 autocmd FileType terraform setlocal commentstring=#%s
 
+"sudo trick. See https://stackoverflow.com/questions/2600783/how-does-the-vim-write-with-sudo-trick-work
+cmap w!! w !sudo tee > /dev/null %
 
