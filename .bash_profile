@@ -56,3 +56,5 @@ export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
 
 # bash-completion for respecting CDPATH- homebrew
 [ -f /usr/local/etc/bash_completion ] && LC_ALL=C . /usr/local/etc/bash_completion
+
+export PATH="$HOME/.cargo/bin:$PATH"

@@ -10,6 +10,8 @@ brew "glide"
 
 # Clang stuff
 brew "gcc"
+brew "gdb"
+brew "cmake"
 
 # Java stuff
 cask "java"
@@ -54,7 +56,6 @@ brew "r"
 brew "ledger"
 brew "tree"
 brew "ack"
-brew "cmake"
 brew "wget", args: ["with-iri"]
 brew "wiki"
 brew "autojump"
@@ -89,4 +90,7 @@ brew "kubernetes-helm"
 
 # Vault
 brew "vault"
+
+# Rust
+brew "rustup-init"
 

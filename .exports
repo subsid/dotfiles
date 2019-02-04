@@ -29,7 +29,6 @@ export LESS_TERMCAP_md="${yellow}";
 
 # Don’t clear the screen after quitting a manual page.
 export MANPAGER='less -X';
-export CDPATH=.:~:$HOME/SI:$HOME/workspace
 
 # WORKON_HOME for virtualenv
 export WORKON_HOME="~/.virtualenvs"
@@ -37,3 +36,5 @@ export WORKON_HOME="~/.virtualenvs"
 # JAVAHOME
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_172.jdk/Contents/Home"
 
+# KUBECONFIGS
+export KUBECONFIG="/Users/ss01679/.kube/config:/Users/ss01679/.kube/config-blh-dev-nonprod"

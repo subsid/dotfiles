@@ -33,9 +33,7 @@ alias ng="npm list -g --depth=0 2>/dev/null"
 alias kc="kubectl"
 alias mk="minikube"
 
-# docker
-alias d="docker"
-
 # terraform
 alias tf="terraform"
+alias be="bundle exec"
 
