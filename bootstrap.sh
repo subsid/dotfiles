@@ -42,6 +42,14 @@ function installStuff() {
 
         cp -r bin/ ~/bin
         source ~/.bash_profile;
+
+        # Install fzf key bindings
+        if [ -e $(brew --prefix)/opt/fzf/install ]
+        then
+          $(brew --prefix)/opt/fzf/install
+        else
+          :
+        fi
 }
 
 if [ "$1" == "--force" -o "$1" == "-f" ]; then

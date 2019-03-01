@@ -59,6 +59,7 @@ brew "ack"
 brew "wget", args: ["with-iri"]
 brew "wiki"
 brew "autojump"
+brew "fzf"
 
 # Commandline json processor
 brew "jq"
