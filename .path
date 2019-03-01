@@ -9,6 +9,7 @@ PATH=$PATH:$HOME/go/bin
 CHROME_DRIVER_PATH=$HOME/workspace/chromedriver/chromedriver
 PATH=$CHROME_DRIVER_PATH:$PATH
 PATH=$HOME/bin:$PATH
+PATH="$HOME/.cargo/bin:$PATH"
 
 export PATH
 
