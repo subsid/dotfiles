@@ -95,3 +95,6 @@ brew "vault"
 # Rust
 brew "rustup-init"
 
+# Android tools
+brew "android-platform-tools"
+

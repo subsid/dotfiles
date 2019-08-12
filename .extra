@@ -12,7 +12,7 @@ HISTSIZE=100000
 HISTFILESIZE=100000
  
 # single command history across all shells
-PROMPT_COMMAND="history -a; history -c; history -r; chown subsid \${HISTFILE}; $PROMPT_COMMAND"
+# PROMPT_COMMAND="history -a; history -c; history -r; chown subsid \${HISTFILE}; $PROMPT_COMMAND"
   
 # make up arrow and down arrow search
 bind '"\e[A":history-search-backward'
