@@ -2,7 +2,7 @@
 pip install virtualenv
 pip install virtualenvwrapper
 source /usr/local/bin/virtualenvwrapper.sh
-mkvirtualenv global
+mkvirtualenv global --python="/usr/local/bin/python3"
 touch ~/.env
-echo "source ~/.virtualenvs/global/bin/activate"
+echo "source ~/.virtualenvs/global/bin/activate" > ~/.env
 

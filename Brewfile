@@ -22,7 +22,7 @@ brew "scala"
 
 # Databases
 brew "mysql", restart_service: true
-brew "mongodb", restart_service: true
+cask "mongodb", restart_service: true
 cask "jeromelebel-mongohub"
 
 brew "rbenv"
@@ -41,35 +41,34 @@ brew "dep"
 brew "hub"
 
 # Editors
-brew "macvim", args: ["with-override-system-vim"]
+brew "macvim"
 cask "emacs"
-
+ 
 # python
 brew "python"
-brew "python3"
 brew "autoenv"
-
 # R
 brew "r"
+
 
 # Tools
 brew "ledger"
 brew "tree"
 brew "ack"
-brew "wget", args: ["with-iri"]
+brew "wget"
 brew "wiki"
 brew "autojump"
 brew "fzf"
-
+ 
 # Commandline json processor
 brew "jq"
 
-# Unclassified stuff (which I am lazy to classify and always becomes hard to manage)
+## # Unclassified stuff (which I am lazy to classify and always becomes hard to manage)
 brew "autossh"
 brew "bash"
 brew "bash-completion"
-brew "openssh", args: ["with-keychain-support"]
-
+brew "openssh"
+ 
 # brew tap bramstein/webfonttools
 tap "bramstein/webfonttools"
 brew "sfnt2woff"
@@ -80,7 +79,6 @@ brew "woff2"
 brew "the_silver_searcher"
 
 # javascript
-brew "yarn", args: ["without-node"]
 brew "nvm"
 
 
@@ -96,5 +94,5 @@ brew "vault"
 brew "rustup-init"
 
 # Android tools
-brew "android-platform-tools"
+cask "android-platform-tools"
 

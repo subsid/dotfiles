@@ -3,8 +3,6 @@
 PATH=$PATH:$EC2_HOME/bin
 PATH=/usr/local/share/npm/bin:$PATH
 PATH=$HOME/bin:$PATH
-PATH=/usr/local/share/python:$PATH
-PATH=$PATH:/usr/local/smlnj/bin
 PATH=$PATH:$HOME/go/bin
 CHROME_DRIVER_PATH=$HOME/workspace/chromedriver/chromedriver
 PATH=$CHROME_DRIVER_PATH:$PATH

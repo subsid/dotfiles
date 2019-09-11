@@ -38,7 +38,7 @@ function installStuff() {
 
         # TODO this belongs somewhere...
         # Install YouCompleteMe
-        # ~/.vim/bundle/YouCompleteMe/install.py --clang-completer
+        echo "Install YCM MANUALLY!!" ~/.vim/bundle/YouCompleteMe/install.py --clang-completer
 
         cp -r bin/ ~/bin
         source ~/.bash_profile;
