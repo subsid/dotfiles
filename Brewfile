@@ -33,6 +33,10 @@ brew "rbenv-gemset"
 brew "git-secrets"
 brew "awscli"
 
+# Google cloud
+cask "google-cloud-sdk"
+
+
 #go
 brew "go"
 brew "dep"

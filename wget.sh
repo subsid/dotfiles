@@ -13,6 +13,7 @@ echo "android file transfer" wget -nc "https://dl.google.com/dl/androidjumper/mt
 echo "firefox" wget -nc "https://download-installer.cdn.mozilla.net/pub/firefox/releases/54.0/mac/en-US/Firefox%2054.0.dmg" -P ~/Downloads/software
 echo "Rescuetime" wget -nc "https://www.rescuetime.com/installers/RescueTimeInstaller.dmg" -P ~/Downloads/software
 echo "Rstudio" wget -nc "https://download1.rstudio.org/RStudio-1.1.414.dmg" -P ~/Downloads/software
+echo "Intellij"
 
 if hash nvm 2>/dev/null;
 then
