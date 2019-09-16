@@ -2,9 +2,6 @@ if [ -f ~/.git-completion.bash ]; then
     . ~/.git-completion.bash
 fi
 
-# Enable global python env
-source ~/.virtualenvs/global/bin/activate
-
 # Load the shell dotfiles, and then some:
 # * ~/.path can be used to extend `$PATH`.
 # * ~/.extra can be used for other settings you don’t want to commit.
@@ -23,7 +20,7 @@ done
 unset file
 
 ## virtualenv settings
-export VIRTUALENVWRAPPER_VIRTUALENV=/usr/bin/virtualenv
+export VIRTUALENVWRAPPER_VIRTUALENV=~/.local/bin/virtualenv
 export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'
 export WORKON_HOME=$HOME/.virtualenvs
 export VIRTUALENVWRAPPER_PYTHON="/usr/local/bin/python"
@@ -39,4 +36,7 @@ function git_diff() {
 function title {
   echo -ne "\033]0;"$*"\007"
 }
+
+# Enable global python env
+source ~/.virtualenvs/global/bin/activate
 
