@@ -46,7 +46,7 @@ set wildmenu                                                 " show a navigable 
 set wildmode=longest,list,full
 
 " Enable basic mouse behavior such as resizing buffers.
-set mouse=a
+" Doesn't work on server-- set mouse=a
 if exists('$TMUX')  " Support resizing in tmux
   set ttymouse=xterm2
 endif
