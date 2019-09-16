@@ -2,6 +2,9 @@ if [ -f ~/.git-completion.bash ]; then
     . ~/.git-completion.bash
 fi
 
+# Enable global python env
+source ~/.virtualenvs/global/bin/activate
+
 # Load the shell dotfiles, and then some:
 # * ~/.path can be used to extend `$PATH`.
 # * ~/.extra can be used for other settings you don’t want to commit.
@@ -27,6 +30,7 @@ export VIRTUALENVWRAPPER_PYTHON="/usr/local/bin/python"
 
 [ -f /home/ssubramaniyam/.local/bin/virtualenvwrapper.sh ] && . /home/ssubramaniyam/.local/bin/virtualenvwrapper.sh
 [[ -s /home/ssubramaniyam/.autojump/etc/profile.d/autojump.sh ]] && source /home/ssubramaniyam/.autojump/etc/profile.d/autojump.sh
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 function git_diff() {
   git diff --no-ext-diff -w "$@" | vim -R -
