@@ -43,7 +43,7 @@
 	name = Siddharth
 	email = sidharth3930@gmail.com
 [core]
-	editor = mvim -v
+	editor = vim -v
 
 [diff]
     external = git_diff_wrapper
