@@ -24,6 +24,7 @@ alias ..4="cd ../../../.."
 alias ..5="cd ../../../../.."
 
 alias vi="vim"
+alias gdiff="GIT_EXTERNAL_DIFF=git_diff_wrapper git diff"
 
 # k8s
 alias kc="kubectl"
