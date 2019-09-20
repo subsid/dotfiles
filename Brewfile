@@ -90,6 +90,8 @@ brew "nvm"
 cask "virtualbox"
 cask "minikube"
 brew "kubernetes-helm"
+brew "kubernetes-cli"
+brew "kubectx"
 
 # Vault
 brew "vault"
