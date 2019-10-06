@@ -14,6 +14,7 @@ echo "firefox" wget -nc "https://download-installer.cdn.mozilla.net/pub/firefox/
 echo "Rescuetime" wget -nc "https://www.rescuetime.com/installers/RescueTimeInstaller.dmg" -P ~/Downloads/software
 echo "Rstudio" wget -nc "https://download1.rstudio.org/RStudio-1.1.414.dmg" -P ~/Downloads/software
 echo "Karabinar Elementes" "https://pqrs.org/osx/karabiner/"
+echo "Intellij"
 
 if hash nvm 2>/dev/null;
 then

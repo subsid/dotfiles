@@ -33,6 +33,10 @@ brew "rbenv-gemset"
 brew "git-secrets"
 brew "awscli"
 
+# Google cloud
+cask "google-cloud-sdk"
+
+
 #go
 brew "go"
 brew "dep"
@@ -86,6 +90,8 @@ brew "nvm"
 cask "virtualbox"
 cask "minikube"
 brew "kubernetes-helm"
+brew "kubernetes-cli"
+brew "kubectx"
 
 # Vault
 brew "vault"
