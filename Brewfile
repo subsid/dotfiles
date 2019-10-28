@@ -20,6 +20,9 @@ brew "maven"
 brew "sbt"
 brew "scala"
 
+# Php
+brew "php"
+
 # Databases
 brew "mysql", restart_service: true
 cask "mongodb", restart_service: true
