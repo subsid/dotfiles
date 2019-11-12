@@ -30,6 +30,7 @@ alias ng="npm list -g --depth=0 2>/dev/null"
 
 # k8s
 alias kc="kubectl"
+alias kx="kubectx"
 alias mk="minikube"
 
 # terraform

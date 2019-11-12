@@ -23,6 +23,9 @@ brew "scala"
 # Php
 brew "php"
 
+# Haskell
+brew "ghc"
+
 # Databases
 brew "mysql", restart_service: true
 cask "mongodb", restart_service: true
@@ -60,6 +63,7 @@ brew "r"
 
 # Tools
 brew "ledger"
+brew "hledger"
 brew "tree"
 brew "ack"
 brew "wget"

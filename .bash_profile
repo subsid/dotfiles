@@ -17,8 +17,9 @@ eval "$(hub alias -s)"
 
 ## nvm
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
-[[ -r $NVM_DIR/bash_completion ]] && . $NVM_DIR/bash_completion
+[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/usr/local/opt/nvm/etc/bash_completion" ] && . "/usr/local/opt/nvm/etc/bash_completion"  # This loads nvm bash_completion
+
 
 ## virtualenv settings
 export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv
@@ -50,13 +51,10 @@ function title {
 # Your previous /Users/siddharth/.bash_profile file was backed up as /Users/siddharth/.bash_profile.macports-saved_2016-09-18_at_13:40:50
 ##
 
-# MacPorts Installer addition on 2016-09-18_at_13:40:50: adding an appropriate PATH variable for use with MacPorts.
-export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
 # Finished adapting your PATH environment variable for use with MacPorts.
 
 # bash-completion for respecting CDPATH- homebrew
 [ -f /usr/local/etc/bash_completion ] && LC_ALL=C . /usr/local/etc/bash_completion
 # fzf
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
-
 
