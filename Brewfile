@@ -3,6 +3,8 @@ tap "homebrew/bundle"
 tap "homebrew/core"
 tap "homebrew/services"
 tap "buo/cask-upgrade"
+tap "bazelbuild/tap"
+
 
 # brew deps
 brew "mercurial"
@@ -108,4 +110,6 @@ brew "rustup-init"
 
 # Android tools
 cask "android-platform-tools"
+
+brew "bazel"
 
