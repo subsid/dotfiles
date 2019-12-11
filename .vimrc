@@ -46,7 +46,7 @@ set wildmenu                                                 " show a navigable 
 set wildmode=longest,list,full
 
 " Enable basic mouse behavior such as resizing buffers.
-" Doesn't work on server-- set mouse=a
+set mouse=a
 if exists('$TMUX')  " Support resizing in tmux
   set ttymouse=xterm2
 endif
@@ -59,11 +59,8 @@ noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
 noremap <leader>l :Align
 nnoremap <leader>a :Ag<space>
-nnoremap <leader>b :CtrlPBuffer<CR>
 nnoremap <leader>d :NERDTreeToggle<CR>
 nnoremap <leader>f :NERDTreeFind<CR>
-nnoremap <leader>t :CtrlP<CR>
-nnoremap <leader>T :CtrlPClearCache<CR>:CtrlP<CR>
 nnoremap <leader>] :TagbarToggle<CR>
 nnoremap <leader><space> :call whitespace#strip_trailing()<CR>
 nnoremap <leader>g :GitGutterToggle<CR>
@@ -73,7 +70,6 @@ noremap <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo '
 cnoremap w!! %!sudo tee > /dev/null %
 
 " plugin settings
-let g:ctrlp_match_window = 'order:ttb,max:20'
 let g:NERDSpaceDelims=1
 let g:gitgutter_enabled = 0
 let g:tex_fast=0
@@ -82,9 +78,6 @@ let g:tex_fast=0
 if executable('ag')
   " Use Ag over Grep
   set grepprg=ag\ --nogroup\ --nocolor
-
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 endif
 
 " fdoc is yaml
@@ -239,9 +232,10 @@ xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
 
-" CTRLP additional dirs
-let g:ctrlp_root_markers = ['node_modules']
-nnoremap <leader><leader>t :CtrlP<Space>
+" fzf
+nnoremap <leader><leader>t :Files<Space>
+nnoremap <leader>t :GFiles<CR>
+nnoremap <leader>b :Buffers<CR>
 
 " toggle search highlight
 nnoremap <leader>h :set hlsearch<CR>
@@ -265,4 +259,39 @@ autocmd FileType terraform setlocal commentstring=#%s
 
 "sudo trick. See https://stackoverflow.com/questions/2600783/how-does-the-vim-write-with-sudo-trick-work
 cmap w!! w !sudo tee > /dev/null %
+
+" Livedown
+" should markdown preview get shown automatically upon opening markdown buffer
+let g:livedown_autorun = 0
+" should the browser window pop-up upon previewing
+let g:livedown_open = 1
+" the port on which Livedown server will run
+let g:livedown_port = 1337
+
+" Disable syntax highlighting for Large files
+autocmd BufWinEnter * if line2byte(line("$") + 1) > 1000000 | syntax clear | endif
+let g:syntastic_ignore_files = ['\m\.sbt$','\m\.scala$']
+
+" ctags
+set tags^=./.git/tags;
+" tagbar scala support
+let g:tagbar_type_scala = {
+    \ 'ctagstype' : 'scala',
+    \ 'sro'       : '.',
+    \ 'kinds'     : [
+      \ 'p:packages',
+      \ 'T:types:1',
+      \ 't:traits',
+      \ 'o:objects',
+      \ 'O:case objects',
+      \ 'c:classes',
+      \ 'C:case classes',
+      \ 'm:methods',
+      \ 'V:values:1',
+      \ 'v:variables:1'
+    \ ]
+\ }
+
+" fzf
+set rtp+=/usr/local/opt/fzf
 

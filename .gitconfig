@@ -16,10 +16,6 @@
   it = !git init && git commit -m “root” --allow-empty
   grog = log --graph --abbrev-commit --decorate --all --format=format:\"%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(dim white) - %an%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n %C(white)%s%C(reset)\"
   d = difftool
-  rpull = pull --rebase --stat
-  pullr = pull --rebase
-  rpom = pull --rebase --stat origin master
-  prom = pull --rebase origin master
 
 [color]
   # Use colors in Git commands that are capable of colored output when outputting to the terminal
@@ -38,20 +34,16 @@
   changed = green
   untracked = cyan
 
-# Use `origin` as the default remote on the `master` branch in all cases
-[branch "master"]
-  remote = origin
-  merge = refs/heads/master
-
 [user]
 	name = Siddharth
-	email = sidharth3930@gmail.com
+	email = ssubramaniyam@etsy.com
 [core]
-	editor = vim -v
+	editor = mvim -v
+	excludesfile = /Users/ssubramaniyam/.gitignore_global
 
-; [diff]
-;     external = git_diff_wrapper
-; 	tool = vimdiff
+[diff]
+    external = git_diff_wrapper
+	tool = vimdiff
 [pager]
     diff =
 [rerere]

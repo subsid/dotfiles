@@ -45,12 +45,25 @@ export BOLD
 export RESET
 
 function parse_git_dirty() {
-  [[ $(git status 2> /dev/null | tail -n1) != *"working directory clean"* ]] && echo "*"
+  local BASEDIR=$(basename $PWD)
+  [[ ! $BASEDIR =~ (Etsyweb) ]] && [[ $(git status 2> /dev/null | tail -n1) != *"working tree clean"* ]] && echo "*"
 }
 
 function parse_git_branch() {
   git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/\1$(parse_git_dirty)/"
 }
 
-export PS1="\[${BOLD}${MAGENTA}\]\u \[$WHITE\]at \[$ORANGE\]\h \[$WHITE\]in \[$GREEN\]\w\[$WHITE\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \" on \")\[$PURPLE\]\$(parse_git_branch)\[$WHITE\]\n\$ \[$RESET\]"
+# Inspired by https://pracucci.com/display-the-current-kubelet-context-in-the-bash-prompt.html
+function kube_prompt()
+{
+    # Get current context
+    CONTEXT=$(cat ~/.kube/config | grep "current-context:" | sed "s/current-context: .*\(gke-[^_]*\).*\(search-.*\)/\1 \2/")
+
+    if [ -n "$CONTEXT" ]; then
+        echo "(k8s: ${CONTEXT})"
+    fi
+}
+
+export PS1="\[${BOLD}${MAGENTA}\]\u \[$WHITE\]at \[$ORANGE\]\h \[$WHITE\]in \[$GREEN\]\w\[$WHITE\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \" on \")\[$PURPLE\]\$(parse_git_branch) \[$WHITE\]\$(kube_prompt)\[$WHITE\]\[$RESET\] \n\$ "
 export PS2="\[$ORANGE\]→ \[$RESET\]"
+

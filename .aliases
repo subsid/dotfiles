@@ -28,6 +28,7 @@ alias gdiff="GIT_EXTERNAL_DIFF=git_diff_wrapper git diff"
 
 # k8s
 alias kc="kubectl"
+alias kx="kubectx"
 alias mk="minikube"
 
 # terraform
