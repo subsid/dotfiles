@@ -12,6 +12,7 @@ PATH=$HOME/bin:$PATH
 PATH=$HOME/development/Search/tools:$PATH
 # MacPorts Installer addition on 2016-09-18_at_13:40:50: adding an appropriate PATH variable for use with MacPorts.
 PATH="/opt/local/bin:/opt/local/sbin:$PATH"
+PATH="$PYENV_ROOT/bin:$PATH"
 
 export PATH
 

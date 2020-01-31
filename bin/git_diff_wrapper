@@ -1,3 +1,10 @@
 #!/bin/sh
 
-/usr/local/bin/vimdiff -v -d "$2" "$5"
+if [ -e /usr/local/bin/vimdiff ]; then
+  /usr/local/bin/vimdiff -v -d "$2" "$5"
+fi
+
+if [ -e /usr/bin/vimdiff ]; then
+  /usr/bin/vimdiff -v -d "$2" "$5"
+fi
+

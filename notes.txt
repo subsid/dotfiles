@@ -1,0 +1,1 @@
+echo deep|sudo tee /sys/power/mem_sleep

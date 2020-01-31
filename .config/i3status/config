@@ -1,0 +1,92 @@
+general {
+        output_format = "i3bar"
+        colors = false
+        markup = pango
+        interval = 5
+        color_good = '#2f343f'
+        color_degraded = '#ebcb8b'
+        color_bad = '#ba5e57'
+}
+
+# order += "cpu_usage"
+order += "memory"
+order += "load"
+order += "cpu_temperature 0"
+# order += "disk /"
+# order += "disk /home"
+/* order += "ethernet enp1s0" */
+order += "wireless wlp59s0"
+order += "path_exists VPN"
+order += "volume master"
+order += "battery 0"
+order += "tztime local"
+
+cpu_usage {
+        format = "<span background='#f59335'> cpu: %usage </span>"
+        max_threshold = 90
+}
+
+memory {
+  format = "<span background='#f59335'> mem: %available (%used) </span>"
+}
+
+load {
+        format = "<span background='#f59335'>  %1min Load </span>"
+}
+
+cpu_temperature 0 {
+        format = "<span background='#f59335'>  %degrees °C </span>"
+        path = "/sys/class/thermal/thermal_zone0/temp"
+}
+
+disk "/" {
+        format = "<span background='#fec7cd'>  %free Free </span>"
+}
+
+disk "/home" {
+        format = "<span background='#a1d569'>  %free Free </span>"
+}
+
+ethernet enp1s0 {
+        format_up = "<span background='#88c0d0'>  %ip </span>"
+        format_down = "<span background='#88c0d0'>  Disconnected </span>"
+}
+
+wireless wlp59s0 {
+        format_up = "<span background='#b48ead'>  (%essid %ip) </span>"
+        format_down = "<span background='#b48ead'>  Disconnected </span>"
+}
+
+path_exists VPN {
+        # path exists when a VPN tunnel launched by nmcli/nm-applet is active
+        path = "/proc/sys/net/ipv4/conf/tun0"
+        format="<span background='#b48ead'>%title %status</span>"
+}
+
+volume master {
+        format = "<span background='#ebcb8b'>  %volume </span>"
+        format_muted = "<span background='#ebcb8b'>  Muted </span>"
+        device = "default"
+        mixer = "Master"
+        mixer_idx = 0
+}
+
+battery 0 {
+        last_full_capacity = true
+        format = "<span background='#a3be8c'>  %status %percentage %emptytime</span>"
+        format_down = "No Battery"
+        status_chr = "⚡"
+        status_bat = "Bat"
+        status_unk = "Unknown"
+        status_full = "☻"
+        path = "/sys/class/power_supply/BAT0/uevent"
+        threshold_type = time
+        low_threshold = 15
+}
+
+tztime local {
+        format = "<span background='#81a1c1'> %time </span>"
+        format_time = " %a %-d %b %H:%M"
+}
+
+
