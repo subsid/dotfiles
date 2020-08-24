@@ -1,18 +1,14 @@
 #!/usr/bin/env bash
 
-PATH=$PATH:$EC2_HOME/bin
-PATH=/usr/local/share/npm/bin:$PATH
+PATH=/bin:$PATH
 PATH=$PATH:$HOME/go/bin
-CHROME_DRIVER_PATH=$HOME/workspace/chromedriver/chromedriver
-PATH=$CHROME_DRIVER_PATH:$PATH
-PATH=$HOME/bin:$PATH
 PATH="$HOME/.cargo/bin:$PATH"
 PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 PATH=$HOME/bin:$PATH
 PATH=$HOME/development/Search/tools:$PATH
-# MacPorts Installer addition on 2016-09-18_at_13:40:50: adding an appropriate PATH variable for use with MacPorts.
-PATH="/opt/local/bin:/opt/local/sbin:$PATH"
-PATH="$PYENV_ROOT/bin:$PATH"
+
+# # Can undo this after creating docker toolchain in bazel
+# PATH=/usr/bin:$PATH
 
 export PATH
 

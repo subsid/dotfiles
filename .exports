@@ -3,13 +3,13 @@
 # Make vim the default editor.
 export EDITOR='vim';
 
-export NODE_PATH=$NODE_PATH:/usr/local/lib/node_modules/:./node_modules/vi-ng-build/node_modules:./node_modules/react-build/node_modules
+# export NODE_PATH=$NODE_PATH:/usr/local/lib/node_modules/:./node_modules/vi-ng-build/node_modules:./node_modules/react-build/node_modules
 # Enable persistent REPL history for `node`.
-export NODE_REPL_HISTORY=~/.node_history;
+# export NODE_REPL_HISTORY=~/.node_history;
 # Allow 32³ entries; the default is 1000.
-export NODE_REPL_HISTORY_SIZE='32768';
+# export NODE_REPL_HISTORY_SIZE='32768';
 # Use sloppy mode by default, matching web browsers.
-export NODE_REPL_MODE='sloppy';
+# export NODE_REPL_MODE='sloppy';
 
 # Make Python use UTF-8 encoding for output to stdin, stdout, and stderr.
 export PYTHONIOENCODING='UTF-8';
@@ -30,11 +30,12 @@ export LESS_TERMCAP_md="${yellow}";
 # Don’t clear the screen after quitting a manual page.
 export MANPAGER='less -X';
 
-# WORKON_HOME for virtualenv
-export WORKON_HOME="~/.virtualenvs"
-
 # JAVAHOME
-# export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_172.jdk/Contents/Home"
+export JAVA_HOME="/usr/java/jdk-11.0.6+10/"
+# export JAVA_HOME="/usr/java/jdk1.8.0_131/"
+
+export LDAP="ssubramaniyam"
+export GOPATH="$HOME/go"
 
 # KUBECONFIGS
 # export KUBECONFIG="/Users/ss01679/.kube/config:/Users/ss01679/.kube/config-blh-dev-nonprod"

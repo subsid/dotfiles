@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # @gf3’s Sexy Bash Prompt, inspired by “Extravagant Zsh Prompt”
 # Shamelessly copied from https://github.com/gf3/dotfiles
 # Screenshot: http://i.imgur.com/s0Blh.png
@@ -57,13 +59,26 @@ function parse_git_branch() {
 function kube_prompt()
 {
     # Get current context
-    CONTEXT=$(cat ~/.kube/config | grep "current-context:" | sed "s/current-context: .*\(gke-[^_]*\).*\(search-.*\)/\1 \2/")
+    CONTEXT=$(cat ~/.kube/config | grep "current-context:" | sed -e "s/current-context: .*\(gke-[^_]*\).*\(search-.*\)/\1 \2/; s/current-context: .*\(gke-[^_]*\).*\(kafka-gke.*\)/\1 \2/")
 
     if [ -n "$CONTEXT" ]; then
         echo "(k8s: ${CONTEXT})"
     fi
 }
 
-export PS1="\[${BOLD}${MAGENTA}\]\u \[$WHITE\]at \[$ORANGE\]\h \[$WHITE\]in \[$GREEN\]\w\[$WHITE\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \" on \")\[$PURPLE\]\$(parse_git_branch) \[$WHITE\]\$(kube_prompt)\[$WHITE\]\[$RESET\] \n\$ "
+# PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ;} __prompt_command"
+PROMPT_COMMAND=" __prompt_command ; ${PROMPT_COMMAND:+$PROMPT_COMMAND ;}"
+_PS1="\[$WHITE\]at \[$ORANGE\]\h \[$WHITE\]in \[$GREEN\]\w\[$WHITE\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \" on \")\[$PURPLE\]\$(parse_git_branch) \[$WHITE\]\$(kube_prompt) \[$WHITE\]\[$RESET\]  \n\$ "
+
+function __prompt_command()
+{
+  local EXIT="$?"
+  if [[ $EXIT == 0 ]]; then
+    PS1="\[${BOLD}${GREEN}\]\u $_PS1"
+  else
+    PS1="\[${BOLD}${MAGENTA}\]\u $_PS1"
+  fi
+}
+
 export PS2="\[$ORANGE\]→ \[$RESET\]"
 
