@@ -1,8 +1,21 @@
-# Disable the startup message
+# Use bash
+shell /bin/bash
+
+# Big scrollback
+defscrollback 1024
+
+# No annoying startup message
 startup_message off
 
-# Set a large scrollback buffer
-defscrollback 32000
+# Display the status line
+hardstatus on
+hardstatus alwayslastline
+hardstatus string "%{.kW}%-w%{.bW}%t [%n]%{-}%+w %=%{..G} %H %{..Y} %Y/%m/%d %c"
 
-# Always start `screen` with UTF-8 enabled (`screen -U`)
-defutf8 on
+# Setup screens
+screen -t 'one' 0 bash
+screen -t 'two' 1 bash
+screen -t 'extra' 2 bash
+
+# Switch to the first screen
+select 0

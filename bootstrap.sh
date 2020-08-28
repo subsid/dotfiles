@@ -12,7 +12,7 @@ function copyDotFiles() {
                 --exclude "bootstrap.sh" \
                 --exclude "README.md" \
                 --exclude "LICENSE-MIT.txt" \
-                -avh --no-perms .gitconfig .git-completion.bash .vim .vimrc .vimrc.bundles .aliases .bash_profile .bash_prompt .path .exports  ~;
+                -avh --no-perms .gitconfig .git-completion.bash .vim .vimrc .vimrc.bundles .aliases .bash_profile .bash_prompt .path .exports .screenrc ~;
         source ~/.bash_profile;
 }
 

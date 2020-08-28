@@ -1,4 +1,4 @@
-for file in ~/.{gitconfig,git-completion.bash,vimrc,vimrc.bundles,aliases,bash_profile,bash_prompt,path,exports,extra}; do
+for file in ~/.{gitconfig,git-completion.bash,vimrc,vimrc.bundles,aliases,bash_profile,bash_prompt,path,exports,extra,screenrc}; do
   cp $file .
 done
 
