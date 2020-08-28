@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-PATH=/bin:$PATH
 PATH=$PATH:$HOME/go/bin
 PATH="$HOME/.cargo/bin:$PATH"
 PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
