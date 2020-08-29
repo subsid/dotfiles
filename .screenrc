@@ -1,3 +1,5 @@
+shell -$SHELL
+
 # Use bash
 shell /bin/bash
 

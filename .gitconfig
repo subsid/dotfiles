@@ -39,7 +39,7 @@
 	name = Siddharth
 	email = ssubramaniyam@etsy.com
 [core]
-	editor = vim
+	editor = nvim
 	excludesfile = /Users/ssubramaniyam/.gitignore_global
 
 [diff]

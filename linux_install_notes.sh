@@ -1,3 +1,6 @@
+echo "Insall neovim and emacs"
+echo "Insall miniconda for conda support https://conda.io/en/latest/miniconda.html"
+
 ## Fix brightness control for Dell XPS"
 echo "https://askubuntu.com/questions/1179384/screen-brightness-not-changing-on-dell-xps-7590"
 
@@ -9,11 +12,7 @@ echo "Extract and setup like so https://stackoverflow.com/questions/6477415/how-
 echo "sudo tar xvfz jdk-8u131-linux-i586.tar.gz -C /usr/java/"
 echo "Set java home export JAVA_HOME=/usr/java/jdk1.8.0_131/"
 echo "Set java /usr/bin/java version sudo update-alternatives --install /usr/bin/java java \$\{JAVA_HOME%*/\}/bin/java 20000"
-
-echo "Insall vim Ubuntu: https://www.simplified.guide/ubuntu/install-vim"
-# echo "Insall emacs Ubuntu: sudo apt install emacs"
-echo "Install pyenv (git clone https://github.com/pyenv/pyenv.git ~/.pyenv) before compiling YouCompleteMe and other python stuff"
-echo "yum install vim-enhanced -y"
+echo "Install git secrets checker https://github.com/awslabs/git-secrets#synopsis"
 
 echo "install cmake:"
 echo "sudo apt-get -y install cmake"

@@ -1,12 +1,10 @@
 #!/bin/sh
 
-echo $@
-
-if [ -e /usr/local/bin/vimdiff ]; then
+if [ -e /usr/local/bin/nvim ]; then
+  nvim -d "$1" "$2"
+elif [ -e /usr/local/bin/vimdiff ]; then
   /usr/local/bin/vimdiff -v -d "$1" "$2"
-fi
-
-if [ -e /usr/bin/vimdiff ]; then
+elif [ -e /usr/bin/vimdiff ]; then
   /usr/bin/vimdiff -v -d "$1" "$2"
 fi
 
