@@ -58,4 +58,4 @@ source ~/.autoenv/activate.sh
 
 
 # Title
-title "<Terminal title>"
+title "Local"
