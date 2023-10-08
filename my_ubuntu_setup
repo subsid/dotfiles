@@ -68,6 +68,12 @@ install_greenclip () {
   fi
 }
 
+install_fzf () {
+    info "Installing fzf..."
+    git clone --depth 1 https://github.com/junegunn/fzf.git "$HOME"/.fzf
+    "$HOME"/.fzf/install
+}
+
 install_other_packages () {
   if ask_yn "Install nvm?"; then
     info "Installing nvm..."
@@ -92,6 +98,10 @@ install_other_packages () {
 
   if ask_yn "Install greenclip"; then
     install_greenclip
+  fi
+
+  if ask_yn "Install fzf"; then
+    install_fzf
   fi
 }
 
