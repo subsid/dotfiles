@@ -48,7 +48,7 @@ setup_rofi () {
     info "
       Copying scripts folder to home. Manually install some packages inside the folder.
     "
-    cp -r scripts "$HOME"/scripts
+    cp -r scripts "$HOME"/.scripts
   else
     info "Skipping config..."
   fi
@@ -76,14 +76,17 @@ install_other_packages () {
   if ask_yn "Install nvm?"; then
     info "Installing nvm..."
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+    info "Install latest node version"
+    nvm install node
     info "Done! Press enter to continue..."
     read -r
   fi
 
   if ask_yn "Install autoenv?"; then
-    info "Installing autoenv..."
-    curl -#fLo- 'https://raw.githubusercontent.com/hyperupcall/autoenv/master/scripts/install.sh' | sh
-    info "Done! Press enter to continue..."
+    info "Installing autoenv using npm..."
+    npm install -g '@hyperupcall/autoenv'
+    info "Note: You may have to update bash_profile to point to autoenv under a new node version...
+      Done! Press enter to continue..."
     read -r
   fi
 
@@ -94,6 +97,16 @@ install_other_packages () {
   if ask_yn "Install greenclip"; then
     install_greenclip
   fi
+}
+
+run_setup_scripts () {
+  # Setup time
+  setup_cron_jobs
+  setup_gpg
+  setup_sound
+  setup_i3
+  setup_nvim
+  setup_rofi
 }
 
 run_setup () {
@@ -116,13 +129,7 @@ run_setup () {
   install_other_packages
   manual_setup_packages
 
-  # Setup time
-  setup_cron_jobs
-  setup_gpg
-  setup_sound
-  setup_i3
-  setup_nvim
-  setup_rofi
+  run_setup_scripts
 
   copy_dot_files_to_home
   info "Woooho! Successfully completed setup. Restart your terminal and you should be good to go!"
@@ -199,6 +206,14 @@ copy_config_files_from_home () {
   # Rofi
   info "Copying rofi files..."
   cp -r "$HOME"/.config/rofi/ config/rofi
+
+  # General Scripts
+  cp -r "$HOME"/.scripts scripts
+
+  # Alacritty
+  info "Copying alacritty files..."
+
+  cp -r "$HOME"/.config/alacritty/alacritty.yml config/alacritty/alacritty.yml
 }
 
 copy_dot_files_to_home () {
@@ -338,7 +353,9 @@ manual_setup_packages () {
     info "Install dropbox https://www.dropbox.com/install-linux"
     info "Enter to continue..."
     read -r
-    info "Install conda https://conda.io/en/latest/miniconda.html"
+    info "
+      Install conda https://conda.io/en/latest/miniconda.html
+      echo \"conda activate base\" >> ~/.env"
     info "Enter to continue..."
     read -r
     info "Install https://github.com/wting/autojump"
@@ -400,7 +417,7 @@ usage () {
   info "This setup process will guide you through installing\
 some basic utilities on arch linux.
 
-  Usage: $PROG [--verbose] [--copy-config-from-home] [--copy-dot-files-to-home] [--help|-h] [--setup-i3] [--setup-nvim] [--setup-sound]"
+  Usage: $PROG [--verbose] [--copy-config-from-home] [--copy-dot-files-to-home] [--help|-h] [--setup-i3] [--setup-nvim] [--setup-sound] [--setup-cron-jobs] [--setup-gpg] [--setup-rofi]"
 }
 
 for arg in "$@"; do
@@ -429,13 +446,28 @@ for arg in "$@"; do
     exit 0
     ;;
 
+    --setup-rofi)
+    setup_rofi
+    exit 0
+    ;;
+
     --setup-nvim)
     setup_nvim
     exit 0
     ;;
 
+    --setup-gpg)
+    setup_gpg
+    exit 0
+    ;;
+
     --setup-sound)
     setup_sound
+    exit 0
+    ;;
+
+    --setup-cron-jobs)
+    setup_cron_jobs
     exit 0
     ;;
 
