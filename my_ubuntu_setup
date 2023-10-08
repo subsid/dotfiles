@@ -122,10 +122,10 @@ run_setup () {
 setup_nvim () {
   info "Installing neovim and copying configs...Enter to continue"
   read -r
-  local packages=(neovim)
+  local packages=(nvim)
   if ask_yn "${packages[*]} Install packages?"; then
     info "Installing ${packages[*]}"
-    sudo apt install "${packages[@]}"
+    sudo snap install "${packages[@]}"
   else
     info "Skipping neovim package download"
   fi
@@ -162,6 +162,7 @@ setup_i3 () {
     cp config/i3/config "$i3_dir"/config
 
     info "Copying py3status config files to home"
+    mkdir -p "$HOME"/.config/py3status
     cp config/py3status/config "$HOME"/.config/py3status/config
 
     info "Setup brightness controls"
@@ -294,11 +295,12 @@ i3_brightness_controls () {
   local add_to_group="sudo usermod -aG video ${USER}"
   if ask_yn "${packages[*]} Setup brightness control packages for i3?"; then
     sudo apt install "${packages[@]}"
-    info "Add user to video group for brightnessctl. ${add_to_group}"
+    info "Adding user to video group for brightnessctl. ${add_to_group}"
     eval "$add_to_group"
   else
     info "Skipping brightnessctl packages..."
   fi
+  info "Done installing brightnessctl package. Press Enter to continue..."
   read -r
 }
 
@@ -309,6 +311,8 @@ install_rustup () {
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs -o /tmp/rust.sh
     if ask_yn "Run rust.sh?"; then
       bash /tmp/rust.sh
+      info "Source cargo env"
+      bash "$HOME/.cargo/env"
     else
       info "Skipping running rust.sh. Exiting..."
       exit 0
@@ -320,7 +324,11 @@ manual_setup_packages () {
   info "Install powertop https://wiki.archlinux.org/title/powertop"
   info "Enter to continue..."
   read -r
-  info "Install openjdk https://adoptium.net/temurin/releases/"
+  info "
+    Install openjdk https://adoptium.net/temurin/releases/
+    Copy jdk to /usr/lib/jvm
+    Set JAVA_HOME appropriately in .exports
+  "
   info "Enter to continue..."
   read -r
   info "Install dropbox https://www.dropbox.com/install-linux"
@@ -336,10 +344,20 @@ manual_setup_packages () {
   info "Add git secrets --install -f to this repository"
   info "Enter to continue..."
   read -r
-  info "Install Anki https://apps.ankiweb.net/"
+  info "
+  Install Anki https://apps.ankiweb.net/
+  Install with prefix
+  Update anki.desktop to have the local paths
+    Exec=/home/ssubramaniyam/.local/bin/anki %f
+    TryExec=/home/ssubramaniyam/.local/bin/anki
+  PREFIX=\"/home/ssubramaniyam/.local\" ./install.sh
+  "
   info "Enter to continue..."
   read -r
-  info "Install Scala with coursier https://get-coursier.io/docs/cli-installation"
+  info "
+    Install Scala with coursier https://get-coursier.io/docs/cli-installation
+    JAVA_HOME=/usr/lib/jvm/<openjdk path> ./cs setup
+  "
   info "Enter to continue..."
   read -r
   info "Manual Install kubectx tools https://github.com/ahmetb/kubectx#manual-installation-macos-and-linux"
