@@ -181,7 +181,7 @@ mode "resize" {
 
 bindsym $super+r mode "resize"
 
-bindsym $super+Shift+x exec i3lock -t -i ~/.lock.png
+bindsym $super+Shift+x exec $home/.i3/i3lock-multimonitor/lock -i ~/.lock.png
 
 # autostart
 exec --no-startup-id xsettingsd &
