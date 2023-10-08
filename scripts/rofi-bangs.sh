@@ -28,7 +28,7 @@ COMMANDS["filebrowser"]='rofi -show file-browser-extended'
 LABELS["filebrowser"]="filebrowser"
 
 # rofi-pass
-COMMANDS["rofipass"]='~/.scripts/rofi-pass/rofi-pass'
+COMMANDS["rofipass"]='$HOME/workspace/dotfiles/scripts/rofi-pass/rofi-pass'
 LABELS["rofipass"]="rofipass"
 
 # rofi-emoji

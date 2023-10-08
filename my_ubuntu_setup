@@ -393,6 +393,11 @@ manual_setup_packages () {
       Update fontcache fc-cache -f -v
       Enter to continue..."
     read -r
+    info "
+      Clone password store from github
+      Enter to continue...
+    "
+    read -r
   else
     info "Skipping manual packages..."
   fi

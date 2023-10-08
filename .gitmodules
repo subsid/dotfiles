@@ -7,6 +7,7 @@
 [submodule "scripts/rofi-file-browser-extended"]
 	path = scripts/rofi-file-browser-extended
 	url = git@github.com:marvinkreis/rofi-file-browser-extended
+    ignore = untracked
 [submodule "scripts/rofi-calc"]
 	path = scripts/rofi-calc
 	url = git@github.com:svenstaro/rofi-calc
