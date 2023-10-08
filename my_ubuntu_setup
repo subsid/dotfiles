@@ -1,0 +1,413 @@
+#!/usr/bin/env bash
+
+# This script configures my ubuntu setup.
+# No guarantees!
+
+set -euo pipefail
+
+RED='\033[0;31m'
+NC='\033[0m' # No Color
+PROG="my_ubuntu_setup"
+
+info () {
+  echo -e "$@"
+}
+
+err () {
+  echo -e "${RED}****************ERROR***************\
+  \n\n$*\n\n************************************${NC}\n"
+}
+
+## Returns true/false based on users yes/no response.
+ask_yn () {
+  while true; do
+    read -r -p "$1 y/n  " yn
+    case $yn in
+        [Yy]* ) return 0 ;;
+        [Nn]* ) return 1 ;;
+        * ) echo "Please answer yes or no.";;
+    esac
+  done
+}
+
+setup_rofi () {
+  local rofi_packages=(rofi rofi-file-browser-extended-git rofi-greenclip rofi-calc)
+  if ask_yn "${rofi_packages[*]} Install packages?"; then
+      sudo apt install rofi
+  else
+    info "Skipping rofi packages..."
+  fi
+
+  if ask_yn "Copy configs?"; then
+    info "cp rofi config to home"
+    local rofi_dir="$HOME/.config/rofi"
+    mkdir -p "$rofi_dir"
+    cp config/rofi/config "$rofi_dir"/config
+    cp config/rofi/config.rasi "$rofi_dir"/config.rasi
+    cp config/rofi/file-browser "$rofi_dir"/file-browser
+  else
+    info "Skipping config..."
+  fi
+}
+
+install_gitsecrets () {
+  info "git clone git@github.com:awslabs/git-secrets $HOME/workspace/git-secrets"
+  info "ln -sf $HOME/workspace/git-secrets/git-secrets $HOME/bin/git-secrets"
+  read -r
+}
+
+install_greenclip () {
+  wget https://github.com/erebe/greenclip/releases/download/v4.2/greenclip
+  if ask_yn "Install https://github.com/erebe/greenclip?"; then
+    wget -O ~/bin/greenclip https://github.com/erebe/greenclip/releases/download/v4.2/greenclip
+    chmod +x ~/bin/greenclip
+    info "Done! Press enter to continue..."
+    read -r
+  else
+    info "Skipping greenclip"
+  fi
+}
+
+install_other_packages () {
+  if ask_yn "Install nvm?"; then
+    info "Installing nvm..."
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+    info "Done! Press enter to continue..."
+    read -r
+  fi
+
+  if ask_yn "Install autoenv?"; then
+    info "Installing autoenv..."
+    curl -#fLo- 'https://raw.githubusercontent.com/hyperupcall/autoenv/master/scripts/install.sh' | sh
+    info "Done! Press enter to continue..."
+    read -r
+  fi
+
+  if ask_yn "Install git-secrets"; then
+    install_gitsecrets
+  fi
+
+  if ask_yn "Install greenclip"; then
+    install_greenclip
+  fi
+}
+
+run_setup () {
+  # Ubuntu setup
+  install_apt_packages
+  install_snap_packages
+  install_rustup
+  install_cargo_packages
+  install_other_packages
+  manual_setup_packages
+
+  # Setup time
+  setup_cron_jobs
+  setup_gpg
+  setup_sound
+  setup_i3
+  setup_nvim
+  setup_rofi
+}
+
+setup_nvim () {
+  info "Installing neovim and copying configs...Enter to continue"
+  read -r
+  local packages=(neovim)
+  if ask_yn "${packages[*]} Install packages?"; then
+    info "Installing ${packages[*]}"
+    sudo apt install "${packages[@]}"
+  else
+    info "Skipping neovim package download"
+  fi
+
+  info "Manually setup plug.vim \
+  $ curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim. Press Enter to continue..."
+  read -r
+
+  local nvim_dir="$HOME/.config/nvim"
+  local bin_dir="$HOME/bin"
+  mkdir -p "$nvim_dir"
+  info "copying nvim config to home"
+  cp -r .config/nvim/* "$nvim_dir"/
+  info "copying vimrc and vimrc.bundles to home"
+  info "copying git_diff_wrapper to $bin_dir"
+  mkdir -p "$bin_dir"
+  cp bin/git_diff_wrapper "$bin_dir"/git_diff_wrapper
+}
+
+setup_i3 () {
+    local packages=(py3status)
+
+    info "Setup i3 manually following https://i3wm.org/docs/repositories.html"
+    info "Press enter to continue..."
+    read -r
+
+    info "Installing up py3status (i3 and i3lock should already be installed)"
+    sudo apt install "${packages[@]}"
+
+    info "Copying i3 config files to home"
+    local i3_dir="$HOME/.config/i3"
+    mkdir -p "$i3_dir"
+    cp config/i3/config "$i3_dir"/config
+
+    info "Copying py3status config files to home"
+    cp config/py3status/config "$HOME"/.config/py3status/config
+
+    info "Setup brightness controls"
+    i3_brightness_controls
+
+    info "Successfully setup i3. Press enter to continue..."
+    read -r
+}
+
+copy_config_files_from_home () {
+  for file in $HOME/.{gitconfig,git-completion.bash,aliases,bash_profile,bash_prompt,path,exports,screenrc,functions}; do
+    info "Copying $file..."
+    cp "$file" "home_files/"
+  done
+
+  # Nvim specific files
+  info "Copying neovim files..."
+  cp "$HOME"/.config/nvim/init.lua config/nvim/init.lua
+  cp -r "$HOME"/.config/nvim/lua config/nvim/lua
+  cp -r "$HOME"/.config/nvim/ftdetect config/nvim/ftdetect
+
+  # i3 config
+  info "Copying i3 files..."
+  cp "$HOME"/.config/i3/config config/i3/config
+  cp "$HOME"/.config/py3status/config config/py3status/config
+
+  # Clipboard
+  info "Copying greenclip files..."
+  cp "$HOME"/.config/greenclip.toml config/greenclip.toml
+
+  # Rofi
+  info "Copying rofi files..."
+  cp -r "$HOME"/.config/rofi config/rofi
+}
+
+copy_dot_files_to_home () {
+  for file in .{gitconfig,git-completion.bash,aliases,bash_profile,bash_prompt,path,exports,screenrc,functions}; do
+    cp "$file" "${HOME}/$file"
+  done
+}
+
+install_cargo_packages () {
+  local cargo_packages=(alacritty ripgrep fd-find)
+  if ask_yn "${cargo_packages[*]} Install packages?"; then
+    cargo install "${cargo_packages[@]}"
+  else
+    info "Skipping cargo packages..."
+  fi
+}
+
+setup_gpg () {
+  info "Import gpg key manually... gpg --import <path to secret>. Press enter to continue..."
+  read -r
+}
+
+install_snap_packages () {
+  # Snap packages
+  # hugo htop slack emacs
+  local snap_classic_packages=(emacs nvim youtube-dl go ccls)
+  if ask_yn "Install classic snap packages? ${snap_classic_packages[*]}"; then
+    for pkg in "${snap_classic_packages[@]}"
+    do
+      sudo snap install "$pkg" --classic
+    done
+  else
+    info "Skipping snap classic pakages"
+  fi
+
+  local snap_packages=(hugo discord htop vlc)
+  if ask_yn "Install other snap packages? ${snap_packages[*]}"; then
+    for pkg in "${snap_packages[@]}"
+    do
+      sudo snap install "$pkg"
+    done
+  else
+    info "Skipping snap other pakages"
+  fi
+
+  info "Done with Snap. Enter to continue..."
+  read -r
+}
+
+install_apt_packages () {
+# import and trust gpg key
+  if ask_yn "Manually update apt packages..."; then
+    info "Press enter to continue..."
+    read -r
+  fi
+
+  local apt_packages=(curl xdotool feh scrot gimp pavucontrol ledger autoconf dnsmasq flatpak pass gpg cmake g++ pkg-config brightnessctl lua5.1 gnome-shell-pomodoro py3status ffmpeg imagemagick-6.q16 hyperfine powertop libpango1.0-0 xournal arandr nemo usb-creator-gtk)
+  local apt_dev_packages=(libglib2.0-dev libcairo2-dev rofi-dev libfontconfig1-dev libtool m4 automake)
+  if ask_yn "${apt_packages[*]} Install packages?"; then
+    sudo apt install "${apt_packages[@]}"
+    info "Done Installing apt packages. Press Enter to continue..."
+    read -r
+    if ask_yn "${apt_dev_packages[*]} Install dev packages?"; then
+      sudo apt install "${apt_dev_packages[@]}"
+      info "Done Installing apt-dev packages. Press Enter to continue..."
+      read -r
+    fi
+  else
+    info "Skipping apt packages..."
+  fi
+}
+
+setup_sound () {
+  info "Setup sound"
+  # Ofono is requred with pulseaudio for bluetooth HSP/HFP sink.
+  # Else only A2DP sink is available.
+  local sound_packages=(pulseaudio bluez* blueman ofono)
+  if ask_yn "${sound_packages[*]} Install packages?"; then
+    sudo apt install "${sound_packages[@]}"
+    info "Done Installing sound packages. Press Enter to continue..."
+    read -r
+  else
+    info "Skipping sound packages..."
+  fi
+}
+
+i3_brightness_controls () {
+  # https://github.com/Hummer12007/brightnessctl
+  # we use brightnessctl to control device brightness
+  # Add user to video group
+  local packages=(brightnessctl)
+  local add_to_group="sudo usermod -aG video ${USER}"
+  if ask_yn "${packages[*]} Setup brightness control packages for i3?"; then
+    sudo apt install "${packages[@]}"
+    info "Add user to video group for brightnessctl. ${add_to_group}"
+    eval "$add_to_group"
+  else
+    info "Skipping brightnessctl packages..."
+  fi
+  read -r
+}
+
+install_rustup () {
+  info "Checking for rustup"
+  if (cmd_exists "rustup"); then
+    info "rustup not found. Installing..."
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs -o /tmp/rust.sh
+    if ask_yn "Run rust.sh?"; then
+      bash /tmp/rust.sh
+    else
+      info "Skipping running rust.sh. Exiting..."
+      exit 0
+    fi
+  fi
+}
+
+manual_setup_packages () {
+  info "Install powertop https://wiki.archlinux.org/title/powertop"
+  info "Enter to continue..."
+  read -r
+  info "Install openjdk https://adoptium.net/temurin/releases/"
+  info "Enter to continue..."
+  read -r
+  info "Install dropbox https://www.dropbox.com/install-linux"
+  info "Enter to continue..."
+  read -r
+  info "Install conda https://conda.io/en/latest/miniconda.html"
+  info "Enter to continue..."
+  read -r
+  info "Install https://github.com/wting/autojump"
+  info "Enter to continue..."
+  read -r
+  info "Install https://github.com/awslabs/git-secrets"
+  info "Add git secrets --install -f to this repository"
+  info "Enter to continue..."
+  read -r
+  info "Install Anki https://apps.ankiweb.net/"
+  info "Enter to continue..."
+  read -r
+  info "Install Scala with coursier https://get-coursier.io/docs/cli-installation"
+  info "Enter to continue..."
+  read -r
+  info "Manual Install kubectx tools https://github.com/ahmetb/kubectx#manual-installation-macos-and-linux"
+  info "Should be cloned to workspace/kubectx for bin/ soft links to work"
+  info "Enter to continue..."
+  read -r
+  info "
+    Install fontawesome fonts https://fontawesome.com/v5/docs/desktop/setup/get-started.
+    Install nerdfont icons https://www.nerdfonts.com/font-downloads
+    Install codeicons.ttf
+    Copy otfs to ~/.fonts
+    Update fontcache fc-cache -f -v
+    Enter to continue..."
+  read -r
+}
+
+setup_cron_jobs () {
+  info "Renewal script 0 11 * * MON <renew_script> > /dev/null 2>&1"
+  info "Ledger updates - /home/ssubramaniyam/miniconda3/bin/python3 /home/ssubramaniyam/Dropbox/notes/finance/mandelbrot/fetch.py --ledger-file-path /home/ssubramaniyam/Dropbox/notes/finance/ledger.dat --ledger-price-db-update --price-db-path /home/ssubramaniyam/Dropbox/notes/finance/ledger-files/prices.db > /home/ssubramaniyam/Dropbox/notes/finance/mandelbrot/fetch.log 2>&1"
+  info "Enter to continue"
+  read -r
+}
+
+cmd_exists () {
+  if (! command -v "$1" &> /dev/null); then
+    return 0
+  else
+    return 1
+  fi
+}
+
+usage () {
+  info "This setup process will guide you through installing\
+some basic utilities on arch linux.
+
+  Usage: $PROG [--verbose] [--copy-config-from-home] [--copy-dot-files-to-home] [--help|-h] [--setup-i3] [--setup-nvim] [--setup-sound]"
+}
+
+for arg in "$@"; do
+  case $arg in
+    --verbose)
+      set -x
+      ;;
+
+    --help|-h)
+      usage
+      exit 0
+      ;;
+
+    --copy-config-from-home)
+    copy_config_files_from_home
+    exit 0
+    ;;
+
+    --copy-dot-files-to-home)
+    copy_dot_files_to_home
+    exit 0
+    ;;
+
+    --setup-i3)
+    setup_i3
+    exit 0
+    ;;
+
+    --setup-nvim)
+    setup_nvim
+    exit 0
+    ;;
+
+    --setup-sound)
+    setup_sound
+    exit 0
+    ;;
+
+    *)
+      echo "Unknown cmd $arg"
+      usage
+      exit 127 ## Unknown command input
+      ;;
+
+  esac
+done
+
+run_setup
+
