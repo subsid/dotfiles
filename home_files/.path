@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+# Don't want other processes to update PATH silently. Hence not appending and resetting path.
+PATH=/bin
+PATH=$PATH:/sbin
+PATH=/usr/bin:$PATH
+PATH=/usr/local/bin:$PATH
+PATH=/snap/bin:$PATH
+PATH=$HOME/bin:$PATH
+PATH=$HOME/go/bin:$PATH:
+PATH="$HOME/.cargo/bin:$PATH"
+PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+# flatpak desktop apps for rofi
+PATH=/var/lib/flatpak/exports/bin:$PATH
+
+# Created by `pipx` on 2021-08-18 17:09:38
+# Anki related
+PATH="$HOME/.local/bin:$PATH"
+
+# Added by Toolbox App
+PATH="$PATH:$HOME/.local/share/JetBrains/Toolbox/scripts"
+
+PATH=$HOME/development/Search/tools:$PATH
+
+# >>> coursier install directory >>>
+PATH="$PATH:$HOME/.local/share/coursier/bin"
+# <<< coursier install directory <<<
+#
+PATH=$JAVA_HOME/bin:$PATH
+export PATH
+
