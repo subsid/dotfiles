@@ -413,11 +413,17 @@ cmd_exists () {
   fi
 }
 
+setup_alacritty () {
+  info "Copying config/alacritty/alacritty.yml to ~/.config/alacritty/alacritty.yml"
+  mkdir -p "$HOME"/.config/alacritty
+  cp config/alacritty/alacritty.yml "$HOME"/.config/alacritty/alacritty.yml
+}
+
 usage () {
   info "This setup process will guide you through installing\
 some basic utilities on arch linux.
 
-  Usage: $PROG [--verbose] [--copy-config-from-home] [--copy-dot-files-to-home] [--help|-h] [--setup-i3] [--setup-nvim] [--setup-sound] [--setup-cron-jobs] [--setup-gpg] [--setup-rofi]"
+  Usage: $PROG [--verbose] [--copy-config-from-home] [--copy-dot-files-to-home] [--help|-h] [--setup-i3] [--setup-nvim] [--setup-sound] [--setup-cron-jobs] [--setup-gpg] [--setup-rofi] [--setup-alacritty]"
 }
 
 for arg in "$@"; do
@@ -468,6 +474,11 @@ for arg in "$@"; do
 
     --setup-cron-jobs)
     setup_cron_jobs
+    exit 0
+    ;;
+
+    --setup-alacritty)
+    setup_alacritty
     exit 0
     ;;
 
