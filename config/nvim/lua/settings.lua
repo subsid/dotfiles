@@ -100,11 +100,6 @@ vim.cmd([[
 --   let g:fzf_preview_window = ['right,60%:sharp']
 -- ]])
 
--- Coc settings
-vim.cmd([[
-  source $HOME/.config/nvim/plug-config/coc.vim
-]])
-
 -- Save and old folds
 vim.cmd([[
   set viewoptions-=options

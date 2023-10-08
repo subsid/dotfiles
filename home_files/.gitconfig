@@ -63,8 +63,6 @@
     autosetuprebase = always
 [merge]
   tool = vimdiff
-[init]
-    templateDir = /home/sid/.git-templates/git-secrets
 [url "ssh://git@github.com/etsy/tinkerer"]
     insteadOf = https://github.com/etsy/tinkerer
 [secrets]

@@ -59,7 +59,11 @@ function parse_git_branch() {
 function kube_prompt()
 {
     # Get current context
-    CONTEXT=$(cat ~/.kube/config | grep "current-context:" | sed -e "s/current-context: .*\(gke-[^_]*\).*\(search-.*\)/\1 \2/; s/current-context: .*\(gke-[^_]*\).*\(kafka-gke.*\)/\1 \2/")
+    if [ -f ~/.kube/config ]; then
+      CONTEXT=$(cat ~/.kube/config | grep "current-context:" | sed -e "s/current-context: .*\(gke-[^_]*\).*\(search-.*\)/\1 \2/; s/current-context: .*\(gke-[^_]*\).*\(kafka-gke.*\)/\1 \2/")
+    else
+      CONTEXT=""
+    fi
 
     if [ -n "$CONTEXT" ]; then
         echo "(k8s: ${CONTEXT})"
