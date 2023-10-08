@@ -108,6 +108,8 @@ run_setup () {
   setup_i3
   setup_nvim
   setup_rofi
+
+  copy_dot_files_to_home
 }
 
 setup_nvim () {
@@ -189,9 +191,14 @@ copy_config_files_from_home () {
 }
 
 copy_dot_files_to_home () {
-  for file in .{gitconfig,git-completion.bash,aliases,bash_profile,bash_prompt,path,exports,screenrc,functions}; do
-    cp "$file" "${HOME}/$file"
-  done
+  if ask_yn "Copy dot files to home?"; then
+    info "Copying dot files to home..."
+    for file in .{gitconfig,git-completion.bash,aliases,bash_profile,bash_prompt,path,exports,screenrc,functions}; do
+      cp "$file" "${HOME}/$file"
+    done
+  else
+    info "Skipping copying dot files to home..."
+  fi
 }
 
 install_cargo_packages () {
