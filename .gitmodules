@@ -1,12 +1,6 @@
 [submodule "scripts/rofi-emoji"]
 	path = scripts/rofi-emoji
 	url = git@github.com:Mange/rofi-emoji
-[submodule "scripts/i3-gnome-pomodoro"]
-	path = scripts/i3-gnome-pomodoro
-	url = git@github.com:kantord/i3-gnome-pomodoro
-[submodule "scripts/rofi"]
-	path = scripts/rofi
-	url = git@github.com:davatorium/rofi
 [submodule "scripts/rofi-pass"]
 	path = scripts/rofi-pass
 	url = git@github.com:carnager/rofi-pass

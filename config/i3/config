@@ -54,7 +54,7 @@ bindsym $super+Print --release exec scrot -f -s -e 'mv $f ~/screenshot/'
 
 # bindsym $super+Shift+d exec dmenu_run
 # Rofi launcher
-bindsym $super+space exec $home/.scripts/rofi-bangs.sh
+bindsym $super+space exec $home/workspace/dotfiles/scripts/rofi-bangs.sh
 bindsym $super+d exec rofi -show drun # Config saved in ~/.config/rofi/config
 
 # change focus
@@ -190,11 +190,11 @@ exec --no-startup-id xrandr --output eDP-1-1 --mode 1920x1080
 exec --no-startup-id /usr/bin/dropbox start &
 exec --no-startup-id feh --bg-scale ~/.wallpaper.png
 exec --no-startup-id greenclip daemon>/dev/null &
-exec --no-startup-id $home/.scripts/battery_notify &
+exec --no-startup-id $home/workspace/dotfiles/scripts/battery_notify &
 exec --no-startup-id $home/.local/bin/anki &
 
-exec_always --no-startup-id ~/.scripts/setupmonitor
-exec_always --no-startup-id ~/.scripts/tap_enable
+exec_always --no-startup-id $home/workspace/dotfiles/scripts/setupmonitor
+exec_always --no-startup-id $home/workspace/dotfiles/scripts/tap_enable
 
 # Swap left control-capslock, alt-super globally
 exec_always setxkbmap -option "ctrl:swapcaps" -option "altwin:swap_lalt_lwin"
@@ -229,9 +229,9 @@ client.placeholder          #2f343f #2f343f #d8dee8 #2f343f #2f343f
 client.background           #2f343f
 
 # Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id ~/.scripts/pactl_volume.sh +5% # increase sound volume
-bindsym XF86AudioLowerVolume exec --no-startup-id ~/.scripts/pactl_volume.sh -5% # decrease sound volume
-bindsym XF86AudioMute exec --no-startup-id ~/.scripts/pactl_volume.sh M # mute sound
+bindsym XF86AudioRaiseVolume exec --no-startup-id $home/workspace/dotfiles/scripts/pactl_volume.sh +5% # increase sound volume
+bindsym XF86AudioLowerVolume exec --no-startup-id $home/workspace/dotfiles/scripts/pactl_volume.sh -5% # decrease sound volume
+bindsym XF86AudioMute exec --no-startup-id $home/workspace/dotfiles/scripts/pactl_volume.sh M # mute sound
 
 # Sreen brightness controls
 set $brightness_step 5%
@@ -254,12 +254,6 @@ bindsym $alt+F9 exec "py3-cmd click --button 1 pomodoro"
 bindsym $alt+F10 exec "py3-cmd click --button 2 pomodoro"
 # Skip
 bindsym $alt+F11 exec "py3-cmd click --button 3 pomodoro"
-
-# exec --no-startup-id "$home/miniconda3/bin/python ~/.scripts/i3-gnome-pomodoro/pomodoro-client.py daemon"
-# bindsym $alt+F9 exec "$home/miniconda3/bin/python ~/.scripts/i3-gnome-pomodoro/pomodoro-client.py start"
-# bindsym $alt+F10 exec "$home/miniconda3/bin/python ~/.scripts/i3-gnome-pomodoro/pomodoro-client.py toggle"
-# bindsym $alt+F11 exec "$home/miniconda3/bin/python ~/.scripts/i3-gnome-pomodoro/pomodoro-client.py skip"
-# bindsym $alt+F12 exec "$home/miniconda3/bin/python ~/.scripts/i3-gnome-pomodoro/pomodoro-client.py stop"
 
 ## Workspace settings
 

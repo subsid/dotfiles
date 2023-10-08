@@ -1,0 +1,63 @@
+#!/bin/bash
+
+MONITORS=`xrandr -q | sed -n "s/^\(.*\) connected.*/\1/p"`
+N_MONITORS=`echo $MONITORS | awk -F " " 'END{print NF}'`
+LIDCLOSED=`cat /proc/acpi/button/lid/LID0/state | grep -E -o "open|close"`
+
+M0="eDP-1"
+M1="DP-1"
+M2="DP-2"
+M3="DP-3"
+
+# 2 active monitors at office
+# Use only 1
+if [[ "$MONITORS" == *"$M1"* && "$MONITORS" == *"$M2"* ]]; then
+  if [[ $LIDCLOSED == "close" ]]; then
+    xrandr --output $M0 --off --output $M1 --mode 1920x1080 --pos 0x0 --rotate normal --output $M2 --off
+  else
+    # One active
+    # xrandr --output $M1 --primary --mode 1920x1080 --pos 0x0 --rotate normal --output $M0 --mode 1920x1080 --pos 1920x0 --rotate normal --output $M2 --off --output $M3 --off
+    # Both active
+    # xrandr --output $M0 --mode 1920x1080  --primary --pos 0x1080 --rotate normal --output $M2 --mode 1920x1080 --pos 0x0 --rotate normal --output $M1 --mode 1920x1080 --pos 1920x0 --rotate normal --output $M3 --off
+    # Flip monitors
+    xrandr --output $M0 --mode 1920x1080  --primary --pos 0x1080 --rotate normal --output $M1 --mode 1920x1080 --pos 0x0 --rotate normal --output $M2 --mode 1920x1080 --pos 1920x0 --rotate normal --output $M3 --off
+    exit 0;
+  fi
+elif [[ "$MONITORS" == "eDP-1" ]]; then
+  xrandr --output $M0 --mode 1920x1080 --pos 0x0 --rotate normal --output $M3 --off --output $M2 --off --output $M1 --off
+fi
+
+if [[ "$MONITORS" == *"$M3"* ]]; then
+  if [[ $LIDCLOSED == "close" ]]; then
+    xrandr --output $M0 --off --output $M1 --off --output $M2 --off --output $M3 --primary --mode 1920x1080 --pos 0x0 --rotate normal
+  else
+    # Monitor on left.
+    # xrandr --output eDP-1 --mode 1920x1080 --pos 1920x0 --rotate normal --output DP-1 --off --output DP-2 --off --output DP-3 --primary --mode 1920x1080 --pos 0x0 --rotate normal
+    # Monitor on right
+    xrandr --output eDP-1 --mode 1920x1080 --pos 0x0 --rotate normal --output DP-1 --off --output DP-2 --off --output DP-3 --primary --mode 1920x1080 --pos 1920x0 --rotate normal
+  fi
+else
+  xrandr --output $M0 --mode 1920x1080 --pos 0x0 --rotate normal --output $M3 --off --output $M2 --off --output $M1 --off
+fi
+
+if [[ "$MONITORS" == *"$M1"* ]]; then
+  if [[ $LIDCLOSED == "close" ]]; then
+    xrandr --output $M0 --off --output $M3 --off --output $M2 --off --output $M1 --primary --mode 1920x1080 --pos 0x0 --rotate normal
+  else
+    # Monitor on left.
+    echo "yup"
+    xrandr --output eDP-1 --mode 1920x1080 --pos 1920x0 --rotate normal --output $M3 --off --output $M2 --off --output $M1 --primary --mode 1920x1080 --pos 0x0 --rotate normal
+  fi
+else
+  xrandr --output $M0 --mode 1920x1080 --pos 0x0 --rotate normal --output $M3 --off --output $M2 --off --output $M1 --off
+fi
+
+# function set_as_primary(monitor, lid) {
+# }
+
+function bg_scale() {
+  # Now set wallpaper
+  feh --bg-scale ~/.wallpaper.png
+}
+
+bg_scale

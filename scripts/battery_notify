@@ -1,0 +1,28 @@
+#!/bin/bash
+
+set -e
+
+# notify-send doesn't seem to work from cron. Need to figure out why
+# Workaround: run this script in a loop
+
+while true; do
+  bat_files="/sys/class/power_supply/BAT0"
+  bat_status=$(cat "${bat_files}/status")
+  capacity=$(cat "${bat_files}/capacity")
+  threshold_low=20
+  threshold_high=97
+
+  echo "Battery status: ${bat_status} ${capacity}"
+  if [[ ${bat_status} == "Discharging" ]] && [[ ${capacity} -le ${threshold_low} ]]; then
+      echo "Battery is low: ${capacity}%"
+      notify-send "Low Battery" "${capacity}% of battery remaining." -u critical -i "battery-alert"
+  fi
+
+  if [[ ${bat_status} == "Charging" ]] && [[ ${capacity} -gt ${threshold_high} ]]; then
+      echo "Battery is fully charged: ${capacity}%"
+      notify-send "Battery is fully charged." -i "battery-alert"
+  fi
+
+  sleep 300
+done
+

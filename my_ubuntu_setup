@@ -45,10 +45,6 @@ setup_rofi () {
     cp config/rofi/config.rasi "$rofi_dir"/config.rasi
     cp config/rofi/file-browser "$rofi_dir"/file-browser
 
-    info "
-      Copying scripts folder to home. Manually install some packages inside the folder.
-    "
-    cp -r scripts "$HOME"/.scripts
   else
     info "Skipping config..."
   fi
@@ -206,9 +202,6 @@ copy_config_files_from_home () {
   # Rofi
   info "Copying rofi files..."
   cp -r "$HOME"/.config/rofi/ config/rofi
-
-  # General Scripts
-  cp -r "$HOME"/.scripts scripts
 
   # Alacritty
   info "Copying alacritty files..."
