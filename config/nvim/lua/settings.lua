@@ -4,7 +4,7 @@ local g = vim.g
 local o = vim.o
 
 g.python_highlight_all = 1
-g.python3_host_prog='/home/sid/miniconda3/bin/python'
+g.python3_host_prog='/home/ssubramaniyam/miniconda3/bin/python'
 
 -- Nerdtree ignore
 g.NERDTreeIgnore = {'.pyc$'}
@@ -92,7 +92,7 @@ o.splitkeep = 'screen'
 -- autocmd BufWinLeave *.* mkview
 -- autocmd BufWinEnter *.* silent loadview
 vim.cmd([[
-  noremap <silent> <leader>V :luafile /home/sid/.config/nvim/init.lua<CR>:filetype detect<CR>:exe ":echo 'neovimrc reloaded'"<CR>
+  noremap <silent> <leader>V :luafile /home/ssubramaniyam/.config/nvim/init.lua<CR>:filetype detect<CR>:exe ":echo 'neovimrc reloaded'"<CR>
 ]])
 
 -- fzf
@@ -100,15 +100,20 @@ vim.cmd([[
 --   let g:fzf_preview_window = ['right,60%:sharp']
 -- ]])
 
+-- Coc settings
+-- vim.cmd([[
+--   source $HOME/.config/nvim/plug-config/coc.vim
+-- ]])
+
 -- Save and old folds
-vim.cmd([[
-  set viewoptions-=options
-  augroup remember_folds
-    autocmd!
-    autocmd BufWinLeave *.* mkview
-    autocmd BufWinEnter *.* silent! loadview
-  augroup END
-]])
+-- vim.cmd([[
+--   set viewoptions-=options
+--   augroup remember_folds
+--     autocmd!
+--     autocmd BufWinLeave *.* mkview
+--     autocmd BufWinEnter *.* silent! loadview
+--   augroup END
+-- ]])
 
 -- vscode colorscheme
 vim.cmd([[
@@ -142,7 +147,7 @@ vim.cmd([[
 -- tagbar scala support
 vim.cmd([[
   let g:tagbar_type_scala = {
-      \ 'ctagsbin' : '/home/sid/.local/bin/ctags',
+      \ 'ctagsbin' : '/home/ssubramaniyam/.local/bin/ctags',
       \ 'ctagstype' : 'scala',
       \ 'sro'       : '.',
       \ 'kinds'     : [
@@ -170,3 +175,6 @@ vim.cmd([[
   autocmd BufNewFile,BufReadPost development.php let b:tagbar_ignore = 1
 ]])
 
+-- Remove F from shortmess
+-- This allows some log messagse to be printed nicely.
+vim.opt_global.shortmess:remove("F")

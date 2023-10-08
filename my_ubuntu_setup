@@ -186,12 +186,17 @@ copy_config_files_from_home () {
 
   # Nvim specific files
   info "Copying neovim files..."
+  mkdir -p config/nvim
+  mkdir -p config/nvim/lua
+  mkdir -p config/nvim/ftdetect
   cp "$HOME"/.config/nvim/init.lua config/nvim/init.lua
-  cp -r "$HOME"/.config/nvim/lua config/nvim/lua
-  cp -r "$HOME"/.config/nvim/ftdetect config/nvim/ftdetect
+  cp -r "$HOME"/.config/nvim/lua/* config/nvim/lua
+  cp -r "$HOME"/.config/nvim/ftdetect/* config/nvim/ftdetect
 
   # i3 config
   info "Copying i3 files..."
+  mkdir -p config/i3
+  mkdir -p config/py3status
   cp "$HOME"/.config/i3/config config/i3/config
   cp "$HOME"/.config/py3status/config config/py3status/config
 
@@ -201,11 +206,13 @@ copy_config_files_from_home () {
 
   # Rofi
   info "Copying rofi files..."
-  cp -r "$HOME"/.config/rofi/ config/rofi
+  mkdir -p config/rofi
+  cp -r "$HOME"/.config/rofi/* config/rofi
 
   # Alacritty
   info "Copying alacritty files..."
 
+  mkdir -p config/alacritty
   cp -r "$HOME"/.config/alacritty/alacritty.yml config/alacritty/alacritty.yml
 }
 
