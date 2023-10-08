@@ -10,3 +10,6 @@
 [submodule "scripts/rofi-calc"]
 	path = scripts/rofi-calc
 	url = git@github.com:svenstaro/rofi-calc
+[submodule "scripts/rofi"]
+	path = scripts/rofi
+	url = git@github.com:davatorium/rofi
