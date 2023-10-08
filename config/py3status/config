@@ -1,0 +1,95 @@
+py3status {
+    nagbar_font = 'pango:Ubuntu Mono 12'
+    min_length = 15
+    position = 'right'
+}
+
+general {
+    # These will be used if not supplied by a module
+    markup = pango
+    interval = 5
+    color = '#FFFFFF' # white
+    color_good = '#00FF00' # green
+    color_bad = '#FF0000' # red
+    color_degraded = '#FFFF00' # yellow
+}
+
+order += "sysdata"
+order += "disk /"
+order += "disk /home"
+order += "networkmanager"
+order += "path_exists VPN"
+order += "pomodoro"
+order += "volume master"
+order += "battery 0"
+order += "tztime local"
+
+disk "/" {
+        format = "💾 %free Free"
+}
+
+disk "/home" {
+        format = "💾 %free Free"
+}
+
+# display per cpu percents
+sysdata {
+    cpus = ['cpu']
+    format = "[\?color=cpu_used_percent CPU: {cpu_used_percent}%], [\?color=mem_used_percent Mem: {mem_used}/{mem_total} {mem_total_unit}]"
+}
+
+networkmanager {
+    format_device = "[\?if=general_connection {general_device} [\?soft ][\?color=ap_signal {ap_ssid} ]|[\?soft ][\?color=good {ip4_address1}]]"
+}
+
+# vpn_status {
+#     cache_timeout = 2
+#     format = "VPN {name}|"
+#     pidfile = "/sys/class/net/tun0/dev_id"
+#     check_pid = True
+# }
+path_exists VPN {
+        # path exists when a VPN tunnel launched by nmcli/nm-applet is active
+        path = "/proc/sys/net/ipv4/conf/tun0"
+        format="%title %status"
+}
+
+battery 0 {
+        last_full_capacity = true
+        format = "%status %percentage %emptytime"
+        format_down = "No Battery"
+        status_chr = "⚡"
+        status_bat = ""
+        status_unk = "Unknown"
+        status_full = "☻"
+        path = "/sys/class/power_supply/BAT0/uevent"
+        last_full_capacity = true
+        threshold_type = time
+        low_threshold = 15
+}
+
+volume master {
+        format = "🔊 %volume"
+        format_muted = "\uf6a9 Muted"
+        device = "default"
+        mixer = "Master"
+        mixer_idx = 0
+}
+
+tztime local {
+  format = "\uf017 %a %-d %b %H:%M"
+}
+
+pomodoro {
+  format_separator = ":"
+  timer_pomodoro = 1500 # (25 * 60)
+  timer_long_break = 900 # "15 * 60"
+  timer_break = 300 # "5 * 60"
+  format = "{mmss}"
+  format_active = "{format}"
+  format_stopped = "{format}"
+  display_bar = False
+  sound_break_end = "/home/ssubramaniyam/Dropbox/sounds/yougotthis.mp3"
+  sound_pomodoro_start = "/home/ssubramaniyam/Dropbox/sounds/yougotthis.mp3"
+  sound_pomodoro_end = "/home/ssubramaniyam/Dropbox/sounds/ifyousmell.mp3"
+}

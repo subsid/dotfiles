@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if [ -e /snap/bin/nvim ]; then
+  nvim -d "$1" "$2"
+elif [ -e /usr/bin/vimdiff ]; then
+  /usr/bin/vimdiff -v -d "$1" "$2"
+fi
+
