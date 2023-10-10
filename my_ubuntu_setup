@@ -111,6 +111,7 @@ run_setup_scripts () {
   setup_gpg
   setup_sound
   setup_i3
+  setup_ctags
   setup_nvim
   setup_rofi
   setup_emacs
@@ -156,6 +157,27 @@ setup_emacs () {
   else
     info "Skipping emacs package download"
   fi
+}
+
+setup_ctags () {
+  info "
+    Clone and install  ctags...
+    $ git clone https://github.com/universal-ctags/ctags $HOME/workspace/ctags
+    $ cd $HOME/workspace/ctags
+    $ ./autogen.sh
+    $ ./configure --prefix=$HOME/.local # defaults to /usr/local
+    $ make
+    $ make install # may require extra privileges depending on where to install
+    Press enter to continue...
+  "
+  read -r
+
+  info "Copying ctags.d file to $HOME..."
+  mkdir -p "$HOME"/.ctags.d
+  cp -r config/ctags.d/* "$HOME"/.ctags.d/
+
+  info "Successfully setup ctags. Press enter to continue..."
+  read -r
 }
 
 setup_nvim () {
@@ -249,6 +271,10 @@ copy_config_files_from_home () {
   info "Copying emacs files..."
 
   cp -r "$HOME"/.emacs.d/* config/emacs.d/
+
+  # Custom Ctags
+  mkdir -p config/ctags.d
+  cp -r "$HOME"/.ctags.d/* config/ctags.d/
 }
 
 copy_dot_files_to_home () {
@@ -310,7 +336,7 @@ install_apt_packages () {
     read -r
   fi
 
-  local apt_packages=(curl xdotool feh scrot gimp pavucontrol ledger autoconf dnsmasq flatpak pass gpg cmake g++ pkg-config brightnessctl lua5.1 gnome-shell-pomodoro py3status ffmpeg imagemagick-6.q16 hyperfine powertop libpango1.0-0 xournal arandr nemo usb-creator-gtk)
+  local apt_packages=(curl xdotool feh scrot gimp pavucontrol ledger autoconf dnsmasq flatpak pass gpg cmake g++ pkg-config brightnessctl lua5.1 gnome-shell-pomodoro py3status ffmpeg imagemagick-6.q16 hyperfine powertop libpango1.0-0 xournal arandr nemo usb-creator-gtk net-tools)
   local apt_dev_packages=(libglib2.0-dev libcairo2-dev rofi-dev libfontconfig1-dev libtool m4 automake)
   if ask_yn "${apt_packages[*]} Install packages?"; then
     sudo apt install "${apt_packages[@]}"
@@ -462,81 +488,63 @@ setup_alacritty () {
 }
 
 usage () {
-  info "This setup process will guide you through installing\
-some basic utilities on arch linux.
+  info "
+  This setup process will guide you through installing some basic utilities on arch linux.
+  "
 
-  Usage: $PROG [--verbose] [--copy-config-from-home] [--copy-dot-files-to-home] [--help|-h] [--setup-i3] [--setup-nvim] [--setup-sound] [--setup-cron-jobs] [--setup-gpg] [--setup-rofi] [--setup-alacritty] [--setup-emacs]"
+  info "Usage: $PROG [--verbose] "
+  for i in "${!fns[@]}"
+  do
+    info "[${i}]"
+  done
 }
 
-for arg in "$@"; do
-  case $arg in
-    --verbose)
-      set -x
-      ;;
+declare -A fns
 
-    --help|-h)
-      usage
-      exit 0
-      ;;
+fns["--help"]=usage
+fns["-h"]=usage
+# Setup commands
+fns["--setup-rofi"]=setup_rofi
+fns["--setup-nvim"]=setup_nvim
+fns["--setup-gpg"]=setup_gpg
+fns["--setup-sound"]=setup_sound
+fns["--setup-cron-jobs"]=setup_cron_jobs
+fns["--setup-i3"]=setup_i3
+fns["--setup-alacritty"]=setup_alacritty
+fns["--setup-emacs"]=setup_emacs
+fns["--setup-ctags"]=setup_ctags
 
-    --copy-config-from-home)
-    copy_config_files_from_home
-    exit 0
-    ;;
+# Install stuff
+fns["--install-apt-packages"]=install_apt_packages
+fns["--install-snap-packages"]=install_snap_packages
+fns["--install-rustup"]=install_rustup
+fns["--install-cargo-packages"]=install_cargo_packages
+fns["--install-other-packages"]=install_other_packages
+fns["--install-gitsecrets"]=install_gitsecrets
+fns["--install-greenclip"]=install_greenclip
+fns["--install-fzf"]=install_fzf
 
-    --copy-dot-files-to-home)
-    copy_dot_files_to_home
-    exit 0
-    ;;
+# Higher-level commands
+fns["--manual-setup-packages"]=manual_setup_packages
+fns["--copy-dot-files-to-home"]=copy_dot_files_to_home
+fns["--copy-config-from-home"]=copy_config_files_from_home
 
-    --setup-i3)
-    setup_i3
-    exit 0
-    ;;
+if [ $# -gt 1 ]; then
+  err "Too many arguments"
+  usage
+  exit 1
+fi
 
-    --setup-rofi)
-    setup_rofi
-    exit 0
-    ;;
+if [ $# -eq 0 ]; then
+  run_setup
+  exit 0
+fi
 
-    --setup-nvim)
-    setup_nvim
-    exit 0
-    ;;
-
-    --setup-gpg)
-    setup_gpg
-    exit 0
-    ;;
-
-    --setup-sound)
-    setup_sound
-    exit 0
-    ;;
-
-    --setup-cron-jobs)
-    setup_cron_jobs
-    exit 0
-    ;;
-
-    --setup-alacritty)
-    setup_alacritty
-    exit 0
-    ;;
-
-    --setup-emacs)
-    setup_emacs
-    exit 0
-    ;;
-
-    *)
-      echo "Unknown cmd $arg"
-      usage
-      exit 127 ## Unknown command input
-      ;;
-
-  esac
-done
-
-run_setup
+if [[ -v fns[$1] ]]; then
+  ${fns[$1]}
+else
+  err "Unknown argument $1"
+  usage
+  exit 1
+fi
 
