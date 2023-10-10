@@ -278,11 +278,19 @@ copy_config_files_from_home () {
 }
 
 copy_dot_files_to_home () {
+  local common_dotfiles=(.bashrc .git-completion.bash .aliases .bash_profile .bash_prompt .path .screenrc .functions)
+  local other_dotfiles=(.gitconfig .exports)
   if ask_yn "Copy dot files to home?"; then
     info "Copying dot files to home..."
-    for file in .{bashrc,gitconfig,git-completion.bash,aliases,bash_profile,bash_prompt,path,exports,screenrc,functions}; do
+    for file in "${common_dotfiles[@]}"; do
       cp "home_files/$file" "${HOME}/$file"
     done
+
+    if ask_yn "Copy ${other_dotfiles[*]} as well. Note, these could have keys etc defined. Make sure to copy them over..."; then
+      for file in "${other_dotfiles[@]}"; do
+        cp "home_files/$file" "${HOME}/$file"
+      done
+    fi
   else
     info "Skipping copying dot files to home..."
   fi

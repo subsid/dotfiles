@@ -90,3 +90,14 @@ export HISTIGNORE="history:ls:pwd:clear:vi"
 . "$HOME/.cargo/env"
 export PATH=/home/ssubramaniyam/development/Search/tools:$PATH
 export PATH=/home/ssubramaniyam/development/sciences/tools:$PATH
+
+check-ssh-agent() {
+  # ssh-add -l returns 2 if a connection cannot be opened with the running agent.
+  [ -S "$SSH_AUTH_SOCK" ] && { ssh-add -l >& /dev/null || [ $? -ne 2 ]; }
+}
+
+# Start ssh-agent if not running
+# https://superuser.com/questions/141044/sharing-the-same-ssh-agent-among-multiple-login-sessions
+check-ssh-agent || export SSH_AUTH_SOCK=~/.tmp/ssh-agent.sock
+check-ssh-agent || eval "$(ssh-agent -s -a ~/.tmp/ssh-agent.sock)" > /dev/null
+
