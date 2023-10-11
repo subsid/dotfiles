@@ -1,0 +1,67 @@
+#!/bin/env bash
+
+# system_name () {
+# }
+
+LAPTOP_DISPLAY="eDP-1"
+
+lid_state () {
+  local lid_files=("/proc/acpi/button/lid/LID0/state" "/proc/acpi/button/lid/LID/state")
+  local lid_state="open"
+  for lid_file in "${lid_files[@]}"; do
+    if [[ -e $lid_file ]]; then
+      lid_state=$(grep -E -o "open|close" "$lid_file")
+      break
+    fi
+  done
+
+  echo "$lid_state"
+}
+
+ext_monitors () {
+  local all_monitors=("$@")
+  for monitor in "${all_monitors[@]}"; do
+    if [[ "${monitor}" != "${LAPTOP_DISPLAY}" ]]; then
+      echo "$monitor"
+    fi
+  done
+}
+
+# Connected monitors
+readarray -t MONITORS <<< "$(xrandr -q | sed -n "s/^\(.*\) connected.*/\1/p")"
+EXT_MONITORS=$(ext_monitors "${MONITORS[@]}")
+N_EXT_MONITORS=${#EXT_MONITORS[@]}
+# open | close
+LID_STATE=$(lid_state)
+
+# Get number of active monitors
+
+if (( "${N_EXT_MONITORS}" > 3 )); then
+  echo "Too many monitors found $N_EXT_MONITORS. Exiting..."
+  exit 1
+fi
+
+if [[ $N_EXT_MONITORS == 0 ]]; then
+  # Only laptop display
+  if [[ $LID_STATE == "open" ]]; then
+    echo xrandr --output $LAPTOP_DISPLAY --mode 1920x1080 --pos 0x0 --rotate normal
+    exit 0
+  else
+    echo "Laptop lid closed and no external monitors. Exiting..."
+    exit 1
+  fi
+fi
+
+echo "${MONITORS[*]}"
+echo "${EXT_MONITORS}"
+echo "${N_EXT_MONITORS}"
+# if $N_EXT_MONITORS == 1; then
+#   # Laptop open + 1 external monitor
+
+#   # Laptop closed + 1 external monitor
+#   if [[ $LID_STATE == "close" ]]; then
+#   if [[ ${SCREENS["eDP-1"]} ]]; then
+#     exit 0
+#   fi
+#   xrandr --output $M0 --mode 1920x1080 --pos 0x0 --rotate normal 
+
