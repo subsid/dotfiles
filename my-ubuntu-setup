@@ -30,6 +30,51 @@ ask_yn () {
   done
 }
 
+setup_php_composer () {
+  local expected_checksum actual_checksum
+
+  # Composer install
+  expected_checksum="$(php -r 'copy("https://composer.github.io/installer.sig", "php://stdout");')"
+  php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+
+  actual_checksum="$(php -r "echo hash_file('sha384', 'composer-setup.php');")"
+
+  if [ "$expected_checksum" != "$actual_checksum" ]
+  then
+      >&2 echo 'ERROR: Invalid installer checksum'
+      rm composer-setup.php
+      return 1
+  fi
+
+  php composer-setup.php --quiet
+  local result=$?
+  rm composer-setup.php
+  return $result
+}
+
+setup_php () {
+  local php_packages=(php-common libapache2-mod-php php-cli)
+  if ask_yn "${php_packages[*]} Install packages?"; then
+    sudo apt install "${php_packages[@]}"
+  else
+    info "Skipping php packages..."
+  fi
+
+  if ask_yn "Install composer?"; then
+    info "Installing composer..."
+
+    if setup_php_composer; then
+      info "Successfully installed composer. Moving to $HOME/bin..."
+      mkdir -p "$HOME/bin"
+      mv composer.phar "$HOME/bin/composer"
+    else
+      info "Failed to install composer"
+    fi
+  else
+    info "Skipping composer..."
+  fi
+}
+
 setup_rofi () {
   local rofi_packages=(rofi rofi-file-browser-extended-git rofi-greenclip rofi-calc)
   if ask_yn "${rofi_packages[*]} Install packages?"; then
@@ -50,13 +95,13 @@ setup_rofi () {
   fi
 }
 
-install_gitsecrets () {
+setup_gitsecrets () {
   info "git clone git@github.com:awslabs/git-secrets $HOME/workspace/git-secrets"
   info "ln -sf $HOME/workspace/git-secrets/git-secrets $HOME/bin/git-secrets"
   read -r
 }
 
-install_greenclip () {
+setup_greenclip () {
   wget https://github.com/erebe/greenclip/releases/download/v4.2/greenclip
   if ask_yn "Install https://github.com/erebe/greenclip?"; then
     wget -O ~/bin/greenclip https://github.com/erebe/greenclip/releases/download/v4.2/greenclip
@@ -68,7 +113,7 @@ install_greenclip () {
   fi
 }
 
-install_fzf () {
+setup_fzf () {
     info "Installing fzf..."
     git clone --depth 1 https://github.com/junegunn/fzf.git "$HOME"/.fzf
     "$HOME"/.fzf/install
@@ -91,22 +136,13 @@ install_other_packages () {
       Done! Press enter to continue..."
     read -r
   fi
-
-  if ask_yn "Install git-secrets"; then
-    install_gitsecrets
-  fi
-
-  if ask_yn "Install greenclip"; then
-    install_greenclip
-  fi
-
-  if ask_yn "Install fzf"; then
-    install_fzf
-  fi
 }
 
 run_setup_scripts () {
   # Setup time
+  setup_gitsecrets
+  setup_greenclip
+  setup_fzf
   setup_cron_jobs
   setup_gpg
   setup_sound
@@ -129,14 +165,19 @@ run_setup () {
     git submodule update
   "
 
-  # Ubuntu setup
+  # Basics
   install_apt_packages
   install_snap_packages
-  install_rustup
-  install_cargo_packages
   install_other_packages
+
+  # Rust stuff
+  setup_rustup
+  install_cargo_packages
+
+  # TODO :: Move these to individual setup scripts
   manual_setup_packages
 
+  # Setup tools
   run_setup_scripts
 
   copy_dot_files_to_home
@@ -391,7 +432,7 @@ i3_brightness_controls () {
   read -r
 }
 
-install_rustup () {
+setup_rustup () {
   info "Checking for rustup"
   if (cmd_exists "rustup"); then
     info "rustup not found. Installing..."
@@ -521,16 +562,17 @@ fns["--setup-i3"]=setup_i3
 fns["--setup-alacritty"]=setup_alacritty
 fns["--setup-emacs"]=setup_emacs
 fns["--setup-ctags"]=setup_ctags
+fns["--setup-php"]=setup_php
+fns["--setup-gitsecrets"]=setup_gitsecrets
+fns["--setup-greenclip"]=setup_greenclip
+fns["--setup-fzf"]=setup_fzf
+fns["--setup-rustup"]=setup_rustup
 
 # Install stuff
 fns["--install-apt-packages"]=install_apt_packages
 fns["--install-snap-packages"]=install_snap_packages
-fns["--install-rustup"]=install_rustup
 fns["--install-cargo-packages"]=install_cargo_packages
 fns["--install-other-packages"]=install_other_packages
-fns["--install-gitsecrets"]=install_gitsecrets
-fns["--install-greenclip"]=install_greenclip
-fns["--install-fzf"]=install_fzf
 
 # Higher-level commands
 fns["--manual-setup-packages"]=manual_setup_packages
