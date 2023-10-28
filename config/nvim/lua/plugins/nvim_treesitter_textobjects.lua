@@ -1,6 +1,6 @@
 M = {
   "nvim-treesitter/nvim-treesitter-textobjects",
-  lazy = True,
+  lazy = true,
   config = function()
     require("nvim-treesitter.configs").setup({
       textobjects = {

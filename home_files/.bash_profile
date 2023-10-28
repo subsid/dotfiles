@@ -101,3 +101,7 @@ check-ssh-agent() {
 check-ssh-agent || export SSH_AUTH_SOCK=~/.tmp/ssh-agent.sock
 check-ssh-agent || eval "$(ssh-agent -s -a ~/.tmp/ssh-agent.sock)" > /dev/null
 
+# Start pulseaudio if not running
+if ! pgrep -x pulseaudio > /dev/null; then
+  pulseaudio --start
+fi

@@ -21,6 +21,7 @@ M.config = function()
       "pyright",
       "bashls",
       "jdtls",
+      "phpactor",
       -- linters
       "mypy",
       "shellcheck",

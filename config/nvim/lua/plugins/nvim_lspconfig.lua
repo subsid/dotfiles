@@ -40,6 +40,12 @@ M.config = function()
     },
   })
   lspconfig.jdtls.setup({})
+  lspconfig.phpactor.setup({
+    init_options = {
+        ["language_server_phpstan.enabled"] = true,
+        ["language_server_psalm.enabled"] = true,
+    }
+  })
 
   vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)
   vim.keymap.set("n", "[g", vim.diagnostic.goto_prev)

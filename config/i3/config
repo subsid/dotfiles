@@ -189,7 +189,7 @@ exec --no-startup-id picom -b
 exec --no-startup-id xrandr --output eDP-1-1 --mode 1920x1080
 exec --no-startup-id /usr/bin/dropbox start &
 exec --no-startup-id feh --bg-scale ~/.wallpaper.png
-exec --no-startup-id greenclip daemon>/dev/null &
+exec --no-startup-id $home/bin/greenclip daemon>/dev/null &
 exec --no-startup-id $home/workspace/dotfiles/scripts/battery_notify &
 exec --no-startup-id $home/.local/bin/anki &
 

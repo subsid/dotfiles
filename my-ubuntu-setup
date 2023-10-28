@@ -316,6 +316,10 @@ copy_config_files_from_home () {
   # Custom Ctags
   mkdir -p config/ctags.d
   cp -r "$HOME"/.ctags.d/* config/ctags.d/
+
+  # Pulseaudio
+  mkdir -p config/pulse
+  cp -r "$HOME"/.config/pulse/client.conf config/pulse/client.conf
 }
 
 copy_dot_files_to_home () {
@@ -413,6 +417,8 @@ setup_sound () {
   else
     info "Skipping sound packages..."
   fi
+  # For bluetooth module to work, we need to load pulseaudio after X11 starts.
+  # https://bbs.archlinux.org/viewtopic.php?id=240405
 }
 
 i3_brightness_controls () {

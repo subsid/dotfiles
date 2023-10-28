@@ -27,6 +27,10 @@ o.incsearch = true
 
 -- indent a new line the same amount as the line just typed
 o.autoindent = true
+-- PHP specific shiftwidth
+vim.cmd([[
+  autocmd FileType php setlocal shiftwidth=4 tabstop=4 softtabstop=4
+]])
 
 -- add line numbers
 o.number = true
@@ -54,11 +58,9 @@ o.cc=80
 
 -- insert mode tab and backspace use 2 spaces
 o.softtabstop=2
--- actual tabs occupy 8 characters
-o.tabstop=4
+o.tabstop=2
 -- converts tabs to white space
 o.expandtab=true
-
 -- width for autoindents
 o.shiftwidth=2
 o.showcmd=true

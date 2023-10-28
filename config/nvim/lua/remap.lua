@@ -13,8 +13,9 @@ map("n", "<leader><leader>f", "<Plug>(easymotion-overwin-f)")
 -- NerdTree settings
 map("n", "<leader>d", ":NERDTreeToggle<CR>")
 map("n", "<leader>f", ":NERDTreeFind<CR>")
-map("n", "<leader>]", ":TagbarToggle<CR>")
-map("n", "<leader><leader>]", ":TagbarTogglePause<CR>")
+
+-- Aerial settings
+map("n", "<leader>]", ":AerialToggle right<CR>")
 
 -- Navigation
 map("n", "<C-h>", "<C-w>h")
@@ -148,7 +149,7 @@ map("v", "<leader>/", function()
 end, opts)
 
 map("n", "<leader>a", ":Telescope live_grep<cr>", topts)
-map("n", "<leader>A", ":Telescope live_grep search_dirs={vim.fn.expand('%:h')<cr>}", topts)
+map("n", "<leader>A", ":Telescope live_grep search_dirs={vim.fn.expand('%:h')}<cr>", topts)
 map("v", "<leader>a", function()
   local text = vim.getVisualSelection()
   tb.live_grep({ default_text = text })

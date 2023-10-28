@@ -7,7 +7,6 @@ M.config = function()
   local lint = require("lint")
 
   lint.linters_by_ft = {
-    python = { "mypy" },
     sh = { "shellcheck" },
     java = { "checkstyle" },
     bzl = { "buildifier" },
