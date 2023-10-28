@@ -228,18 +228,18 @@ setup_nvim () {
   if ask_yn "${packages[*]} Install packages?"; then
     info "Installing ${packages[*]}"
     sudo snap install "${packages[@]}" --classic
-
-    local nvim_dir="$HOME/.config/nvim"
-    local bin_dir="$HOME/bin"
-    mkdir -p "$nvim_dir"
-    info "copying nvim config to home"
-    cp -r config/nvim/* "$nvim_dir"/
-    info "copying git_diff_wrapper to $bin_dir"
-    mkdir -p "$bin_dir"
-    cp bin/git_diff_wrapper "$bin_dir"/git_diff_wrapper
   else
     info "Skipping neovim package download"
   fi
+
+  local nvim_dir="$HOME/.config/nvim"
+  local bin_dir="$HOME/bin"
+  mkdir -p "$nvim_dir"
+  info "copying nvim config to home"
+  cp -r config/nvim/* "$nvim_dir"/
+  info "copying git_diff_wrapper to $bin_dir"
+  mkdir -p "$bin_dir"
+  cp bin/git_diff_wrapper "$bin_dir"/git_diff_wrapper
 }
 
 setup_i3 () {
@@ -249,8 +249,11 @@ setup_i3 () {
     info "Press enter to continue..."
     read -r
 
-    info "Installing up py3status (i3 and i3lock should already be installed)"
-    sudo apt install "${packages[@]}"
+    if ask_yn "${packages[*]} Install packages?"; then
+      sudo apt install "${packages[@]}"
+    else
+      info "Skipping py3status package download"
+    fi
 
     info "Copying i3 config files to home"
     local i3_dir="$HOME/.config/i3"
@@ -261,11 +264,13 @@ setup_i3 () {
     mkdir -p "$HOME"/.config/py3status
     cp config/py3status/config "$HOME"/.config/py3status/config
 
-    info "Setup brightness controls"
-    i3_brightness_controls
+    if ask_yn "Setup brightness controls?"; then
+      i3_brightness_controls
+    fi
 
     info "Manually setup i3lock for multimonitor https://github.com/shikherverma/i3lock-multimonitor.git"
-    read -r "Press enter to continue..."
+    info "Press enter to continue..."
+    read -r
 
     info "Successfully setup i3. Press enter to continue..."
     read -r
