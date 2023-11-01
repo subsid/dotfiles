@@ -394,7 +394,7 @@ install_apt_packages () {
     read -r
   fi
 
-  local apt_packages=(curl xdotool feh scrot gimp pavucontrol ledger autoconf dnsmasq flatpak pass gpg cmake g++ pkg-config brightnessctl lua5.1 gnome-shell-pomodoro py3status ffmpeg imagemagick-6.q16 hyperfine powertop libpango1.0-0 xournal arandr nemo usb-creator-gtk net-tools)
+  local apt_packages=(curl xdotool feh scrot gimp pavucontrol ledger autoconf dnsmasq flatpak pass gpg cmake g++ pkg-config brightnessctl lua5.1 gnome-shell-pomodoro py3status ffmpeg imagemagick-6.q16 hyperfine powertop libpango1.0-0 xournal arandr nemo usb-creator-gtk net-tools screen)
   local apt_dev_packages=(libglib2.0-dev libcairo2-dev rofi-dev libfontconfig1-dev libtool m4 automake)
   if ask_yn "${apt_packages[*]} Install packages?"; then
     sudo apt install "${apt_packages[@]}"
