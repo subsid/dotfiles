@@ -319,6 +319,8 @@ copy_config_files_from_home () {
   cp -r "$HOME"/.emacs.d/* config/emacs.d/
 
   # Custom Ctags
+  info "Copying cusom ctags..."
+
   mkdir -p config/ctags.d
   cp -r "$HOME"/.ctags.d/* config/ctags.d/
 

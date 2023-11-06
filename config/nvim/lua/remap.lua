@@ -146,20 +146,20 @@ map("n", "<leader>/", ":Telescope current_buffer_fuzzy_find<cr>", topts)
 map("v", "<leader>/", function()
   local text = vim.getVisualSelection()
   tb.current_buffer_fuzzy_find({ default_text = text })
-end, opts)
+end, topts)
 
 map("n", "<leader>a", ":Telescope live_grep<cr>", topts)
 map("n", "<leader>A", ":Telescope live_grep search_dirs={vim.fn.expand('%:h')}<cr>", topts)
 map("v", "<leader>a", function()
   local text = vim.getVisualSelection()
   tb.live_grep({ default_text = text })
-end, opts)
+end, topts)
 
 map("n", "<leader>sf", ":Telescope find_files<CR>", { desc = "[S]earch [F]iles" })
 map(
   "n",
   "<leader><leader>sf",
-  ":Telescope find_files search_dirs={'.',vim.fn.expand('%:h')} no_ignore=true hidden=true<CR>",
+  ":Telescope find_files no_ignore=true hidden=true search_dirs={vim.fn.expand('%:h')}",
   { desc = "Custom [S]earch [F]iles" }
 )
 map("n", "<leader>td", ":Telescope lsp_document_symbols<CR>", { desc = "[Search] [D]ocument" })
