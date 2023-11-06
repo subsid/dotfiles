@@ -322,9 +322,6 @@ copy_config_files_from_home () {
   mkdir -p config/ctags.d
   cp -r "$HOME"/.ctags.d/* config/ctags.d/
 
-  # Pulseaudio
-  mkdir -p config/pulse
-  cp -r "$HOME"/.config/pulse/client.conf config/pulse/client.conf
 }
 
 copy_dot_files_to_home () {
@@ -412,9 +409,7 @@ install_apt_packages () {
 
 setup_sound () {
   info "Setup sound"
-  # Ofono is requred with pulseaudio for bluetooth HSP/HFP sink.
-  # Else only A2DP sink is available.
-  local sound_packages=(pulseaudio bluez* blueman ofono)
+  local sound_packages=(bluez* blueman)
   if ask_yn "${sound_packages[*]} Install packages?"; then
     sudo apt install "${sound_packages[@]}"
     info "Done Installing sound packages. Press Enter to continue..."
@@ -422,8 +417,10 @@ setup_sound () {
   else
     info "Skipping sound packages..."
   fi
-  # For bluetooth module to work, we need to load pulseaudio after X11 starts.
-  # https://bbs.archlinux.org/viewtopic.php?id=240405
+  info "Setup sound and bluetooth headset using pipewire and wireplumber
+   https://gist.github.com/the-spyke/2de98b22ff4f978ebf0650c90e82027e?permalink_comment_id=3976215
+   You may need add-apt-repository ppa:pipewire-debian/pipewire-upstream"
+  read -r
 }
 
 i3_brightness_controls () {
