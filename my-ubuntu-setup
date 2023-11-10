@@ -136,6 +136,22 @@ install_other_packages () {
       Done! Press enter to continue..."
     read -r
   fi
+
+  if ask_yn "Install Calibre?"; then
+    info "sudo -v && wget -nv -O- https://download.calibre-ebook.com/linux-installer.sh | sudo sh /dev/stdin"
+  fi
+}
+
+install_flatpak_packages () {
+  local flathub_packages=("io.gitlab.news_flash.NewsFlash")
+  info "Setup flathub"
+  sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+
+  if ask_yn "${flathub_packages[*]} Install packages?"; then
+    flatpak install flathub "${flathub_packages[@]}"
+  else
+    info "Skipping flatpak packages..."
+  fi
 }
 
 run_setup_scripts () {
@@ -583,6 +599,7 @@ fns["--install-apt-packages"]=install_apt_packages
 fns["--install-snap-packages"]=install_snap_packages
 fns["--install-cargo-packages"]=install_cargo_packages
 fns["--install-other-packages"]=install_other_packages
+fns["--install-flatpak-packages"]=install_flatpak_packages
 
 # Higher-level commands
 fns["--manual-setup-packages"]=manual_setup_packages
