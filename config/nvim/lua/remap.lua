@@ -69,7 +69,7 @@ map("x", "<leader>p", '"_dP')
 -- map('n', '<leader>t', '<CMD>GFiles<CR>')
 -- map('n', '<leader>b', '<CMD>Buffers<CR>')
 
-function strip_trailing_whitespaces()
+function StripTrailingWhitespaces()
   local view = vim.fn.winsaveview()
   vim.cmd([[keepp %s/\s\+$//e]])
   vim.cmd("update")
@@ -77,7 +77,7 @@ function strip_trailing_whitespaces()
 end
 
 -- Strip trailing whitespaces
-map("n", "<leader><space>", ":lua strip_trailing_whitespaces()<CR>")
+map("n", "<leader><space>", ":lua StripTrailingWhitespaces()<CR>")
 
 -- UndotreeToggle
 -- TODO Convert to Lua
