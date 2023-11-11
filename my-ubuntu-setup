@@ -53,7 +53,7 @@ setup_php_composer () {
 }
 
 setup_php () {
-  local php_packages=(php-common libapache2-mod-php php-cli)
+  local php_packages=(php-common libapache2-mod-php php-cli php-xml php-curl)
   if ask_yn "${php_packages[*]} Install packages?"; then
     sudo apt install "${php_packages[@]}"
   else
@@ -476,6 +476,9 @@ setup_rustup () {
 
 manual_setup_packages () {
   if ask_yn "Install manual packages?"; then
+    info "Install Docker https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository"
+    info "Enter to continue..."
+    read -r
     info "Install powertop https://wiki.archlinux.org/title/powertop"
     info "Enter to continue..."
     read -r
