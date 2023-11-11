@@ -27,5 +27,8 @@ PATH="$PATH:$HOME/.local/share/coursier/bin"
 # <<< coursier install directory <<<
 #
 PATH=$JAVA_HOME/bin:$PATH
+
+# Add composer bin
+PATH="$HOME/.config/composer/vendor/bin:$PATH"
 export PATH
 
