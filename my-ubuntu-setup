@@ -403,8 +403,9 @@ install_snap_packages () {
 }
 
 install_apt_packages () {
-# import and trust gpg key
-  if ask_yn "Manually update apt packages..."; then
+  # import and trust gpg key
+  if ask_yn "Update apt packages?"; then
+    sudo apt update
     info "Press enter to continue..."
     read -r
   fi
