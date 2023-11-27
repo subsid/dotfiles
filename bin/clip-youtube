@@ -1,0 +1,8 @@
+#!/bin/env bash
+
+# Arguments: URL, Time stamp -5 seconds, length of clip, video file name. You can say "5:30" for 5 minutes and 30 seconds.
+# From https://unix.stackexchange.com/questions/230481/how-to-download-portion-of-video-with-youtube-dl-command
+
+readarray -t urls <<< "$(yt-dlp --youtube-skip-dash-manifest -g "$1")"
+ffmpeg -ss $2 -i "${urls[0]}" -ss $2 -i "${urls[1]}" -ss 5 -map 0:v -map 1:a -c:v libx264 -c:a aac -t $3 $4
+
