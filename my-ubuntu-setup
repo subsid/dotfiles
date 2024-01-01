@@ -167,6 +167,7 @@ run_setup_scripts () {
   setup_nvim
   setup_rofi
   setup_emacs
+  setup_ledger
 }
 
 run_setup () {
@@ -402,6 +403,25 @@ install_snap_packages () {
   read -r
 }
 
+setup_ledger () {
+  info "Install ledger by cloning https://github.com/ledger/ledger"
+  info "Commands:
+    # Create conda env for ledger
+    $ conda create -n ledger_dev python=3.10 # Boost has build issues with python 3.11\
+    $ conda install pip
+    $ echo \"conda activate ledger_dev\" > .env
+    # Build and install using acprep
+    $ ./acprep gitclean --prefix=$HOME/.local --python
+    $ ./acprep dependencies
+    $ PREFIX=/home/ssubramaniyam/.local
+    $ ./acprep update --prefix=$HOME/.local --python
+    $ ./acprep --prefix=\$PREFIX --debug --python make
+    $ ./acprep --prefix=\$PREFIX --debug --python make install
+  "
+  info "Enter to continue..."
+  read -r
+}
+
 install_apt_packages () {
   # import and trust gpg key
   if ask_yn "Update apt packages?"; then
@@ -410,17 +430,16 @@ install_apt_packages () {
     read -r
   fi
 
-  local apt_packages=(curl xdotool feh scrot gimp pavucontrol ledger autoconf dnsmasq flatpak pass gpg cmake g++ pkg-config brightnessctl lua5.1 gnome-shell-pomodoro py3status ffmpeg imagemagick-6.q16 hyperfine powertop libpango1.0-0 xournal arandr nemo usb-creator-gtk net-tools screen qalc)
-  local apt_dev_packages=(libglib2.0-dev libcairo2-dev rofi-dev libfontconfig1-dev libtool m4 automake)
+  local apt_packages=(curl xdotool feh scrot gimp pavucontrol autoconf dnsmasq flatpak pass gpg cmake g++ pkg-config brightnessctl lua5.1 gnome-shell-pomodoro py3status ffmpeg imagemagick-6.q16 hyperfine powertop libpango1.0-0 xournal arandr nemo usb-creator-gtk net-tools screen qalc)
+  local apt_dev_packages=(libglib2.0-dev libcairo2-dev rofi-dev libfontconfig1-dev libtool m4 automake libboost-all-dev libgmp-dev libmpfr-dev libboost-python-dev python3-dev)
   if ask_yn "${apt_packages[*]} Install packages?"; then
     sudo apt install "${apt_packages[@]}"
     info "Done Installing apt packages. Press Enter to continue..."
     read -r
-    if ask_yn "${apt_dev_packages[*]} Install dev packages?"; then
-      sudo apt install "${apt_dev_packages[@]}"
-      info "Done Installing apt-dev packages. Press Enter to continue..."
-      read -r
-    fi
+  elif ask_yn "${apt_dev_packages[*]} Install dev packages?"; then
+    sudo apt install "${apt_dev_packages[@]}"
+    info "Done Installing apt-dev packages. Press Enter to continue..."
+    read -r
   else
     info "Skipping apt packages..."
   fi
@@ -597,6 +616,7 @@ fns["--setup-gitsecrets"]=setup_gitsecrets
 fns["--setup-greenclip"]=setup_greenclip
 fns["--setup-fzf"]=setup_fzf
 fns["--setup-rustup"]=setup_rustup
+fns["--setup-ledger"]=setup_ledger
 
 # Install stuff
 fns["--install-apt-packages"]=install_apt_packages
