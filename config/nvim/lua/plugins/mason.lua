@@ -22,6 +22,7 @@ M.config = function()
       "bashls",
       "jdtls",
       "phpactor",
+      "zls",
       -- linters
       "mypy",
       "shellcheck",

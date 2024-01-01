@@ -594,7 +594,7 @@ usage () {
   for i in "${!fns[@]}"
   do
     info "[${i}]"
-  done
+  done | sort
 }
 
 declare -A fns

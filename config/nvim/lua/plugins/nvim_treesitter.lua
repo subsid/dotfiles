@@ -27,6 +27,7 @@ M = {
         "starlark",
         "vim",
         "vimdoc",
+        "zig",
       },
       sync_install = false,
       highlight = { enable = true },

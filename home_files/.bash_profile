@@ -73,7 +73,6 @@ source "$HOME/.nvm/versions/node/v20.7.0/lib/node_modules/@hyperupcall/autoenv/a
 
 # Created by `pipx` on 2021-08-18 17:09:38
 export PATH="$PATH:/home/sid/.local/bin"
-export PATH=$HOME/development/sciences/tools:$PATH
 source "$HOME/.nvm/versions/node/v20.7.0/lib/node_modules/@hyperupcall/autoenv/activate.sh"
 
 ## History settings
@@ -88,8 +87,6 @@ export HISTCONTROL=ignorespace:ignoredups
 export HISTIGNORE="history:ls:pwd:clear:vi"
 
 . "$HOME/.cargo/env"
-export PATH=/home/ssubramaniyam/development/Search/tools:$PATH
-export PATH=/home/ssubramaniyam/development/sciences/tools:$PATH
 
 check-ssh-agent() {
   # ssh-add -l returns 2 if a connection cannot be opened with the running agent.

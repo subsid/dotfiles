@@ -28,6 +28,7 @@ M.config = function()
     },
   })
 
+  lspconfig.zls.setup({enable_snippets = true})
   lspconfig.bashls.setup({})
   lspconfig.lua_ls.setup({
     settings = {
