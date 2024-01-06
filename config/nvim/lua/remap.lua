@@ -2,7 +2,6 @@ local function map(m, k, v, opts)
   vim.keymap.set(m, k, v, opts)
 end
 
-
 map("n", "<leader><leader>f", "<Plug>(easymotion-overwin-f)")
 
 -- Telescope
