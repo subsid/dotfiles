@@ -8,9 +8,9 @@ M = {
   build = "make install_jsregexp",
   config = function()
     local ls = require("luasnip")
+    local types = require("luasnip.util.types")
     require("luasnip.loaders.from_vscode").lazy_load()
 
-    ls.filetype_extend("php", {"html"})
 
     ls.config.set_config {
       -- This tells LuaSnip to keep aroudn the last snippet.

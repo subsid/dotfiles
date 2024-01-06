@@ -149,7 +149,7 @@ map("v", "<leader>/", function()
 end, topts)
 
 map("n", "<leader>a", ":Telescope live_grep<cr>", topts)
-map("n", "<leader>A", ":Telescope live_grep search_dirs={vim.fn.expand('%:h')}<cr>", topts)
+map("n", "<leader>A", ":Telescope live_grep search_dirs={vim.fn.expand('%:h')}", topts)
 map("v", "<leader>a", function()
   local text = vim.getVisualSelection()
   tb.live_grep({ default_text = text })
