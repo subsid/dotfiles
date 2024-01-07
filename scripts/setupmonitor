@@ -8,6 +8,19 @@ M0="eDP-1"
 M1="DP-1"
 M2="DP-2"
 M3="DP-3"
+HOME_MACHINE="ssubramaniyam-ThinkPad-X1-Carbon-7th"
+HOST_NAME=$(hostname)
+
+if [[ $HOST_NAME == "${HOME_MACHINE}" ]]; then
+  if [[ $LIDCLOSED == "close" ]]; then
+    xrandr --output $M0 --off --output $M1 --off --output $M2 --off --output $M3 --primary --mode 1920x1080 --pos 0x0 --rotate normal
+  else
+    # Monitor on right.
+    xrandr --output eDP-1 --mode 1920x1080 --pos 0x0 --rotate normal --output DP-1 --primary --mode 1920x1080 --pos 1920x0 --rotate normal --output HDMI-1 --off --output DP-2 --off
+  fi
+  bg_scale
+  exit 0;
+fi
 
 # 2 active monitors at office
 # Use only 1
