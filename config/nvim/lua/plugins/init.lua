@@ -47,6 +47,9 @@ return {
   {
     'tpope/vim-fugitive',
   },
+  {
+    'tpope/vim-rhubarb',
+  },
   -- Colorschemes
   {
     'rafi/awesome-vim-colorschemes',

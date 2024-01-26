@@ -28,9 +28,15 @@ M.config = function()
     },
   })
 
-  lspconfig.zls.setup({enable_snippets = true})
-  lspconfig.bashls.setup({})
+  lspconfig.zls.setup({
+    capabilities = capabilities,
+    enable_snippets = true
+  })
+  lspconfig.bashls.setup({
+    capabilities = capabilities,
+  })
   lspconfig.lua_ls.setup({
+    capabilities = capabilities,
     settings = {
       Lua = {
         diagnostics = {
@@ -40,18 +46,22 @@ M.config = function()
       },
     },
   })
-  lspconfig.jdtls.setup({})
+  lspconfig.jdtls.setup({
+    capabilities = capabilities,
+  })
   lspconfig.phpactor.setup({
+    capabilities = capabilities,
     init_options = {
-        ["language_server_phpstan.enabled"] = true,
-        ["language_server_psalm.enabled"] = true,
-    }
+      ["language_server_phpstan.enabled"] = true,
+      ["language_server_psalm.enabled"] = true,
+    },
   })
 
   vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)
   vim.keymap.set("n", "[g", vim.diagnostic.goto_prev)
   vim.keymap.set("n", "]g", vim.diagnostic.goto_next)
   vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist)
+  vim.keymap.set("n", "<leader>tq", "<cmd>Telescope diagnostics<cr>")
 
   -- Use LspAttach autocommand to only map the following keys
   -- after the language server attaches to the current buffer

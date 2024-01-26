@@ -43,30 +43,8 @@ map("n", "<leader><leader>m", ":messages<CR>")
 map("n", "<leader>h", ":set hlsearch<CR>")
 map("n", "<leader>n", ":set nohlsearch<CR>")
 
--- Ripgrep everything
--- map('n', '<leader>a', ':Rg<space>')
-
--- vim.cmd([[
--- command! -bang -nargs=* PRg
---   \ call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, fzf#vim#with_preview({'dir': system('git -C '.expand('%:p:h').' rev-parse --show-toplevel 2> /dev/null')[:-2], }), <bang>0)
-
--- ]])
-
--- map('n', '<leader>a', ':PRg<space>')
--- map('x', '<leader>a', 'y<Esc>:PRg<space><C-R>')
-
 -- blackhole and paste
 map("x", "<leader>p", '"_dP')
--- vim.cmd([[
---   vnoremap <leader>a y<Esc>:PRg<space><C-R>"
--- ]])
-
--- fzf
--- Show command history
--- map('n', '<leader><leader>h', ':History:<CR>')
--- map('n', '<leader><leader>t', ':Files<CR>')
--- map('n', '<leader>t', '<CMD>GFiles<CR>')
--- map('n', '<leader>b', '<CMD>Buffers<CR>')
 
 function StripTrailingWhitespaces()
   local view = vim.fn.winsaveview()
