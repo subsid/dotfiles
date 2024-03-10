@@ -1,7 +1,6 @@
 # Load the shell dotfiles, and then some:
 # * ~/.path can be used to extend `$PATH`.
-# * ~/.extra can be used for other settings you don’t want to commit.
-for file in ~/.{exports,path,bash_prompt,aliases,functions,extra}; do
+for file in ~/.{exports,path,bash_prompt,aliases,functions}; do
   [ -r "$file" ] && source "$file"
 done
 unset file
@@ -102,3 +101,6 @@ check-ssh-agent || eval "$(ssh-agent -s -a ~/.tmp/ssh-agent.sock)" > /dev/null
 # if ! pgrep -x pulseaudio > /dev/null; then
 #   pulseaudio --start
 # fi
+#
+# * ~/.extra can be used for other settings you don’t want to commit.
+[ -r "$HOME/.extra" ] && source "$HOME/.extra"

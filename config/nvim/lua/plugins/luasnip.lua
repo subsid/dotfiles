@@ -10,7 +10,6 @@ M = {
     local ls = require("luasnip")
     require("luasnip.loaders.from_vscode").lazy_load()
 
-    ls.filetype_extend("php", {"html"})
 
     ls.config.set_config {
       -- This tells LuaSnip to keep aroudn the last snippet.

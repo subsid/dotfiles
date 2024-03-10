@@ -16,6 +16,13 @@ o.updatetime = 200
 o.scrolloff = 8
 -- o.autochdir = true
 
+-- add cfilter package for quickfix
+vim.cmd([[
+  packadd cfilter
+]])
+
+
+
 -- show matching brackets.
 o.showmatch = true
 

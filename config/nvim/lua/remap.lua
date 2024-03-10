@@ -119,8 +119,8 @@ end
 
 local topts = { noremap = true, silent = true }
 
-map("n", "<leader>/", ":Telescope current_buffer_fuzzy_find<cr>", topts)
-map("v", "<leader>/", function()
+map("n", "<leader>ts", ":Telescope current_buffer_fuzzy_find<cr>", topts)
+map("v", "<leader>ts", function()
   local text = vim.getVisualSelection()
   tb.current_buffer_fuzzy_find({ default_text = text })
 end, topts)
@@ -141,6 +141,7 @@ map(
 )
 map("n", "<leader>td", ":Telescope lsp_document_symbols<CR>", { desc = "[Search] [D]ocument" })
 map("n", "<leader>tw", ":Telescope lsp_workspace_symbols<CR>", { desc = "[W]orkspace [S]ymbols" })
+map("n", "<leader>tr", ":Telescope lsp_references<CR>", { desc = "LSP [R]efereces" })
 map("n", "<leader>b", tb.buffers, {})
 map("n", "<leader>?", "<Cmd>Telescope frecency<CR>")
 map("n", "<leader>h", tb.command_history, {})
