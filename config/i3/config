@@ -251,10 +251,8 @@ bindsym XF86AudioPrev exec playerctl previous
 # Pomodoro timer
 # Start/pause
 bindsym $alt+F9 exec "py3-cmd click --button 1 pomodoro"
-# Reset
-bindsym $alt+F10 exec "py3-cmd click --button 2 pomodoro"
 # Skip
-bindsym $alt+F11 exec "py3-cmd click --button 3 pomodoro"
+bindsym $alt+F10 exec "py3-cmd click --button 3 pomodoro"
 
 ## Workspace settings
 

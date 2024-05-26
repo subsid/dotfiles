@@ -20,6 +20,7 @@ M = {
         "javascript",
         "lua",
         "php",
+        "phpdoc",
         "python",
         "query",
         "rust",

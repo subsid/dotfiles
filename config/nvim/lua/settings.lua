@@ -61,7 +61,7 @@ o.undodir = os.getenv("HOME") .. '/.undodir'
 o.undofile = true
 
 -- set an 80 column border for good coding style
-o.cc=80
+o.cc="80"
 
 -- insert mode tab and backspace use 2 spaces
 o.softtabstop=2
