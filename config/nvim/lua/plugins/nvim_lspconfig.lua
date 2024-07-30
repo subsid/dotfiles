@@ -28,6 +28,13 @@ M.config = function()
     },
   })
 
+  lspconfig.rust_analyzer.setup({
+    capabilities = capabilities,
+    settings = {
+      ["rust-analyzer"] = {},
+    },
+  })
+
   lspconfig.zls.setup({
     capabilities = capabilities,
     enable_snippets = true

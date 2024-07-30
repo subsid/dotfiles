@@ -31,9 +31,9 @@ if [[ "$MONITORS" == *"$M1"* && "$MONITORS" == *"$M2"* ]]; then
     # One active
     # xrandr --output $M1 --primary --mode 1920x1080 --pos 0x0 --rotate normal --output $M0 --mode 1920x1080 --pos 1920x0 --rotate normal --output $M2 --off --output $M3 --off
     # Both active
-    # xrandr --output $M0 --mode 1920x1080  --primary --pos 0x1080 --rotate normal --output $M2 --mode 1920x1080 --pos 0x0 --rotate normal --output $M1 --mode 1920x1080 --pos 1920x0 --rotate normal --output $M3 --off
+    xrandr --output $M0 --mode 1920x1080  --primary --pos 0x1080 --rotate normal --output $M2 --mode 1920x1080 --pos 0x0 --rotate normal --output $M1 --mode 1920x1080 --pos 1920x0 --rotate normal --output $M3 --off
     # Flip monitors
-    xrandr --output $M0 --mode 1920x1080  --primary --pos 0x1080 --rotate normal --output $M1 --mode 1920x1080 --pos 0x0 --rotate normal --output $M2 --mode 1920x1080 --pos 1920x0 --rotate normal --output $M3 --off
+    # xrandr --output $M0 --mode 1920x1080  --primary --pos 0x1080 --rotate normal --output $M1 --mode 1920x1080 --pos 0x0 --rotate normal --output $M2 --mode 1920x1080 --pos 1920x0 --rotate normal --output $M3 --off
     exit 0;
   fi
 elif [[ "$MONITORS" == "eDP-1" ]]; then
