@@ -22,7 +22,7 @@ vim.cmd([[
 ]])
 
 -- Conceal level for obsidian
-vim.opt.conceallevel = 1
+o.conceallevel = 1
 
 -- show matching brackets.
 o.showmatch = true
