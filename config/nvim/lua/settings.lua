@@ -21,7 +21,8 @@ vim.cmd([[
   packadd cfilter
 ]])
 
-
+-- Conceal level for obsidian
+vim.opt.conceallevel = 1
 
 -- show matching brackets.
 o.showmatch = true
