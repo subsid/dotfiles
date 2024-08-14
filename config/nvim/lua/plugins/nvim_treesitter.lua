@@ -29,6 +29,8 @@ M = {
         "vim",
         "vimdoc",
         "zig",
+        "markdown",
+        "markdown_inline",
       },
       sync_install = false,
       highlight = { enable = true },

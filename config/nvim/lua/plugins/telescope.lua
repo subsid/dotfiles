@@ -14,13 +14,8 @@ M = {
       "nvim-telescope/telescope-fzf-native.nvim",
       build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
     },
-    {
-      "jonarrien/telescope-cmdline.nvim",
-    },
   },
-  keys = {
-    { ":", "<cmd>Telescope cmdline<cr>", desc = "Cmdline" },
-  },
+  keys = { },
   config = function()
     local actions = require("telescope.actions")
 
@@ -72,23 +67,8 @@ M = {
             ["workspace"] = "~/workspace",
           },
         },
-        cmdline = {
-          picker = {
-            layout_config = {
-              width = 120,
-              height = 25,
-            },
-          },
-          mappings = {
-            complete = "<Tab>",
-            run_selection = "<C-CR>",
-            run_input = "<CR>",
-          },
-        },
       },
     })
-
-    require("telescope").load_extension("cmdline")
   end,
 }
 

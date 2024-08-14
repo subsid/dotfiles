@@ -27,9 +27,9 @@ function git_diff() {
 }
 
 ## Name terminal in iterm
-# function title {
-#   echo -ne "\033]0;"$*"\007"
-# }
+function title {
+  echo -ne "\033]0;"$*"\007"
+}
 
 # Nix setup
 if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then
@@ -67,7 +67,7 @@ unset __conda_setup
 source "$HOME/.nvm/versions/node/v20.7.0/lib/node_modules/@hyperupcall/autoenv/activate.sh"
 
 # Title
-# title "Local"
+title "Local"
 
 
 # Created by `pipx` on 2021-08-18 17:09:38

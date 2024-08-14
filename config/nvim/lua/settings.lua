@@ -22,7 +22,7 @@ vim.cmd([[
 ]])
 
 -- Conceal level for obsidian
-o.conceallevel = 1
+o.conceallevel = 2
 
 -- show matching brackets.
 o.showmatch = true
@@ -38,6 +38,7 @@ o.autoindent = true
 -- PHP specific shiftwidth
 vim.cmd([[
   autocmd FileType php setlocal shiftwidth=4 tabstop=4 softtabstop=4
+  autocmd FileType markdown setlocal shiftwidth=2 tabstop=2 expandtab
 ]])
 
 -- add line numbers
