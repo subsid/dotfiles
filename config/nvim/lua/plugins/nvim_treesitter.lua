@@ -16,6 +16,7 @@ M = {
         "css",
         "dockerfile",
         "html",
+        "ledger",
         "java",
         "javascript",
         "lua",

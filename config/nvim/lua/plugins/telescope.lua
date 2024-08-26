@@ -4,6 +4,7 @@ M = {
   dependencies = {
     {
       "nvim-telescope/telescope-frecency.nvim",
+      branch = "master",
       config = function()
         require("telescope").load_extension("frecency")
       end,
@@ -15,7 +16,6 @@ M = {
       build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
     },
   },
-  keys = { },
   config = function()
     local actions = require("telescope.actions")
 
