@@ -6,6 +6,8 @@ local o = vim.o
 g.python_highlight_all = 1
 g.python3_host_prog='/home/ssubramaniyam/miniconda3/bin/python'
 
+g.fugitive_github_domains = {'github.etsycorp.com'}
+
 -- Nerdtree ignore
 g.NERDTreeIgnore = {'.pyc$'}
 g.NERDSpaceDelims=1
@@ -21,8 +23,8 @@ vim.cmd([[
   packadd cfilter
 ]])
 
--- Conceal level for obsidian
-o.conceallevel = 2
+-- Conceal level for markdown docs
+o.conceallevel = 0
 
 -- show matching brackets.
 o.showmatch = true
@@ -38,7 +40,7 @@ o.autoindent = true
 -- PHP specific shiftwidth
 vim.cmd([[
   autocmd FileType php setlocal shiftwidth=4 tabstop=4 softtabstop=4
-  autocmd FileType markdown setlocal shiftwidth=2 tabstop=2 expandtab
+  autocmd FileType markdown setlocal shiftwidth=4 tabstop=4 expandtab
 ]])
 
 -- add line numbers

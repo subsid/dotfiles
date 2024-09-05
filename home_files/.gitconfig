@@ -69,5 +69,6 @@
     patterns = .+API_KEY\\s*=\\s*.+
     patterns = \\s*token\\s*=\\s*.+
     patterns = signingkey\\s*=\\s*.+
+
 [commit]
     gpgsign = true
