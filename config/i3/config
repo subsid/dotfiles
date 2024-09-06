@@ -31,6 +31,19 @@ bindsym $super+Return exec $home/.cargo/bin/alacritty
 # Wifi
 exec --no-startup-id nm-applet
 
+# Flameshot
+exec --no-startup-id flatpak run org.flameshot.Flameshot
+
+# Full screenshot
+bindsym Print --release exec flatpak run org.flameshot.Flameshot full -c -p ~/screenshot
+
+# Interactive screenshot
+bindsym $super+Print --release exec flatpak run org.flameshot.Flameshot gui -p ~/screenshot
+
+# bindsym Print --release exec scrot -u -e 'mv $f ~/screenshot/'
+# bindsym $super+Print --release exec scrot -f -s -e 'mv $f ~/screenshot/'
+
+
 # kill focused window
 bindsym $super+Shift+q kill
 
@@ -49,8 +62,8 @@ bindsym $super+Shift+d exec i3-dmenu-desktop --dmenu="dmenu -i -fn 'Noto Sans:si
 # bindsym Print --release exec scrot -e 'mv $f ~/screenshot/ && gimp ~/screenshot/$f'
 # bindsym $super+Print --release exec scrot -s -e 'mv $f ~/screenshot/ && gimp ~/screenshot/$f'
 # Just screenshot
-bindsym Print --release exec scrot -u -e 'mv $f ~/screenshot/'
-bindsym $super+Print --release exec scrot -f -s -e 'mv $f ~/screenshot/'
+# bindsym Print --release exec scrot -u -e 'mv $f ~/screenshot/'
+# bindsym $super+Print --release exec scrot -f -s -e 'mv $f ~/screenshot/'
 
 # bindsym $super+Shift+d exec dmenu_run
 # Rofi launcher

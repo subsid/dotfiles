@@ -6,6 +6,7 @@ local o = vim.o
 g.python_highlight_all = 1
 g.python3_host_prog='/home/ssubramaniyam/miniconda3/bin/python'
 
+-- g.fugitive_github_domains = ['github.etsycorp.com']
 g.fugitive_github_domains = {'github.etsycorp.com'}
 
 -- Nerdtree ignore
