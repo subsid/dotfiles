@@ -58,6 +58,10 @@ return {
     "github/copilot.vim",
     branch = 'release',
   },
+  -- SudaRead and SudaWrite
+  {
+    'lambdalisue/suda.vim',
+  },
 }
 
 
