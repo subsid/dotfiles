@@ -83,16 +83,16 @@ setup_rofi () {
     info "Skipping rofi packages..."
   fi
 
-  if ask_yn "Copy configs?"; then
-    info "cp rofi config to home"
-    local rofi_dir="$HOME/.config/rofi"
-    mkdir -p "$rofi_dir"
-    cp config/rofi/config.rasi "$rofi_dir"/config.rasi
-    cp config/rofi/file-browser "$rofi_dir"/file-browser
+  # if ask_yn "Copy configs?"; then
+  #   info "cp rofi config to home"
+  #   local rofi_dir="$HOME/.config/rofi"
+  #   mkdir -p "$rofi_dir"
+  #   cp config/rofi/config.rasi "$rofi_dir"/config.rasi
+  #   cp config/rofi/file-browser "$rofi_dir"/file-browser
 
-  else
-    info "Skipping config..."
-  fi
+  # else
+  #   info "Skipping config..."
+  # fi
 }
 
 setup_gitsecrets () {
@@ -197,7 +197,6 @@ run_setup () {
   # Setup tools
   run_setup_scripts
 
-  copy_dot_files_to_home
   info "Woooho! Successfully completed setup. Restart your terminal and you should be good to go!"
 }
 
@@ -211,14 +210,14 @@ setup_emacs () {
     info "Skipping emacs package download"
   fi
 
-  if ask_yn "Copy emacs config?"; then
-    local emacs_dir="$HOME/.emacs.d"
-    info "copying emacs config to home"
-    mkdir -p "$emacs_dir"
-    cp -r config/emacs.d/* "$emacs_dir"/
-  else
-    info "Skipping emacs package download"
-  fi
+  # if ask_yn "Copy emacs config?"; then
+  #   local emacs_dir="$HOME/.emacs.d"
+  #   info "copying emacs config to home"
+  #   mkdir -p "$emacs_dir"
+  #   cp -r config/emacs.d/* "$emacs_dir"/
+  # else
+  #   info "Skipping emacs package download"
+  # fi
 }
 
 setup_ctags () {
@@ -234,9 +233,9 @@ setup_ctags () {
   "
   read -r
 
-  info "Copying ctags.d file to $HOME..."
-  mkdir -p "$HOME"/.ctags.d
-  cp -r config/ctags.d/* "$HOME"/.ctags.d/
+  # info "Copying ctags.d file to $HOME..."
+  # mkdir -p "$HOME"/.ctags.d
+  # cp -r config/ctags.d/* "$HOME"/.ctags.d/
 
   info "Successfully setup ctags. Press enter to continue..."
   read -r
@@ -253,14 +252,14 @@ setup_nvim () {
     info "Skipping neovim package download"
   fi
 
-  local nvim_dir="$HOME/.config/nvim"
-  local bin_dir="$HOME/bin"
-  mkdir -p "$nvim_dir"
-  info "copying nvim config to home"
-  cp -r config/nvim/* "$nvim_dir"/
-  info "copying git_diff_wrapper to $bin_dir"
-  mkdir -p "$bin_dir"
-  cp bin/git_diff_wrapper "$bin_dir"/git_diff_wrapper
+  # local nvim_dir="$HOME/.config/nvim"
+  # local bin_dir="$HOME/bin"
+  # mkdir -p "$nvim_dir"
+  # info "copying nvim config to home"
+  # cp -r config/nvim/* "$nvim_dir"/
+  # info "copying git_diff_wrapper to $bin_dir"
+  # mkdir -p "$bin_dir"
+  # cp bin/git_diff_wrapper "$bin_dir"/git_diff_wrapper
 }
 
 setup_i3 () {
@@ -276,14 +275,14 @@ setup_i3 () {
       info "Skipping py3status package download"
     fi
 
-    info "Copying i3 config files to home"
-    local i3_dir="$HOME/.config/i3"
-    mkdir -p "$i3_dir"
-    cp config/i3/config "$i3_dir"/config
+    # info "Copying i3 config files to home"
+    # local i3_dir="$HOME/.config/i3"
+    # mkdir -p "$i3_dir"
+    # cp config/i3/config "$i3_dir"/config
 
-    info "Copying py3status config files to home"
-    mkdir -p "$HOME"/.config/py3status
-    cp config/py3status/config "$HOME"/.config/py3status/config
+    # info "Copying py3status config files to home"
+    # mkdir -p "$HOME"/.config/py3status
+    # cp config/py3status/config "$HOME"/.config/py3status/config
 
     if ask_yn "Setup brightness controls?"; then
       i3_brightness_controls
@@ -295,75 +294,6 @@ setup_i3 () {
 
     info "Successfully setup i3. Press enter to continue..."
     read -r
-}
-
-copy_config_files_from_home () {
-  for file in $HOME/.{bashrc,gitconfig,git-completion.bash,aliases,bash_profile,bash_prompt,path,exports,screenrc,functions}; do
-    info "Copying $file..."
-    cp "$file" "home_files/"
-  done
-
-  # Nvim specific files
-  info "Copying neovim files..."
-  mkdir -p config/nvim
-  mkdir -p config/nvim/lua
-  mkdir -p config/nvim/ftdetect
-  cp "$HOME"/.config/nvim/init.lua config/nvim/init.lua
-  cp -r "$HOME"/.config/nvim/lua/* config/nvim/lua
-  cp -r "$HOME"/.config/nvim/ftdetect/* config/nvim/ftdetect
-
-  # i3 config
-  info "Copying i3 files..."
-  mkdir -p config/i3
-  mkdir -p config/py3status
-  cp "$HOME"/.config/i3/config config/i3/config
-  cp "$HOME"/.config/py3status/config config/py3status/config
-
-  # Clipboard
-  info "Copying greenclip files..."
-  cp "$HOME"/.config/greenclip.toml config/greenclip.toml
-
-  # Rofi
-  info "Copying rofi files..."
-  mkdir -p config/rofi
-  cp -r "$HOME"/.config/rofi/* config/rofi
-
-  # Alacritty
-  info "Copying alacritty files..."
-
-  mkdir -p config/alacritty
-  cp -r "$HOME"/.config/alacritty/alacritty.yml config/alacritty/alacritty.yml
-
-  # Emacs
-  info "Copying emacs files..."
-
-  cp -r "$HOME"/.emacs.d/* config/emacs.d/
-
-  # Custom Ctags
-  info "Copying cusom ctags..."
-
-  mkdir -p config/ctags.d
-  cp -r "$HOME"/.ctags.d/* config/ctags.d/
-
-}
-
-copy_dot_files_to_home () {
-  local common_dotfiles=(.bashrc .git-completion.bash .aliases .bash_profile .bash_prompt .path .screenrc .functions)
-  local other_dotfiles=(.gitconfig .exports)
-  if ask_yn "Copy dot files to home?"; then
-    info "Copying dot files to home..."
-    for file in "${common_dotfiles[@]}"; do
-      cp "home_files/$file" "${HOME}/$file"
-    done
-
-    if ask_yn "Copy ${other_dotfiles[*]} as well. Note, these could have keys etc defined. Make sure to copy them over..."; then
-      for file in "${other_dotfiles[@]}"; do
-        cp "home_files/$file" "${HOME}/$file"
-      done
-    fi
-  else
-    info "Skipping copying dot files to home..."
-  fi
 }
 
 install_cargo_packages () {
@@ -585,8 +515,8 @@ cmd_exists () {
 
 setup_alacritty () {
   info "Copying config/alacritty/alacritty.yml to ~/.config/alacritty/alacritty.yml"
-  mkdir -p "$HOME"/.config/alacritty
-  cp config/alacritty/alacritty.yml "$HOME"/.config/alacritty/alacritty.yml
+  # mkdir -p "$HOME"/.config/alacritty
+  # cp config/alacritty/alacritty.yml "$HOME"/.config/alacritty/alacritty.yml
 }
 
 usage () {
@@ -631,8 +561,6 @@ fns["--install-flatpak-packages"]=install_flatpak_packages
 
 # Higher-level commands
 fns["--manual-setup-packages"]=manual_setup_packages
-fns["--copy-dot-files-to-home"]=copy_dot_files_to_home
-fns["--copy-config-from-home"]=copy_config_files_from_home
 
 if [ $# -gt 1 ]; then
   err "Too many arguments"
