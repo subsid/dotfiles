@@ -1,4 +1,6 @@
 return {
+  -- Catpuccin colors
+  { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
   -- VSCode colors
   {
     'Mofiqul/vscode.nvim',

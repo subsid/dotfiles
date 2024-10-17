@@ -129,16 +129,8 @@ vim.cmd([[
 --   augroup END
 -- ]])
 
--- vscode colorscheme
-vim.cmd([[
-  if (&t_Co == 256 || has('gui_running'))
-    if ($TERM_PROGRAM == 'iTerm.app')
-      colorscheme vscode
-    else
-      colorscheme  vscode
-    endif
-  endif
-]])
+-- catppuccin colorscheme
+vim.cmd.colorscheme "vscode"
 
 -- Livedown
 -- should markdown preview get shown automatically upon opening markdown buffer
