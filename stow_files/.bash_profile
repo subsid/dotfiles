@@ -66,9 +66,8 @@ unset __conda_setup
 # autoenv initialize
 source "$HOME/.nvm/versions/node/v20.7.0/lib/node_modules/@hyperupcall/autoenv/activate.sh"
 
-# Title
-title "Local"
-
+# Display machine name in terminal
+title "$(hostname)"
 
 # Created by `pipx` on 2021-08-18 17:09:38
 export PATH="$PATH:/home/sid/.local/bin"
