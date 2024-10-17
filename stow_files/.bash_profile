@@ -64,14 +64,10 @@ unset __conda_setup
 # source activate py37
 
 # autoenv initialize
-source "$HOME/.nvm/versions/node/v20.7.0/lib/node_modules/@hyperupcall/autoenv/activate.sh"
+source "$HOME/.nvm/versions/node/$(nvm version)/lib/node_modules/@hyperupcall/autoenv/activate.sh"
 
 # Display machine name in terminal
 title "$(hostname)"
-
-# Created by `pipx` on 2021-08-18 17:09:38
-export PATH="$PATH:/home/sid/.local/bin"
-source "$HOME/.nvm/versions/node/v20.7.0/lib/node_modules/@hyperupcall/autoenv/activate.sh"
 
 ## History settings
 export HISTTIMEFORMAT='%F, %T '
