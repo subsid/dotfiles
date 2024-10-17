@@ -40,5 +40,4 @@ alias anki="ANKI_NOHIGHDPI=1 anki"
 
 # Open in nvim
 alias o="fd -H --type f --strip-cwd-prefix | fzf --bind 'enter:become(nvim {})'"
-alias oo="cd ~/Dropbox/notes/obsidian_notes"
 

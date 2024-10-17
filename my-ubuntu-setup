@@ -383,7 +383,7 @@ setup_gpg () {
 install_snap_packages () {
   # Snap packages
   # hugo htop slack emacs
-  local snap_classic_packages=(emacs nvim youtube-dl go ccls obsidian)
+  local snap_classic_packages=(emacs nvim youtube-dl go ccls)
   if ask_yn "Install classic snap packages? ${snap_classic_packages[*]}"; then
     for pkg in "${snap_classic_packages[@]}"
     do
