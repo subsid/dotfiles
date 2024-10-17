@@ -15,5 +15,5 @@
 	path = scripts/rofi
 	url = git@github.com:davatorium/rofi
 [submodule "config/emacs.d"]
-	path = config/emacs.d
+	path = stow_files/.emacs.d
 	url = git@github.com:subsid/emacs.d
