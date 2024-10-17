@@ -81,7 +81,7 @@ function __prompt_command()
   local EXIT="$?"
   if [[ $EXIT == 0 ]]; then
     PS1="\[${ORANGE}\] ($CONDA_DEFAULT_ENV) \[${BOLD}${GREEN}\]\u $_PS1"
-    echo -ne "\033]0;Local $PWD\007"
+    echo -ne "\033]0;$(hostname) $PWD\007"
   else
     PS1="\[${ORANGE}\] \[${BOLD}${MAGENTA}\]\u $_PS1"
   fi
