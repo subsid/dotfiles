@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+
+# Make vim the default editor.
+export EDITOR='vim';
+
+# export NODE_PATH=$NODE_PATH:/usr/local/lib/node_modules/:./node_modules/vi-ng-build/node_modules:./node_modules/react-build/node_modules
+# Enable persistent REPL history for `node`.
+# export NODE_REPL_HISTORY=~/.node_history;
+# Allow 32³ entries; the default is 1000.
+# export NODE_REPL_HISTORY_SIZE='32768';
+# Use sloppy mode by default, matching web browsers.
+# export NODE_REPL_MODE='sloppy';
+
+# Make Python use UTF-8 encoding for output to stdin, stdout, and stderr.
+export PYTHONIOENCODING='UTF-8';
+
+# Increase Bash history size. Allow 32³ entries; the default is 500.
+export HISTSIZE='32768';
+export HISTFILESIZE="${HISTSIZE}";
+# Omit duplicates and commands that begin with a space from history.
+export HISTCONTROL='ignoreboth';
+
+# Prefer US English and use UTF-8.
+export LANG='en_US.UTF-8';
+export LC_ALL='en_US.UTF-8';
+
+# Highlight section titles in manual pages.
+# export LESS_TERMCAP_md="${yellow}";
+
+# Don’t clear the screen after quitting a manual page.
+export MANPAGER='less -X';
+
+# JAVAHOME
+export JAVA_HOME="/usr/lib/jvm/jdk-17.0.8"
+export GOPATH="$HOME/go"
+export LEDGER_FILE="$HOME/Dropbox/notes/finance/ledger.dat"
+
+# KUBECONFIGS
+# export KUBECONFIG="/Users/ss01679/.kube/config:/Users/ss01679/.kube/config-blh-dev-nonprod"
+
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_CONFIG_HOME="$HOME/.config"
+export TERMINAL=alacritty
+export EDITOR=nvim
+export SLACK_USERNAME=ssubramaniyam
+
+# Feed the output of fd into fzf
+export FZF_DEFAULT_COMMAND='fd --strip-cwd-prefix -H'
+
+

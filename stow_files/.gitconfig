@@ -1,0 +1,74 @@
+[alias]
+  # Show verbose output about tags, branches or remotes
+  tags = tag -l
+  lg = log --graph --pretty=format:'%C(red)%h%Creset %G? - %C(yellow)%s %Creset%C(green)(%an) %Creset%C(cyan)%ar%Creset'
+  branches = branch -a
+  remotes = remote -v
+  # Pretty log output
+  hist = log --graph --pretty=format:'%Cred%h%Creset %s%C(yellow)%d%Creset %Cgreen(%cr)%Creset [%an]' --abbrev-commit --date=relative
+  co = checkout
+  # Thanks Matt!
+  caa = "!git add .;git commit --amend --no-edit"
+  st = status --short --branch
+  br = branch
+  ci = commit
+  last = log -1 HEAD
+  unstage = reset HEAD
+  please = push --force-with-lease
+  it = !git init && git commit -m “root” --allow-empty
+  grog = log --graph --abbrev-commit --decorate --all --format=format:\"%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(dim white) - %an%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n %C(white)%s%C(reset)\"
+  d = difftool
+  rpull = pull --rebase --stat
+
+[color]
+  # Use colors in Git commands that are capable of colored output when outputting to the terminal
+  ui = auto
+[color "branch"]
+  current = yellow reverse
+  local = yellow
+  remote = green
+[color "diff"]
+  meta = yellow bold
+  frag = magenta bold
+  old = red bold
+  new = green bold
+[color "status"]
+  added = yellow
+  changed = green
+  untracked = cyan
+
+[user]
+  name = Siddharth
+  email = ssubramaniyam@etsy.com
+[core]
+  editor = nvim
+  excludesFile = ~/.gitignore_global
+
+[diff]
+     ; external = git_diff_wrapper
+     tool = extDiff
+[pager]
+    diff =
+[rerere]
+    enabled = false
+[difftool]
+  prompt = false
+  trustExitCode = true
+[difftool "extDiff"]
+  cmd = git_diff_wrapper $LOCAL $REMOTE
+[push]
+    followTags = true
+    default = tracking
+[branch]
+    autosetuprebase = always
+[merge]
+  tool = vimdiff
+[url "ssh://git@github.com/etsy/tinkerer"]
+    insteadOf = https://github.com/etsy/tinkerer
+[secrets]
+    patterns = .+API_KEY\\s*=\\s*.+
+    patterns = \\s*token\\s*=\\s*.+
+    patterns = signingkey\\s*=\\s*.+
+
+[commit]
+    gpgsign = true
