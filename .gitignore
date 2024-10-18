@@ -1,4 +1,5 @@
 mydev.lua
 stow_files/.gitconfig.local
 stow_files/.config/nvim/lazy-lock.json
+stow_files/.config/tmux/tmux.local.conf
 
