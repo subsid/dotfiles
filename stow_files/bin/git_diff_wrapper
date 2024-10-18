@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ -e /snap/bin/nvim ]; then
+if command -v nvim >/dev/null 2>&1 || alias nvim >/dev/null 2>&1; then
   nvim -d "$1" "$2"
 elif [ -e /usr/bin/vimdiff ]; then
   /usr/bin/vimdiff -v -d "$1" "$2"
