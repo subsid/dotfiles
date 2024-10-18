@@ -1,5 +1,4 @@
 mydev.lua
 stow_files/.gitconfig.local
 stow_files/.config/nvim/lazy-lock.json
-stow_files/.config/alacritty/alacritty.local.toml
 

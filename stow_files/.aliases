@@ -37,6 +37,8 @@ alias mk="microsk8s"
 alias tf="terraform"
 alias be="bundle exec"
 alias anki="ANKI_NOHIGHDPI=1 anki"
+alias ssh='ssh_alacritty'
+
 
 # Open in nvim
 alias o="fd -H --type f --strip-cwd-prefix | fzf --bind 'enter:become(nvim {})'"

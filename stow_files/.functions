@@ -48,3 +48,10 @@ function codepoint() {
 		echo ""; # newline
 	fi;
 }
+
+function ssh_alacritty() {
+  alacritty msg config --window-id "$ALACRITTY_WINDOW_ID" "$(cat ~/.config/alacritty/solarized-dark.toml)"
+  ssh "$@"
+  alacritty msg config --window-id "$ALACRITTY_WINDOW_ID" "$(cat ~/.config/alacritty/catppuccin-mocha.toml)"
+}
+

@@ -1,35 +1,7 @@
 live_config_reload = true
 import = [
-  "~/.config/alacritty/alacritty.local.toml"
+  "~/.config/alacritty/alacritty_colors.toml"
 ]
-
-# [colors.bright]
-# black = "0x555555"
-# blue = "0x00afff"
-# cyan = "0x51ceff"
-# green = "0xb1e05f"
-# magenta = "0xaf87ff"
-# red = "0xf6669d"
-# white = "0xffffff"
-# yellow = "0xfff26d"
-
-# [colors.cursor]
-# cursor = "0xffffff"
-# text = "0x000000"
-
-# [colors.normal]
-# black = "0x121212"
-# blue = "0x1080d0"
-# cyan = "0x43a8d0"
-# green = "0x9cff00"
-# magenta = "0x8700ff"
-# red = "0xfa2573"
-# white = "0xbbbbbb"
-# yellow = "0xdfd460"
-
-# [colors.primary]
-# background = "0x151515"
-# foreground = "0xeaeaea"
 
 [[keyboard.bindings]]
 chars = "\u001B[13;5u"
