@@ -16,6 +16,7 @@ M = {
         "css",
         "dockerfile",
         "html",
+        "xml",
         "ledger",
         "java",
         "javascript",
