@@ -513,12 +513,6 @@ cmd_exists () {
   fi
 }
 
-setup_alacritty () {
-  info "Copying config/alacritty/alacritty.yml to ~/.config/alacritty/alacritty.yml"
-  # mkdir -p "$HOME"/.config/alacritty
-  # cp config/alacritty/alacritty.yml "$HOME"/.config/alacritty/alacritty.yml
-}
-
 usage () {
   info "
   This setup process will guide you through installing some basic utilities on arch linux.
@@ -542,7 +536,6 @@ fns["--setup-gpg"]=setup_gpg
 fns["--setup-sound"]=setup_sound
 fns["--setup-cron-jobs"]=setup_cron_jobs
 fns["--setup-i3"]=setup_i3
-fns["--setup-alacritty"]=setup_alacritty
 fns["--setup-emacs"]=setup_emacs
 fns["--setup-ctags"]=setup_ctags
 fns["--setup-php"]=setup_php
