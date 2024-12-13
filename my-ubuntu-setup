@@ -152,6 +152,8 @@ install_flatpak_packages () {
   else
     info "Skipping flatpak packages..."
   fi
+  info "Note: for flameshot, you may have to grant home directory access"
+  info "flatpak override --user org.flameshot.Flameshot --filesystem=home..."
 }
 
 run_setup_scripts () {
@@ -460,7 +462,7 @@ manual_setup_packages () {
     read -r
     info "
     Install Anki https://apps.ankiweb.net/
-    Install with prefix
+    Install with prefix PREFIX=\"$HOME/.local\" ./install.sh
     Update anki.desktop to have the local paths
       Exec=/home/ssubramaniyam/.local/bin/anki %f
       TryExec=/home/ssubramaniyam/.local/bin/anki
