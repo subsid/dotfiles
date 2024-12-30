@@ -184,3 +184,6 @@ vim.cmd([[
 -- Remove F from shortmess
 -- This allows some log messagse to be printed nicely.
 vim.opt_global.shortmess:remove("F")
+
+-- Create a scratch buffer
+vim.api.nvim_create_user_command("Scratch", "enew | setlocal buftype=nofile bufhidden=hide noswapfile", { nargs = 0 })
