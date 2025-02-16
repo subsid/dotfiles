@@ -56,10 +56,10 @@ return {
     'shime/vim-livedown',
   },
   -- Github Copilot
-  {
-    "github/copilot.vim",
-    branch = 'release',
-  },
+  -- {
+  --   "github/copilot.vim",
+  --   branch = 'release',
+  -- },
   -- SudaRead and SudaWrite
   {
     'lambdalisue/suda.vim',

@@ -351,8 +351,10 @@ setup_ledger () {
     $ ./acprep dependencies
     $ PREFIX=/home/ssubramaniyam/.local
     $ ./acprep update --prefix=$HOME/.local --python
+    # The above may error. If so try conda uninstall --force readline ncurses from https://github.com/neuronsimulator/nrn/issues/410
     $ ./acprep --prefix=\$PREFIX --debug --python make
     $ ./acprep --prefix=\$PREFIX --debug --python make install
+    # Make sure the copied .ledgerrc to home (from stow_files/.ledgerrc) is what you want
   "
   info "Enter to continue..."
   read -r

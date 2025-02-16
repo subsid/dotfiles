@@ -210,11 +210,13 @@ exec_always --no-startup-id $home/workspace/dotfiles/scripts/setupmonitor
 exec_always --no-startup-id $home/workspace/dotfiles/scripts/tap_enable
 
 # Swap left control-capslock, alt-super globally
-exec_always setxkbmap -option "ctrl:swapcaps" -option "altwin:swap_lalt_lwin"
+# exec_always setxkbmap -option "ctrl:swapcaps" -option "altwin:swap_lalt_lwin"
+exec_always --no-startup-id bash $home/workspace/dotfiles/scripts/keyboard_remap.sh &
+
 
 # For office keyboard, don't swap alt and super.
 # exec_always xinput list | awk -F "\t" '$1 ~ /Macally.+KEYBOARD$/ && $3 ~ /slave.+keyboard/ {print $2}' | awk -F "=" '{print "setxkbmap -device " $2 " -option;" "setxkbmap " "-device " $2 " -option ctrl:swapcaps"}' | bash
-exec_always xinput list | awk -F "\t" '$1 ~ /Macally.+(KEYBOARD|Keyboard) */ && $3 ~ /slave.+keyboard/ {print $2}' | awk -F "=" '{print "setxkbmap -device " $2 " -option;" "setxkbmap " "-device " $2 " -option ctrl:swapcaps"}' | bash
+# exec_always xinput list | awk -F "\t" '$1 ~ /Macally.+(KEYBOARD|Keyboard) */ && $3 ~ /slave.+keyboard/ {print $2}' | awk -F "=" '{print "setxkbmap -device " $2 " -option;" "setxkbmap " "-device " $2 " -option ctrl:swapcaps"}' | bash
 
 # panel
 bar {

@@ -47,7 +47,7 @@ export BOLD
 export RESET
 
 function parse_git_dirty() {
-  local BASEDIR=$(basename $PWD)
+  local BASEDIR=$(basename "$PWD")
   [[ ! $BASEDIR =~ (Etsyweb) ]] && [[ $(git status 2> /dev/null | tail -n1) != *"working tree clean"* ]] && echo "*"
 }
 
