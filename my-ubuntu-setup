@@ -299,7 +299,7 @@ setup_i3 () {
 }
 
 install_cargo_packages () {
-  local cargo_packages=(alacritty ripgrep fd-find)
+  local cargo_packages=(alacritty ripgrep fd-find du-dust)
   if ask_yn "${cargo_packages[*]} Install packages?"; then
     cargo install "${cargo_packages[@]}"
   else
@@ -368,7 +368,7 @@ install_apt_packages () {
     read -r
   fi
 
-  local apt_packages=(curl xdotool feh scrot gimp pavucontrol autoconf flatpak pass gpg cmake g++ pkg-config brightnessctl lua5.1 luarocks gnome-shell-pomodoro py3status ffmpeg imagemagick-6.q16 hyperfine powertop libpango1.0-0 xournal arandr nemo usb-creator-gtk net-tools screen qalc pm-utils tmux stow speedtest-cli)
+  local apt_packages=(curl xdotool feh scrot gimp pavucontrol autoconf flatpak pass gpg cmake g++ pkg-config brightnessctl lua5.1 luarocks gnome-shell-pomodoro py3status ffmpeg imagemagick-6.q16 hyperfine powertop libpango1.0-0 xournal arandr nemo usb-creator-gtk net-tools screen qalc pm-utils tmux stow speedtest-cli inotify-tools)
   local apt_dev_packages=(libglib2.0-dev libcairo2-dev rofi-dev libfontconfig1-dev libtool m4 automake libboost-all-dev libgmp-dev libmpfr-dev libboost-python-dev python3-dev)
   if ask_yn "${apt_packages[*]} Install packages?"; then
     sudo apt install "${apt_packages[@]}"
