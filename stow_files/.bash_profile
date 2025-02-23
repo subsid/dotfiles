@@ -99,3 +99,8 @@ check-ssh-agent || eval "$(ssh-agent -s -a ~/.tmp/ssh-agent.sock)" > /dev/null
 #
 # * ~/.extra can be used for other settings you don’t want to commit.
 [ -r "$HOME/.extra" ] && source "$HOME/.extra"
+
+# Attach to tmux when logging in
+if [[ ! $TMUX && -t 0 && $TERM_PROGRAM != vscode ]]; then
+  ta auto
+fi

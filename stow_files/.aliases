@@ -43,3 +43,9 @@ alias ssh='ssh_alacritty'
 # Open in nvim
 alias o="fd -H --type f --strip-cwd-prefix | fzf --bind 'enter:become(nvim {})'"
 
+alias tl="tmux ls"
+alias ta="tmux new-session -A -s"
+alias tk="tmux kill-session -t"
+alias td="tmux detach"
+alias tat='tmux -u new-session -As "$(basename "$PWD")"'
+
