@@ -140,6 +140,11 @@ install_other_packages () {
   if ask_yn "Install Calibre?"; then
     info "sudo -v && wget -nv -O- https://download.calibre-ebook.com/linux-installer.sh | sudo sh /dev/stdin"
   fi
+
+  if ask_yn "Install Zotero?"; then
+    info "https://www.zotero.org/download/"
+    info "ln -s /opt/zotero/zotero.desktop ~/.local/share/applications/zotero.desktop"
+  fi
 }
 
 install_flatpak_packages () {

@@ -11,6 +11,7 @@ M = {
     configs.setup({
       ensure_installed = {
         "bash",
+        "go",
         "c",
         "cpp",
         "css",

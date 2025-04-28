@@ -23,6 +23,7 @@ M.config = function()
       "jdtls",
       "phpactor",
       "zls",
+      "gopls",
       -- linters
       "mypy",
       "shellcheck",

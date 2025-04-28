@@ -9,6 +9,8 @@ g.python3_host_prog='/home/ssubramaniyam/miniconda3/bin/python'
 -- g.fugitive_github_domains = ['github.etsycorp.com']
 g.fugitive_github_domains = {'github.etsycorp.com'}
 
+g.airline_extensions_tabline_enabled = 1
+
 -- Nerdtree ignore
 g.NERDTreeIgnore = {'.pyc$'}
 g.NERDSpaceDelims=1
