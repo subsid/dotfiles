@@ -4,26 +4,6 @@ import = [
   "~/.config/alacritty/alacritty_colors.toml"
 ]
 
-[[keyboard.bindings]]
-chars = "\u001B[13;5u"
-key = "Return"
-mods = "Control"
-
-[[keyboard.bindings]]
-chars = "\u001B[32;2u"
-key = "Space"
-mods = "Shift"
-
-[[keyboard.bindings]]
-chars = "\u001B[32;5u"
-key = "Space"
-mods = "Control"
-
-[[keyboard.bindings]]
-action = "SpawnNewInstance"
-key = "Return"
-mods = "Super|Shift"
-
 [scrolling]
 history = 10000
 multiplier = 3
@@ -39,4 +19,15 @@ title = "sid-local-xps"
 [window.padding]
 x = 5
 y = 5
+
+[keyboard]
+bindings = [
+  {key = "Space", mods = "Control", chars = "\u0000"},
+  {action = "SpawnNewInstance", key = "Return", mods = "Super|Shift"},
+  # These characters are entered in the terminal. Related to CSI U mode apparently
+  {chars = "\u0000", key = "Space", mods = "Control"},
+  {chars = "\u001B[13;5u", key = "Return", mods = "Control"},
+  {chars = "\u001B[32;2u", key = "Space", mods = "Shift"},
+  {chars = "\u001B[32;5u", key = "Space", mods = "Control"}
+]
 
