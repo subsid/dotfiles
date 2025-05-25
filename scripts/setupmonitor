@@ -1,51 +1,65 @@
 #!/bin/bash
-
 # Monitor definitions
 LAPTOP_SCREEN="eDP-1"
 DP1="DP-1"
 DP2="DP-2"
 DP3="DP-3"
 HOME_MACHINE="ssubramaniyam-ThinkPad-X1-Carbon-7th"
-
 # Get current state
 MONITORS=$(xrandr -q | sed -n "s/^\(.*\) connected.*/\1/p")
-
 # Check lid state from either LID0 or LID location
 if [ -f "/proc/acpi/button/lid/LID0/state" ]; then
     LIDCLOSED=$(grep -E -o "open|close" "/proc/acpi/button/lid/LID0/state")
 else
     LIDCLOSED=$(grep -E -o "open|close" "/proc/acpi/button/lid/LID/state")
 fi
-
 HOST_NAME=$(hostname)
-
 # Function to set wallpaper
 function set_wallpaper() {
     feh --bg-scale ~/.wallpaper.png
 }
 
-# Function to handle home setup
+# Function to handle home setup with any DP port
 function handle_home_setup() {
+    # Determine which DP port is connected
+    CONNECTED_DP=""
+    if monitor_exists "$DP1"; then
+        CONNECTED_DP="$DP1"
+    elif monitor_exists "$DP2"; then
+        CONNECTED_DP="$DP2"
+    elif monitor_exists "$DP3"; then
+        CONNECTED_DP="$DP3"
+    fi
+
     if [[ $LIDCLOSED == "close" ]]; then
         # If lid is closed, only activate external monitor
         xrandr --output $LAPTOP_SCREEN --off \
-               --output $DP1 --primary --mode 1920x1080 --pos 0x0 --rotate normal \
+               --output $CONNECTED_DP --primary --mode 1920x1080 --pos 0x0 --rotate normal \
+               --output $DP1 --off \
                --output $DP2 --off \
                --output $DP3 --off
+        # Turn back on the connected display
+        xrandr --output $CONNECTED_DP --primary --mode 1920x1080 --pos 0x0 --rotate normal
     else
         # If lid is open, laptop screen on left for home machine, right for work
         if [[ $HOST_NAME == "${HOME_MACHINE}" ]]; then
             # Home laptop - screen on left
             xrandr --output $LAPTOP_SCREEN --mode 1920x1080 --pos 0x0 --rotate normal \
-                   --output $DP1 --primary --mode 1920x1080 --pos 1920x0 --rotate normal \
+                   --output $CONNECTED_DP --primary --mode 1920x1080 --pos 1920x0 --rotate normal \
+                   --output $DP1 --off \
                    --output $DP2 --off \
                    --output $DP3 --off
+            # Turn back on the connected display
+            xrandr --output $CONNECTED_DP --primary --mode 1920x1080 --pos 1920x0 --rotate normal
         else
             # Work laptop - screen on right
             xrandr --output $LAPTOP_SCREEN --mode 1920x1080 --pos 1920x0 --rotate normal \
-                   --output $DP1 --primary --mode 1920x1080 --pos 0x0 --rotate normal \
+                   --output $CONNECTED_DP --primary --mode 1920x1080 --pos 0x0 --rotate normal \
+                   --output $DP1 --off \
                    --output $DP2 --off \
                    --output $DP3 --off
+            # Turn back on the connected display
+            xrandr --output $CONNECTED_DP --primary --mode 1920x1080 --pos 0x0 --rotate normal
         fi
     fi
 }
@@ -96,11 +110,8 @@ monitor_exists() {
 if monitor_exists "$DP1" && monitor_exists "$DP2"; then
     # Office setup with two monitors
     handle_office_setup
-elif monitor_exists "$DP1"; then
-    # Home setup with one external monitor
-    handle_home_setup
-elif monitor_exists "$DP3"; then
-    # Alternative home setup using DP3
+elif monitor_exists "$DP1" || monitor_exists "$DP2" || monitor_exists "$DP3"; then
+    # Home setup with one external monitor (any DP port)
     handle_home_setup
 else
     # No external monitors connected
@@ -109,3 +120,4 @@ fi
 
 # Set wallpaper after monitor configuration
 set_wallpaper
+
