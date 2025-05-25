@@ -24,10 +24,7 @@ y = 5
 bindings = [
   {key = "Space", mods = "Control", chars = "\u0000"},
   {action = "SpawnNewInstance", key = "Return", mods = "Super|Shift"},
-  # These characters are entered in the terminal. Related to CSI U mode apparently
-  {chars = "\u0000", key = "Space", mods = "Control"},
   {chars = "\u001B[13;5u", key = "Return", mods = "Control"},
   {chars = "\u001B[32;2u", key = "Space", mods = "Shift"},
-  {chars = "\u001B[32;5u", key = "Space", mods = "Control"}
 ]
 
