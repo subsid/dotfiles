@@ -502,6 +502,7 @@ manual_setup_packages () {
       Enter to continue...
     "
     read -r
+    info "Install Signal https://signal.org/download/"
   else
     info "Skipping manual packages..."
   fi
