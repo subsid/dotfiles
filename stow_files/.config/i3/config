@@ -43,6 +43,7 @@ bindsym $super+Print --release exec flatpak run org.flameshot.Flameshot gui -p ~
 # bindsym Print --release exec scrot -u -e 'mv $f ~/screenshot/'
 # bindsym $super+Print --release exec scrot -f -s -e 'mv $f ~/screenshot/'
 
+focus_wrapping no
 
 # kill focused window
 bindsym $super+Shift+q kill
