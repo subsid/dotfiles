@@ -13,7 +13,7 @@ M = {
 
 
     ls.config.set_config {
-      -- This tells LuaSnip to keep aroudn the last snippet.
+      -- This tells LuaSnip to keep around the last snippet.
       -- You can jump back into it even if you move outside of the selection.
       history = true,
       updateevents = "TextChanged,TextChangedI",
