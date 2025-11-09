@@ -1,0 +1,746 @@
+#!/usr/bin/env bash
+
+# This script configures my Arch Linux setup.
+# No guarantees!
+
+set -euo pipefail
+
+# Colors for better output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+PROG="my_arch_setup"
+
+info() {
+  echo -e "${BLUE}[INFO]${NC} $*"
+}
+
+success() {
+  echo -e "${GREEN}[SUCCESS]${NC} $*"
+}
+
+warn() {
+  echo -e "${YELLOW}[WARN]${NC} $*"
+}
+
+err() {
+  echo -e "${RED}[ERROR]${NC} $*" >&2
+}
+
+# Returns true/false based on users yes/no response.
+ask_yn() {
+  while true; do
+    read -r -p "$(echo -e "${YELLOW}[?]${NC} $1 (y/n): ")" yn
+    case $yn in
+      [Yy]*) return 0 ;;
+      [Nn]*) return 1 ;;
+      *) echo "Please answer yes or no." ;;
+    esac
+  done
+}
+
+cmd_exists() {
+  command -v "$1" &>/dev/null
+}
+
+# Check if yay is installed, offer to install if not
+ensure_yay() {
+  if ! cmd_exists yay; then
+    warn "yay (AUR helper) is not installed."
+    if ask_yn "Would you like to install yay?"; then
+      info "Installing yay..."
+      sudo pacman -S --needed --noconfirm git base-devel
+      git clone https://aur.archlinux.org/yay.git /tmp/yay
+      cd /tmp/yay
+      makepkg -si --noconfirm
+      cd -
+      rm -rf /tmp/yay
+      success "yay installed successfully!"
+    else
+      err "yay is required for AUR packages. Some installations will be skipped."
+      return 1
+    fi
+  fi
+  return 0
+}
+
+setup_php_composer() {
+  local expected_checksum actual_checksum
+
+  info "Installing Composer..."
+  expected_checksum="$(php -r 'copy("https://composer.github.io/installer.sig", "php://stdout");')"
+  php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+
+  actual_checksum="$(php -r "echo hash_file('sha384', 'composer-setup.php');")"
+
+  if [ "$expected_checksum" != "$actual_checksum" ]; then
+    err "Invalid installer checksum"
+    rm composer-setup.php
+    return 1
+  fi
+
+  php composer-setup.php --quiet
+  local result=$?
+  rm composer-setup.php
+  return $result
+}
+
+setup_php() {
+  local php_packages=(php php-gd php-sqlite)
+  if ask_yn "Install PHP packages (${php_packages[*]})?"; then
+    sudo pacman -S --needed "${php_packages[@]}"
+    success "PHP packages installed"
+  else
+    info "Skipping PHP packages..."
+  fi
+
+  if ask_yn "Install Composer?"; then
+    if setup_php_composer; then
+      info "Moving composer to $HOME/bin..."
+      mkdir -p "$HOME/bin"
+      mv composer.phar "$HOME/bin/composer"
+      chmod +x "$HOME/bin/composer"
+      success "Composer installed successfully"
+    else
+      err "Failed to install Composer"
+    fi
+  else
+    info "Skipping Composer..."
+  fi
+}
+
+setup_rofi() {
+  if ask_yn "Install rofi and extensions?"; then
+    sudo pacman -S --needed rofi
+
+    if ensure_yay; then
+      local aur_packages=(rofi-greenclip rofi-calc)
+      for pkg in "${aur_packages[@]}"; do
+        if ask_yn "Install $pkg from AUR?"; then
+          yay -S --needed "$pkg"
+        fi
+      done
+    fi
+    success "Rofi setup complete"
+  else
+    info "Skipping rofi..."
+  fi
+}
+
+setup_gitsecrets() {
+  info "Setting up git-secrets..."
+  info "Run these commands:"
+  echo "  git clone https://github.com/awslabs/git-secrets $HOME/workspace/git-secrets"
+  echo "  ln -sf $HOME/workspace/git-secrets/git-secrets $HOME/bin/git-secrets"
+  read -r -p "Press Enter to continue..."
+}
+
+setup_greenclip() {
+  if ask_yn "Install greenclip clipboard manager?"; then
+    info "Installing greenclip from AUR..."
+    if ensure_yay; then
+      yay -S --needed greenclip
+      success "Greenclip installed"
+    fi
+  else
+    info "Skipping greenclip..."
+  fi
+}
+
+setup_fzf() {
+  if ask_yn "Install fzf (fuzzy finder)?"; then
+    info "Installing fzf..."
+    sudo pacman -S --needed fzf
+    # Also offer the git installation for latest features
+    if ask_yn "Also install latest version from git with key bindings?"; then
+      git clone --depth 1 https://github.com/junegunn/fzf.git "$HOME/.fzf"
+      "$HOME/.fzf/install"
+    fi
+    success "fzf installed"
+  fi
+}
+
+install_other_packages() {
+  if ask_yn "Install nvm (Node Version Manager)?"; then
+    info "Installing nvm..."
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+    # Source nvm to use it immediately
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+    if ask_yn "Install latest Node.js version?"; then
+      nvm install node
+      success "Node.js installed"
+    fi
+  fi
+
+  if ask_yn "Install autoenv?"; then
+    info "Installing autoenv using npm..."
+    npm install -g '@hyperupcall/autoenv'
+    info "Note: You may need to update bash_profile to point to autoenv"
+    read -r -p "Press Enter to continue..."
+  fi
+}
+
+install_flatpak_packages() {
+  if ! cmd_exists flatpak; then
+    if ask_yn "Flatpak not installed. Install it?"; then
+      sudo pacman -S --needed flatpak
+    else
+      info "Skipping Flatpak packages..."
+      return
+    fi
+  fi
+
+  info "Setting up Flathub repository..."
+  sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+
+  local flathub_packages=(
+    "io.gitlab.news_flash.NewsFlash"
+    "com.github.johnfactotum.Foliate"
+    "org.flameshot.Flameshot"
+  )
+
+  if ask_yn "Install Flatpak packages (${flathub_packages[*]})?"; then
+    flatpak install -y flathub "${flathub_packages[@]}"
+    info "For Flameshot, you may need to grant home directory access:"
+    echo "  flatpak override --user org.flameshot.Flameshot --filesystem=home"
+    success "Flatpak packages installed"
+  else
+    info "Skipping Flatpak packages..."
+  fi
+}
+
+setup_emacs() {
+  info "Setting up Emacs..."
+
+  if ask_yn "Install Emacs?"; then
+    sudo pacman -S --needed emacs
+
+    if ask_yn "Install Emacs from source with specific options?"; then
+      info "Installing build dependencies..."
+      sudo pacman -S --needed base-devel texinfo libx11 libxpm libjpeg-turbo \
+        libpng giflib libtiff gtk3 ncurses gnutls
+
+      info "
+      To compile from source:
+        $ git clone https://git.savannah.gnu.org/git/emacs.git
+        $ cd emacs
+        $ ./autogen.sh
+        $ ./configure --with-mailutils
+        $ make
+        $ sudo make install
+      "
+      read -r -p "Press Enter to continue..."
+    fi
+    success "Emacs setup complete"
+  else
+    info "Skipping Emacs..."
+  fi
+}
+
+setup_ctags() {
+  info "Setting up universal-ctags..."
+
+  if ask_yn "Install universal-ctags from AUR?"; then
+    if ensure_yay; then
+      yay -S --needed universal-ctags-git
+      success "universal-ctags installed"
+    fi
+  else
+    info "Manual installation instructions:"
+    echo "  $ git clone https://github.com/universal-ctags/ctags $HOME/workspace/ctags"
+    echo "  $ cd $HOME/workspace/ctags"
+    echo "  $ ./autogen.sh"
+    echo "  $ ./configure --prefix=$HOME/.local"
+    echo "  $ make"
+    echo "  $ make install"
+    read -r -p "Press Enter to continue..."
+  fi
+}
+
+setup_nvim() {
+  info "Setting up Neovim..."
+
+  if ask_yn "Install Neovim?"; then
+    sudo pacman -S --needed neovim
+
+    # Optional: install latest from AUR
+    if ask_yn "Install neovim-nightly from AUR for latest features?"; then
+      if ensure_yay; then
+        yay -S --needed neovim-nightly-bin
+      fi
+    fi
+    success "Neovim installed"
+  else
+    info "Skipping Neovim..."
+  fi
+}
+
+setup_i3() {
+  info "Setting up i3 window manager..."
+
+  if ask_yn "Install i3?"; then
+    local i3_packages=(i3-wm i3status i3lock dmenu)
+    sudo pacman -S --needed "${i3_packages[@]}"
+
+    # py3status
+    if ask_yn "Install py3status (enhanced i3status)?"; then
+      if ensure_yay; then
+        yay -S --needed py3status-git
+      else
+        warn "yay not available, falling back to stable py3status"
+        sudo pacman -S --needed py3status
+      fi
+    fi
+
+    # Brightness control
+    i3_brightness_controls
+
+    info "Copy wallpaper to ~/.wallpaper.png"
+
+    success "i3 setup complete"
+  else
+    info "Skipping i3..."
+  fi
+}
+
+i3_brightness_controls() {
+  info "Setting up brightness controls for i3..."
+
+  if ask_yn "Install brightnessctl?"; then
+    sudo pacman -S --needed brightnessctl
+    info "Adding user to video group..."
+    sudo usermod -aG video "$USER"
+    success "Brightness controls configured"
+    warn "You may need to log out and back in for group changes to take effect"
+  fi
+}
+
+setup_gpg() {
+  info "Setting up GPG..."
+
+  sudo pacman -S --needed gnupg
+
+  info "
+  To generate a GPG key:
+    $ gpg --full-generate-key
+
+  To add to GitHub:
+    1. List keys: gpg --list-secret-keys --keyid-format=long
+    2. Export key: gpg --armor --export <KEY_ID>
+    3. Add to GitHub: https://github.com/settings/keys
+
+  See: https://docs.github.com/en/authentication/managing-commit-signature-verification/generating-a-new-gpg-key
+  "
+  read -r -p "Press Enter to continue..."
+}
+
+setup_sound() {
+  info "Setting up sound system..."
+
+  if ask_yn "Install PipeWire (modern audio system)?"; then
+    local sound_packages=(
+      pipewire
+      pipewire-alsa
+      pipewire-pulse
+      pipewire-jack
+      wireplumber
+      pavucontrol
+      bluez
+      bluez-utils
+      blueman
+    )
+    sudo pacman -S --needed "${sound_packages[@]}"
+
+    info "Enabling Bluetooth service..."
+    sudo systemctl enable bluetooth.service
+    sudo systemctl start bluetooth.service
+
+    success "Sound system configured"
+    info "For more info on PipeWire setup: https://wiki.archlinux.org/title/PipeWire"
+  fi
+}
+
+setup_cron_jobs() {
+  info "Setting up cron jobs..."
+
+  if ! cmd_exists cronie; then
+    if ask_yn "Install cronie (cron daemon)?"; then
+      sudo pacman -S --needed cronie
+      sudo systemctl enable cronie.service
+      sudo systemctl start cronie.service
+    fi
+  fi
+
+  info "Example cron jobs:"
+  echo "  # Renewal script (every Monday at 11am)"
+  echo "  0 11 * * MON <renew_script> > /dev/null 2>&1"
+  echo ""
+  echo "  # Ledger updates"
+  echo "  [your ledger command here]"
+  echo ""
+  info "Run 'crontab -e' to edit your cron jobs"
+  read -r -p "Press Enter to continue..."
+}
+
+setup_rustup() {
+  if cmd_exists rustup; then
+    info "Rustup already installed, updating..."
+    rustup update
+    return 0
+  fi
+
+  info "Installing Rustup..."
+  if ask_yn "Install Rust via rustup?"; then
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs -o /tmp/rust.sh
+    bash /tmp/rust.sh -y
+    source "$HOME/.cargo/env"
+    success "Rust installed successfully"
+  else
+    info "Skipping Rust installation..."
+  fi
+}
+
+install_cargo_packages() {
+  if ! cmd_exists cargo; then
+    warn "Cargo not found. Install Rust first."
+    return 1
+  fi
+
+  local cargo_packages=(alacritty ripgrep fd-find du-dust)
+
+  if ask_yn "Install Rust packages (${cargo_packages[*]})?"; then
+    for pkg in "${cargo_packages[@]}"; do
+      info "Installing $pkg..."
+      cargo install "$pkg"
+    done
+    success "Cargo packages installed"
+  else
+    info "Skipping Cargo packages..."
+  fi
+}
+
+setup_ledger() {
+  info "Setting up ledger-cli..."
+
+  if ask_yn "Install ledger from AUR?"; then
+    if ensure_yay; then
+      yay -S --needed ledger
+      success "Ledger installed from AUR"
+    fi
+  else
+    info "Manual installation instructions:"
+    echo "  $ git clone https://github.com/ledger/ledger"
+    echo "  $ cd ledger"
+    echo "  $ ./acprep update --prefix=\$HOME/.local"
+    echo "  $ ./acprep make"
+    echo "  $ ./acprep install"
+    info "See: https://github.com/ledger/ledger"
+    read -r -p "Press Enter to continue..."
+  fi
+}
+
+install_pacman_packages() {
+  if ask_yn "Update package database?"; then
+    sudo pacman -Sy
+    success "Package database updated"
+  fi
+
+  local pacman_packages=(
+    curl
+    inetutils
+    wget
+    git
+    xdotool
+    feh
+    scrot
+    gimp
+    pavucontrol
+    autoconf
+    flatpak
+    pass
+    gnupg
+    cmake
+    gcc
+    pkg-config
+    lua
+    luarocks
+    ffmpeg
+    imagemagick
+    hyperfine
+    powertop
+    xournalpp
+    arandr
+    nemo
+    net-tools
+    screen
+    libqalculate
+    tmux
+    stow
+    speedtest-cli
+    inotify-tools
+    sqlite
+    htop
+    vlc
+    go
+    discord
+  )
+
+  if ask_yn "Install base packages (${#pacman_packages[@]} packages)?"; then
+    sudo pacman -S --needed "${pacman_packages[@]}"
+    success "Base packages installed"
+  else
+    info "Skipping base packages..."
+  fi
+
+  # Development packages
+  local dev_packages=(
+    glib2
+    cairo
+    fontconfig
+    libtool
+    m4
+    automake
+    boost
+    gmp
+    mpfr
+    python
+  )
+
+  if ask_yn "Install development packages (${#dev_packages[@]} packages)?"; then
+    sudo pacman -S --needed "${dev_packages[@]}"
+    success "Development packages installed"
+  else
+    info "Skipping development packages..."
+  fi
+}
+
+manual_setup_packages() {
+  if ! ask_yn "Show manual setup instructions?"; then
+    info "Skipping manual setup..."
+    return
+  fi
+
+  info "=== Docker ==="
+  echo "Install Docker:"
+  echo "  $ sudo pacman -S docker docker-compose"
+  echo "  $ sudo systemctl enable docker.service"
+  echo "  $ sudo systemctl start docker.service"
+  echo "  $ sudo usermod -aG docker \$USER"
+  read -r -p "Press Enter to continue..."
+
+  info "=== OpenJDK ==="
+  echo "Install OpenJDK:"
+  echo "  $ sudo pacman -S jdk-openjdk"
+  echo "  $ archlinux-java status"
+  echo "  $ archlinux-java set java-XX-openjdk"
+  read -r -p "Press Enter to continue..."
+
+  info "==== Dropbox ==="
+  info "Install dropbox https://www.dropbox.com/install-linux"
+  info "Enter to continue..."
+  read -r -p "Press Enter to continue..."
+
+  info "=== Conda/Miniconda ==="
+  echo "Install Miniconda from AUR:"
+  echo "  $ yay -S miniconda3"
+  echo "  $ source /opt/miniconda3/bin/activate"
+  echo "  $ conda init bash"
+  read -r -p "Press Enter to continue..."
+
+  info "=== Autojump ==="
+  echo "Install autojump: https://github.com/wting/autojump"
+  read -r -p "Press Enter to continue..."
+
+  info "=== Anki ==="
+  echo "Install Anki:"
+  echo "  $ sudo pacman -S anki"
+  read -r -p "Press Enter to continue..."
+
+  info "=== Scala with Coursier ==="
+  echo "Install Scala:"
+  echo "  $ yay -S coursier"
+  echo "  $ cs setup"
+  read -r -p "Press Enter to continue..."
+
+  info "=== kubectx ==="
+  echo "Install kubectx:"
+  echo "  $ sudo pacman -S kubectx"
+  read -r -p "Press Enter to continue..."
+
+  info "=== Fonts ==="
+  echo "Install fonts:"
+  echo "  $ sudo pacman -S ttf-font-awesome ttf-dejavu nerd-fonts-complete"
+  echo "  Or install specific nerd fonts:"
+  echo "  $ yay -S nerd-fonts-ubuntu-mono"
+  echo "  $ fc-cache -f -v"
+  read -r -p "Press Enter to continue..."
+
+  info "=== Password Store ==="
+  echo "Setup password store:"
+  echo "  $ sudo pacman -S pass"
+  echo "  $ git clone <your-password-store-repo> ~/.password-store"
+  read -r -p "Press Enter to continue..."
+
+  success "Manual setup instructions complete"
+}
+
+run_setup_scripts() {
+  info "Running individual setup scripts..."
+
+  setup_gitsecrets
+  setup_greenclip
+  setup_fzf
+  setup_cron_jobs
+  setup_gpg
+  setup_sound
+  setup_i3
+  setup_ctags
+  setup_nvim
+  setup_rofi
+  setup_emacs
+  setup_ledger
+
+  success "All setup scripts complete!"
+}
+
+run_setup() {
+  info "
+  ╔═══════════════════════════════════════════════════════════════╗
+  ║                  Arch Linux Setup Script                      ║
+  ║                                                                ║
+  ║  This script will guide you through setting up your           ║
+  ║  Arch Linux system with various tools and configurations.     ║
+  ╚═══════════════════════════════════════════════════════════════╝
+  "
+
+  info "FIRST: Generate SSH and GPG keys"
+  echo "  SSH key: https://docs.github.com/en/authentication/connecting-to-github-with-ssh"
+  echo "  GPG key: https://docs.github.com/en/authentication/managing-commit-signature-verification"
+  echo ""
+  info "init/update git submodules:"
+  echo "  $ git submodule init"
+  echo "  $ git submodule update"
+  read -r -p "Press Enter to continue..."
+
+  # Ensure yay is available
+  ensure_yay
+
+  # Basics
+  install_pacman_packages
+  install_other_packages
+
+  # Rust stuff
+  setup_rustup
+  install_cargo_packages
+
+  # Flatpak
+  install_flatpak_packages
+
+  # Manual setup
+  manual_setup_packages
+
+  # Setup tools
+  run_setup_scripts
+
+  success "
+  ╔═══════════════════════════════════════════════════════════════╗
+  ║                    Setup Complete! 🎉                         ║
+  ║                                                                ║
+  ║  Please restart your terminal (or re-login) for all changes   ║
+  ║  to take effect.                                               ║
+  ╚═══════════════════════════════════════════════════════════════╝
+  "
+}
+
+usage() {
+  info "
+  ╔═══════════════════════════════════════════════════════════════╗
+  ║              Arch Linux Setup Script - Usage                  ║
+  ╚═══════════════════════════════════════════════════════════════╝
+
+  Usage: $PROG [OPTION]
+
+  Options:
+    -h, --help                  Show this help message
+
+  Setup commands:
+    --setup-rofi               Setup rofi launcher
+    --setup-nvim               Setup Neovim
+    --setup-gpg                Setup GPG
+    --setup-sound              Setup sound system (PipeWire)
+    --setup-cron-jobs          Setup cron jobs
+    --setup-i3                 Setup i3 window manager
+    --setup-emacs              Setup Emacs
+    --setup-ctags              Setup universal-ctags
+    --setup-php                Setup PHP and Composer
+    --setup-gitsecrets         Setup git-secrets
+    --setup-greenclip          Setup greenclip
+    --setup-fzf                Setup fzf fuzzy finder
+    --setup-rustup             Setup Rust toolchain
+    --setup-ledger             Setup ledger-cli
+
+  Install commands:
+    --install-pacman-packages  Install base packages with pacman
+    --install-aur-packages     Install AUR packages with yay
+    --install-cargo-packages   Install Rust packages with cargo
+    --install-other-packages   Install other packages (nvm, etc.)
+    --install-flatpak-packages Install Flatpak packages
+    --manual-setup-packages    Show manual setup instructions
+
+  No arguments: Run full setup process
+  "
+}
+
+# Command mapping
+declare -A fns
+
+fns["--help"]=usage
+fns["-h"]=usage
+
+# Setup commands
+fns["--setup-rofi"]=setup_rofi
+fns["--setup-nvim"]=setup_nvim
+fns["--setup-gpg"]=setup_gpg
+fns["--setup-sound"]=setup_sound
+fns["--setup-cron-jobs"]=setup_cron_jobs
+fns["--setup-i3"]=setup_i3
+fns["--setup-emacs"]=setup_emacs
+fns["--setup-ctags"]=setup_ctags
+fns["--setup-php"]=setup_php
+fns["--setup-gitsecrets"]=setup_gitsecrets
+fns["--setup-greenclip"]=setup_greenclip
+fns["--setup-fzf"]=setup_fzf
+fns["--setup-rustup"]=setup_rustup
+fns["--setup-ledger"]=setup_ledger
+
+# Install commands
+fns["--install-pacman-packages"]=install_pacman_packages
+fns["--install-aur-packages"]=install_aur_packages
+fns["--install-cargo-packages"]=install_cargo_packages
+fns["--install-other-packages"]=install_other_packages
+fns["--install-flatpak-packages"]=install_flatpak_packages
+fns["--manual-setup-packages"]=manual_setup_packages
+
+# Main execution
+if [ $# -gt 1 ]; then
+  err "Too many arguments"
+  usage
+  exit 1
+fi
+
+if [ $# -eq 0 ]; then
+  run_setup
+  exit 0
+fi
+
+if [[ -v fns[$1] ]]; then
+  ${fns[$1]}
+else
+  err "Unknown argument: $1"
+  usage
+  exit 1
+fi
