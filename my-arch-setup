@@ -116,7 +116,7 @@ setup_rofi() {
     sudo pacman -S --needed rofi
 
     if ensure_yay; then
-      local aur_packages=(rofi-greenclip rofi-calc)
+      local aur_packages=(rofi-greenclip rofi-calc libappindicator)
       for pkg in "${aur_packages[@]}"; do
         if ask_yn "Install $pkg from AUR?"; then
           yay -S --needed "$pkg"
@@ -541,6 +541,7 @@ manual_setup_packages() {
 
   info "==== Dropbox ==="
   info "Install dropbox https://www.dropbox.com/install-linux"
+  info "Note you may need to install: libappindicator for tray icon"
   info "Enter to continue..."
   read -r -p "Press Enter to continue..."
 
