@@ -376,8 +376,8 @@ setup_cron_jobs() {
   fi
 
   info "Example cron jobs:"
-  echo "  # Renewal script (every Monday at 11am)"
-  echo "  0 11 * * MON <renew_script> > /dev/null 2>&1"
+  echo "  # Renewal script (everyday at 10am)"
+  echo "  0 10 * * * /home/ssubramaniyam/miniconda3/bin/python3 /home/ssubramaniyam/Dropbox/notes/finance/mandelbrot/fetch.py --ledger-file-path /home/ssubramaniyam/Dropbox/notes/finance/ledger.dat --ledger-price-db-update --price-db-path /home/ssubramaniyam/Dropbox/notes/finance/ledger-files/prices.db > /home/ssubramaniyam/Dropbox/notes/finance/mandelbrot/fetch.log 2>&1"
   echo ""
   echo "  # Ledger updates"
   echo "  [your ledger command here]"
@@ -591,11 +591,11 @@ manual_setup_packages() {
 run_setup_scripts() {
   info "Running individual setup scripts..."
 
+  setup_gpg
   setup_gitsecrets
   setup_greenclip
   setup_fzf
   setup_cron_jobs
-  setup_gpg
   setup_sound
   setup_i3
   setup_ctags
@@ -617,9 +617,14 @@ run_setup() {
   ╚═══════════════════════════════════════════════════════════════╝
   "
 
+  info "Swap ctrl and capslock if you want: setxkbmap -option \"ctrl:swapcaps\" -option \"altwin:swap_lalt_lwin\""
+  info "Connect to Internet: iwctl --passphrase \"your-password\" station wlan0 connect \"your-network-name\""
   info "FIRST: Generate SSH and GPG keys"
+  echo "Get a browser - pacman -S firefox"
   echo "  SSH key: https://docs.github.com/en/authentication/connecting-to-github-with-ssh"
   echo "  GPG key: https://docs.github.com/en/authentication/managing-commit-signature-verification"
+  echo "TIP: You may want to install xclip (sudo pacman -S xclip) to copy stuff from CLI (cat key.pub | xclip -sel clipboard); output: xclip -sel clipboard -o"
+  echo "If running in virtualbox, enabled shared clipboard in host and run the following in guest: pacman -S virtualbox-guest-utils; VBoxClient --clipboard"
   echo ""
   info "init/update git submodules:"
   echo "  $ git submodule init"
