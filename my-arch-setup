@@ -548,6 +548,7 @@ manual_setup_packages() {
   echo "Install Miniconda from AUR:"
   echo "  $ yay -S miniconda3"
   echo "  $ source /opt/miniconda3/bin/activate"
+  echo "touch ~/.env && echo \"conda activate base\" > ~/.env"
   echo "  $ conda init bash"
   read -r -p "Press Enter to continue..."
 

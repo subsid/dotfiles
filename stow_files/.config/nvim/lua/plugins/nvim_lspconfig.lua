@@ -8,10 +8,10 @@ M = {
 M.config = function()
   -- code
   local capabilities = require("cmp_nvim_lsp").default_capabilities()
-  local lspconfig = require("lspconfig")
+  local lspconfig = vim.lsp.config
 
   --https://github.com/microsoft/pyright/blob/71ed1178222eaa88e87bb22a49e7427541304e88/docs/settings.md
-  lspconfig.pyright.setup({
+  lspconfig("pyright", {
     capabilities = capabilities,
     settings = {
       python = {
@@ -28,21 +28,22 @@ M.config = function()
     },
   })
 
-  lspconfig.rust_analyzer.setup({
+  lspconfig("rust_analyzer", {
     capabilities = capabilities,
     settings = {
       ["rust-analyzer"] = {},
     },
   })
 
-  lspconfig.zls.setup({
+  lspconfig("zls", {
     capabilities = capabilities,
     enable_snippets = true
   })
-  lspconfig.bashls.setup({
+
+  lspconfig("bashls", {
     capabilities = capabilities,
   })
-  lspconfig.lua_ls.setup({
+  lspconfig("lua_ls", {
     capabilities = capabilities,
     settings = {
       Lua = {
@@ -53,10 +54,11 @@ M.config = function()
       },
     },
   })
-  lspconfig.jdtls.setup({
+  lspconfig("jdtls", {
     capabilities = capabilities,
   })
-  lspconfig.phpactor.setup({
+
+  lspconfig("phpactor", {
     capabilities = capabilities,
     init_options = {
       ["language_server_phpstan.enabled"] = true,
