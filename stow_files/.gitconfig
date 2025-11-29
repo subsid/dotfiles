@@ -36,8 +36,8 @@
   changed = green
   untracked = cyan
 [user]
-  name = Siddharth
-  email = ssubramaniyam@etsy.com
+  name = Siddharth Subramaniyam
+  email = sidharth3930@gmail.com
 [core]
   editor = nvim
   excludesFile = ~/.gitignore_global
