@@ -48,3 +48,5 @@ export SLACK_USERNAME=ssubramaniyam
 export FZF_DEFAULT_COMMAND='fd --strip-cwd-prefix -H'
 
 
+# Conda errors - https://stackoverflow.com/questions/78439730/openssl-3-0s-legacy-provider-failed-to-load
+export CRYPTOGRAPHY_OPENSSL_NO_LEGACY=1

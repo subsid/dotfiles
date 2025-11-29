@@ -61,8 +61,6 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-# source activate py37
-
 # autoenv initialize
 source "$HOME/.nvm/versions/node/$(nvm version)/lib/node_modules/@hyperupcall/autoenv/activate.sh"
 
