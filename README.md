@@ -19,3 +19,7 @@ But be careful, this will overwrite the files in the stow directory.
 stow -t ~ stow_files --adopt
 ```
 
+# Notes
+
+- Make sure to gpg encrypt and copy ~/.extra for API keys
+- Might have to update $home in i3 config if the path changed

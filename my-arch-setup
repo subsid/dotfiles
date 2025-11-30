@@ -116,7 +116,7 @@ setup_rofi() {
     sudo pacman -S --needed rofi
 
     if ensure_yay; then
-      local aur_packages=(rofi-greenclip rofi-calc libappindicator)
+      local aur_packages=(rofi-greenclip rofi-calc)
       for pkg in "${aur_packages[@]}"; do
         if ask_yn "Install $pkg from AUR?"; then
           yay -S --needed "$pkg"
@@ -206,7 +206,7 @@ install_flatpak_packages() {
   if ask_yn "Install Flatpak packages (${flathub_packages[*]})?"; then
     flatpak install -y flathub "${flathub_packages[@]}"
     info "For Flameshot, you may need to grant home directory access:"
-    echo "  flatpak override --user org.flameshot.Flameshot --filesystem=home"
+    echo "  flatpak override --user org.flameshot.Flameshot --filesystem=~/screenshot"
     success "Flatpak packages installed"
   else
     info "Skipping Flatpak packages..."
@@ -377,7 +377,7 @@ setup_cron_jobs() {
 
   info "Example cron jobs:"
   echo "  # Renewal script (everyday at 10am)"
-  echo "  0 10 * * * /home/ssubramaniyam/miniconda3/bin/python3 /home/ssubramaniyam/Dropbox/notes/finance/mandelbrot/fetch.py --ledger-file-path /home/ssubramaniyam/Dropbox/notes/finance/ledger.dat --ledger-price-db-update --price-db-path /home/ssubramaniyam/Dropbox/notes/finance/ledger-files/prices.db > /home/ssubramaniyam/Dropbox/notes/finance/mandelbrot/fetch.log 2>&1"
+  echo "  0 10 * * * /home/sidsub/miniconda3/bin/python3 /home/sidsub/Dropbox/notes/finance/mandelbrot/fetch.py --ledger-file-path /home/sidsub/Dropbox/notes/finance/ledger.dat --ledger-price-db-update --price-db-path /home/sidsub/Dropbox/notes/finance/ledger-files/prices.db > /home/sidsub/Dropbox/notes/finance/mandelbrot/fetch.log 2>&1"
   echo ""
   echo "  # Ledger updates"
   echo "  [your ledger command here]"
@@ -440,6 +440,15 @@ setup_ledger() {
     echo "  $ ./acprep install"
     info "See: https://github.com/ledger/ledger"
     read -r -p "Press Enter to continue..."
+  fi
+}
+
+install_aur_packages() {
+  if ensure_yay; then
+    local aur_packages=(libappindicator brave-bin man-db bash-completion)
+    if ask_yn "Install (${#aur_packages[@]} packages) from AUR?"; then
+      yay -S --needed "${aur_packages[@]}"
+    fi
   fi
 }
 
@@ -546,11 +555,9 @@ manual_setup_packages() {
   read -r -p "Press Enter to continue..."
 
   info "=== Conda/Miniconda ==="
-  echo "Install Miniconda from AUR:"
-  echo "  $ yay -S miniconda3"
-  echo "  $ source /opt/miniconda3/bin/activate"
-  echo "touch ~/.env && echo \"conda activate base\" > ~/.env"
-  echo "  $ conda init bash"
+  info "
+    Install conda https://conda.io/en/latest/miniconda.html
+    echo \"conda activate base\" >> ~/.env"
   read -r -p "Press Enter to continue..."
 
   info "=== Autojump ==="

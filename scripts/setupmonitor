@@ -4,7 +4,7 @@ LAPTOP_SCREEN="eDP-1"
 DP1="DP-1"
 DP2="DP-2"
 DP3="DP-3"
-HOME_MACHINE="ssubramaniyam-ThinkPad-X1-Carbon-7th"
+HOME_MACHINE="personal-x1-7th"
 # Get current state
 MONITORS=$(xrandr -q | sed -n "s/^\(.*\) connected.*/\1/p")
 # Check lid state from either LID0 or LID location
@@ -39,7 +39,7 @@ function handle_home_setup() {
                --output $DP2 --off \
                --output $DP3 --off
         # Turn back on the connected display
-        xrandr --output $CONNECTED_DP --primary --mode 1920x1080 --pos 0x0 --rotate normal
+        xrandr --output $CONNECTED_DP --primary --mode 1920x1080 --pos 0x0 --rotate normal --set audio off
     else
         # If lid is open, laptop screen on left for home machine, right for work
         if [[ $HOST_NAME == "${HOME_MACHINE}" ]]; then
@@ -50,7 +50,7 @@ function handle_home_setup() {
                    --output $DP2 --off \
                    --output $DP3 --off
             # Turn back on the connected display
-            xrandr --output $CONNECTED_DP --primary --mode 1920x1080 --pos 1920x0 --rotate normal
+            xrandr --output $CONNECTED_DP --primary --mode 1920x1080 --pos 1920x0 --rotate normal --set audio off
         else
             # Work laptop - screen on right
             xrandr --output $LAPTOP_SCREEN --mode 1920x1080 --pos 1920x0 --rotate normal \
@@ -59,7 +59,7 @@ function handle_home_setup() {
                    --output $DP2 --off \
                    --output $DP3 --off
             # Turn back on the connected display
-            xrandr --output $CONNECTED_DP --primary --mode 1920x1080 --pos 0x0 --rotate normal
+            xrandr --output $CONNECTED_DP --primary --mode 1920x1080 --pos 0x0 --rotate normal  --set audio off
         fi
     fi
 }

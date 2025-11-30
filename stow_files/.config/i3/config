@@ -35,10 +35,10 @@ exec --no-startup-id nm-applet
 exec --no-startup-id flatpak run org.flameshot.Flameshot
 
 # Full screenshot
-bindsym Print --release exec flatpak run org.flameshot.Flameshot full -c -p ~/screenshot
+bindsym Print --release exec flatpak run org.flameshot.Flameshot full -c -p $home/screenshot
 
 # Interactive screenshot
-bindsym $super+Print --release exec flatpak run org.flameshot.Flameshot gui -p ~/screenshot
+bindsym $super+Print --release exec flatpak run org.flameshot.Flameshot gui -p $home/screenshot
 
 # bindsym Print --release exec scrot -u -e 'mv $f ~/screenshot/'
 # bindsym $super+Print --release exec scrot -f -s -e 'mv $f ~/screenshot/'
