@@ -445,7 +445,7 @@ setup_ledger() {
 
 install_aur_packages() {
   if ensure_yay; then
-    local aur_packages=(libappindicator brave-bin man-db bash-completion signal-desktop)
+    local aur_packages=(libappindicator brave-bin man-db bash-completion signal-desktop virtualbox timeshift)
     if ask_yn "Install (${#aur_packages[@]} packages) from AUR?"; then
       yay -S --needed "${aur_packages[@]}"
     fi
@@ -453,8 +453,8 @@ install_aur_packages() {
 }
 
 install_pacman_packages() {
-  if ask_yn "Update package database?"; then
-    sudo pacman -Sy
+  if ask_yn "Update and install latest package database?"; then
+    sudo pacman -Syu
     success "Package database updated"
   fi
 
@@ -565,8 +565,17 @@ manual_setup_packages() {
   read -r -p "Press Enter to continue..."
 
   info "=== Anki ==="
-  echo "Install Anki:"
-  echo "  $ sudo pacman -S anki"
+  info "
+    Install Anki https://apps.ankiweb.net/
+    Install Anki: https://docs.ankiweb.net/platform/linux/installing.html
+    $ tar xaf anki-launcher-25.09-linux.tar.zst
+    # Install with prefix
+    PREFIX=\"$HOME/.local\" ./install.sh
+    # Update anki.desktop to have the local paths
+      Exec=/home/ssubramaniyam/.local/bin/anki %f
+      TryExec=/home/ssubramaniyam/.local/bin/anki
+    PREFIX=\"/home/ssubramaniyam/.local\" ./install.sh
+  "
   read -r -p "Press Enter to continue..."
 
   info "=== Scala with Coursier ==="
@@ -591,7 +600,8 @@ manual_setup_packages() {
   info "=== Password Store ==="
   echo "Setup password store:"
   echo "  $ sudo pacman -S pass"
-  echo "  $ git clone <your-password-store-repo> ~/.password-store"
+  echo " $ git clone <your-password-store-repo> ~/.password-store"
+  echo ""
   read -r -p "Press Enter to continue..."
 
   success "Manual setup instructions complete"
