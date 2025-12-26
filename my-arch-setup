@@ -604,6 +604,13 @@ manual_setup_packages() {
   echo ""
   read -r -p "Press Enter to continue..."
 
+  info "=== GTK Portal ==="
+  echo "After setting up stow files (including ~/.config/xdg-desktop-portal). Restart portal service"
+  info "
+    systemctl --user restart xdg-desktop-portal.service
+    systemctl --user restart xdg-desktop-portal-gtk.service
+  "
+
   success "Manual setup instructions complete"
 }
 
