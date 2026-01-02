@@ -445,7 +445,7 @@ setup_ledger() {
 
 install_aur_packages() {
   if ensure_yay; then
-    local aur_packages=(libappindicator brave-bin man-db bash-completion signal-desktop virtualbox timeshift)
+    local aur_packages=(libappindicator brave-bin man-db bash-completion signal-desktop virtualbox timeshift jq)
     if ask_yn "Install (${#aur_packages[@]} packages) from AUR?"; then
       yay -S --needed "${aur_packages[@]}"
     fi
