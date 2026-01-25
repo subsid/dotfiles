@@ -46,6 +46,12 @@ map("n", "<leader>n", ":set nohlsearch<CR>")
 -- blackhole and paste
 map("x", "<leader>p", '"_dP')
 
+-- Leap keymap
+map({'n', 'x'}, 's', '<Plug>(leap)')
+map('n', 'S', '<Plug>(leap-from-window)')
+map('o', 's', '<Plug>(leap-forward)')
+map('o', 'S', '<Plug>(leap-backward)')
+
 function StripTrailingWhitespaces()
   local view = vim.fn.winsaveview()
   vim.cmd([[keepp %s/\s\+$//e]])
