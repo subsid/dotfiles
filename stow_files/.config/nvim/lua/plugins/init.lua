@@ -16,7 +16,7 @@ return {
   },
   -- -- Leap - next gen easymotion
   {
-    'ggandor/leap.nvim',
+    url = "https://codeberg.org/andyg/leap.nvim",
     config = function ()
       local leap = require("leap")
       leap.opts.equivalence_classes = { ' \t\r\n', '([{', ')]}', '\'"`' }

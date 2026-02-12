@@ -445,7 +445,7 @@ setup_ledger() {
 
 install_aur_packages() {
   if ensure_yay; then
-    local aur_packages=(libappindicator brave-bin man-db bash-completion signal-desktop virtualbox timeshift jq entr)
+    local aur_packages=(libappindicator brave-bin man-db bash-completion signal-desktop virtualbox timeshift jq entr ttf-hack-nerd)
     if ask_yn "Install (${#aur_packages[@]} packages) from AUR?"; then
       yay -S --needed "${aur_packages[@]}"
     fi
@@ -480,6 +480,7 @@ install_pacman_packages() {
     ffmpeg
     imagemagick
     hyperfine
+    noto-fonts-emoji
     powertop
     xournalpp
     arandr
@@ -499,6 +500,7 @@ install_pacman_packages() {
     xorg-xinput
     xdg-desktop-portal
     dunst
+    thermald
   )
 
   if ask_yn "Install base packages (${#pacman_packages[@]} packages)?"; then
@@ -594,7 +596,8 @@ manual_setup_packages() {
 
   info "=== Fonts ==="
   echo "Install fonts:"
-  echo "  $ sudo pacman -S ttf-font-awesome ttf-dejavu nerd-fonts-complete"
+  # ttf-hack-nerd - needed for plugins like nvim-web-devicons. noto-fonts-emoji needed for browser to render emojis
+  echo "  $ sudo pacman -S ttf-font-awesome ttf-dejavu nerd-fonts-complete noto-fonts-emoji ttf-hack-nerd"
   echo "  Or install specific nerd fonts:"
   echo "  $ yay -S nerd-fonts-ubuntu-mono"
   echo "  $ fc-cache -f -v"
