@@ -102,3 +102,4 @@ check-ssh-agent || eval "$(ssh-agent -s -a ~/.tmp/ssh-agent.sock)" > /dev/null
 if [[ ! $TMUX && -t 0 && $TERM_PROGRAM != vscode ]]; then
   ta auto
 fi
+export ORG_PAGES_DIR=~/Dropbox/notes/org_roam_v2/pages
