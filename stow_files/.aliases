@@ -48,4 +48,5 @@ alias ta="tmux new-session -A -s"
 alias tk="tmux kill-session -t"
 alias td="tmux detach"
 alias tat='tmux -u new-session -As "$(basename "$PWD")"'
+alias oc="opencode"
 
