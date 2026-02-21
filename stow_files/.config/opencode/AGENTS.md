@@ -38,7 +38,7 @@
 ## Language-Specific Guidelines
 
 ### Bash Scripts
-- Use `#!/bin/bash` shebang
+- Use `#!/usr/bin/env bash` shebang
 - Include help flags (`--help` and `-h`) for user-facing scripts
 - Prefer `$(command)` over backticks
 - Use meaningful variable names in UPPER_CASE for global/env vars
