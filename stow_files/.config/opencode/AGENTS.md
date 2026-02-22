@@ -13,6 +13,7 @@
 - Use any/mixed types
 - Deleting code without tests
 - Refactor adjacent code without asking
+- Editing any code that doesn't have tests
 
 ## General Guidelines
 
@@ -20,7 +21,6 @@
 - Be concise and direct in responses
 - Avoid unnecessary superlatives or praise
 - Focus on technical accuracy over validation
-- Only use emojis if explicitly requested
 
 ### Code Changes
 - Always prefer editing existing files over creating new ones
