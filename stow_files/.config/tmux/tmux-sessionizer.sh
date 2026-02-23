@@ -153,18 +153,18 @@ create_session() {
     local session_path="$2"
     
     # Create session with first window (neovim)
-    tmux new-session -d -s "$session_name" -c "$session_path" -n "nvim"
-    tmux send-keys -t "$session_name:nvim" "nvim" C-m
+    tmux new-session -d -s "$session_name" -c "$session_path" -n "${session_name}_nvim"
+    tmux send-keys -t "$session_name:${session_name}_nvim" "nvim" C-m
     
     # Create second window (terminal)
-    tmux new-window -t "$session_name" -c "$session_path" -n "terminal"
+    tmux new-window -t "$session_name" -c "$session_path" -n "${session_name}_terminal"
     
     # Create third window (opencode)
-    tmux new-window -t "$session_name" -c "$session_path" -n "opencode"
-    tmux send-keys -t "$session_name:opencode" "opencode ." C-m
+    tmux new-window -t "$session_name" -c "$session_path" -n "${session_name}_opencode"
+    tmux send-keys -t "$session_name:${session_name}_opencode" "opencode ." C-m
     
     # Switch to first window
-    tmux select-window -t "$session_name:nvim"
+    tmux select-window -t "$session_name:${session_name}_nvim"
 }
 
 # Create or switch to a session

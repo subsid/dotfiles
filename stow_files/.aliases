@@ -51,3 +51,6 @@ alias tat='tmux -u new-session -As "$(basename "$PWD")"'
 alias ts="~/.config/tmux/tmux-sessionizer.sh"
 alias oc="opencode"
 
+# Make completions work for alias
+complete -o bashdefault -o default -F _opencode_yargs_completions oc
+

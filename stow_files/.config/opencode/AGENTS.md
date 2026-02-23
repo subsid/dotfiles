@@ -13,7 +13,7 @@
 - Use any/mixed types
 - Deleting code without tests
 - Refactor adjacent code without asking
-- Editing any code that doesn't have tests
+- Editing code: check if tests exist first (see Testing section below)
 
 ## General Guidelines
 
@@ -50,6 +50,26 @@
 - Review recent `git log` to match commit message style
 - Stage relevant files explicitly
 - Verify commits succeeded with `git status` after committing
+
+## Testing
+
+### Before editing any code
+1. Search for test files related to the code you're editing
+   - Look for patterns like: `test_*.sh`, `*_test.py`, `*.test.js`, `*_spec.rb`, etc.
+   - Search in common test directories: `tests/`, `test/`, `__tests__/`, `spec/`
+   - Use glob/grep to find test files that reference the file/function you're editing
+
+### After editing code
+1. If tests exist, ALWAYS run them before considering the task complete
+2. Report test results to the user
+3. If tests fail, fix the issues or update tests as needed
+4. If tests don't exist, suggest adding them to the user
+5. Never assume tests will pass - always verify
+
+### Test execution
+- Look for test runner scripts or commands in the project
+- Common patterns: `./test_*.sh`, `npm test`, `pytest`, `cargo test`, etc.
+- Check README or project documentation for test instructions
 
 ## Documentation
 - Keep documentation up-to-date with code changes

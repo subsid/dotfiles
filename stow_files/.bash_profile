@@ -13,6 +13,10 @@ if [ -f ~/.pass-completion.bash ]; then
     . ~/.pass-completion.bash
 fi
 
+if [ -f ~/.opencode-completion.bash ]; then
+    . ~/.opencode-completion.bash
+fi
+
 # NVM
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
