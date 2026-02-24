@@ -32,6 +32,9 @@ setup_test_env() {
     
     # Source the sanitize function from the script
     source <(sed -n '/^# Sanitize session name/,/^}/p' "$SESSIONIZER")
+    
+    # Source the rename function from the script
+    source <(sed -n '/^# Rename a session/,/^}/p' "$SESSIONIZER")
 }
 
 cleanup_test_env() {
@@ -173,6 +176,45 @@ test_unknown_flag() {
     assert_contains "$output" "Unknown option" "Unknown flags should show error message"
 }
 
+test_rename_function_exists() {
+    echo ""
+    echo "=== Testing rename_session function ==="
+    
+    # Check if the rename_session function is defined
+    if declare -f rename_session >/dev/null; then
+        TESTS_RUN=$((TESTS_RUN + 1))
+        TESTS_PASSED=$((TESTS_PASSED + 1))
+        echo -e "${GREEN}✓${NC} rename_session function exists"
+    else
+        TESTS_RUN=$((TESTS_RUN + 1))
+        TESTS_FAILED=$((TESTS_FAILED + 1))
+        echo -e "${RED}✗${NC} rename_session function not found"
+    fi
+}
+
+test_keybinding_documentation() {
+    echo ""
+    echo "=== Testing keybinding documentation ==="
+    
+    local script_content
+    script_content=$(cat "$SESSIONIZER")
+    
+    # Check that ctrl-e is documented for rename
+    assert_contains "$script_content" "ctrl-e" "Script should document ctrl-e keybinding"
+    assert_contains "$script_content" "rename" "Script should mention rename functionality"
+    
+    # Make sure ctrl-n is NOT present (user uses it for fzf navigation)
+    if [[ "$script_content" != *"ctrl-n"* ]]; then
+        TESTS_RUN=$((TESTS_RUN + 1))
+        TESTS_PASSED=$((TESTS_PASSED + 1))
+        echo -e "${GREEN}✓${NC} ctrl-n is not used (reserved for fzf navigation)"
+    else
+        TESTS_RUN=$((TESTS_RUN + 1))
+        TESTS_FAILED=$((TESTS_FAILED + 1))
+        echo -e "${RED}✗${NC} ctrl-n is used but should be avoided"
+    fi
+}
+
 # Print summary
 print_summary() {
     echo ""
@@ -210,6 +252,8 @@ main() {
     test_debug_flag
     test_unknown_flag
     test_sanitize_session_name
+    test_rename_function_exists
+    test_keybinding_documentation
     
     cleanup_test_env
     

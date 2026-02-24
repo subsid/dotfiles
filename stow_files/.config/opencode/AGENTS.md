@@ -14,6 +14,7 @@
 - Deleting code without tests
 - Refactor adjacent code without asking
 - Editing code: check if tests exist first (see Testing section below)
+- Adding new functionality to tested code: ask if tests should be added/updated
 
 ## General Guidelines
 
@@ -59,11 +60,16 @@
    - Search in common test directories: `tests/`, `test/`, `__tests__/`, `spec/`
    - Use glob/grep to find test files that reference the file/function you're editing
 
+2. **If adding new functionality and tests exist:**
+   - **STOP and ASK** the user if tests should be added/updated for the new feature
+   - Do not proceed with implementation until discussing test coverage
+   - This applies to new functions, features, flags, or significant behavior changes
+
 ### After editing code
 1. If tests exist, ALWAYS run them before considering the task complete
 2. Report test results to the user
 3. If tests fail, fix the issues or update tests as needed
-4. If tests don't exist, suggest adding them to the user
+4. If tests don't exist for the file, suggest adding them to the user
 5. Never assume tests will pass - always verify
 
 ### Test execution
