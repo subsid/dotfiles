@@ -29,6 +29,14 @@
 - Read files before editing them
 - Only create documentation/README files when explicitly requested
 - Never be overly proactive with file creation
+- Avoid over-engineering: only make changes directly requested or clearly necessary
+- Don't add error handling, comments, or type annotations to code you didn't change
+
+### Tool Usage
+- Use dedicated tools (Read, Edit, Write, Glob, Grep) over Bash equivalents
+- Use Glob for file discovery, Grep for content search, Read for file contents
+- Run independent tool calls in parallel when possible
+- Use the Agent tool for broad codebase exploration, not simple targeted searches
 
 ### Commit Practices
 - Only create commits when explicitly requested
@@ -59,7 +67,7 @@
 1. Search for test files related to the code you're editing
    - Look for patterns like: `test_*.sh`, `*_test.py`, `*.test.js`, `*_spec.rb`, etc.
    - Search in common test directories: `tests/`, `test/`, `__tests__/`, `spec/`
-   - Use glob/grep to find test files that reference the file/function you're editing
+   - Use Glob/Grep to find test files that reference the file/function you're editing
 
 2. **If adding new functionality and tests exist:**
    - **STOP and ASK** the user if tests should be added/updated for the new feature
