@@ -60,8 +60,6 @@
     autosetuprebase = always
 [merge]
   tool = vimdiff
-[url "ssh://git@github.com/etsy/tinkerer"]
-    insteadOf = https://github.com/etsy/tinkerer
 [secrets]
     patterns = .+API_KEY\\s*=\\s*.+
     patterns = \\s*token\\s*=\\s*.+

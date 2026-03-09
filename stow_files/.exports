@@ -35,8 +35,6 @@ export JAVA_HOME="/usr/lib/jvm/jdk-17.0.8"
 export GOPATH="$HOME/go"
 export LEDGER_FILE="$HOME/Dropbox/notes/finance/ledger.dat"
 
-# KUBECONFIGS
-# export KUBECONFIG="/Users/ss01679/.kube/config:/Users/ss01679/.kube/config-blh-dev-nonprod"
 
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CONFIG_HOME="$HOME/.config"

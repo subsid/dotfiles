@@ -22,8 +22,8 @@ M.config = function()
           useLibraryCodeForTypes = true,
           typeCheckingMode = "off",
         },
-        pythonPath = "/home/ssubramaniyam/miniconda3/bin/python",
-        venvPath = "/home/ssubramaniyam/miniconda3/envs",
+        pythonPath = vim.fn.expand("~/miniconda3/bin/python"),
+        venvPath = vim.fn.expand("~/miniconda3/envs"),
       },
     },
   })

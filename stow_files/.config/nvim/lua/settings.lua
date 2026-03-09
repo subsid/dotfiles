@@ -4,10 +4,7 @@ local g = vim.g
 local o = vim.o
 
 g.python_highlight_all = 1
-g.python3_host_prog='/home/ssubramaniyam/miniconda3/bin/python'
-
--- g.fugitive_github_domains = ['github.etsycorp.com']
-g.fugitive_github_domains = {'github.etsycorp.com'}
+g.python3_host_prog= HOME .. '/miniconda3/bin/python'
 
 g.airline_extensions_tabline_enabled = 1
 
@@ -108,7 +105,7 @@ o.splitkeep = 'screen'
 -- autocmd BufWinLeave *.* mkview
 -- autocmd BufWinEnter *.* silent loadview
 vim.cmd([[
-  noremap <silent> <leader>V :luafile /home/ssubramaniyam/.config/nvim/init.lua<CR>:filetype detect<CR>:exe ":echo 'neovimrc reloaded'"<CR>
+  noremap <silent> <leader>V :luafile ~/.config/nvim/init.lua<CR>:filetype detect<CR>:exe ":echo 'neovimrc reloaded'"<CR>
 ]])
 
 -- fzf
@@ -155,7 +152,7 @@ vim.cmd([[
 -- tagbar scala support
 vim.cmd([[
   let g:tagbar_type_scala = {
-      \ 'ctagsbin' : '/home/ssubramaniyam/.local/bin/ctags',
+      \ 'ctagsbin' : expand('~/.local/bin/ctags'),
       \ 'ctagstype' : 'scala',
       \ 'sro'       : '.',
       \ 'kinds'     : [

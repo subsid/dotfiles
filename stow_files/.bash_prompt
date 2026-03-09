@@ -47,8 +47,7 @@ export BOLD
 export RESET
 
 function parse_git_dirty() {
-  local BASEDIR=$(basename "$PWD")
-  [[ ! $BASEDIR =~ (Etsyweb) ]] && [[ $(git status 2> /dev/null | tail -n1) != *"working tree clean"* ]] && echo "*"
+  [[ $(git status 2> /dev/null | tail -n1) != *"working tree clean"* ]] && echo "*"
 }
 
 function parse_git_branch() {
@@ -60,7 +59,7 @@ function kube_prompt()
 {
     # Get current context
     if [ -f ~/.kube/config ]; then
-      CONTEXT=$(cat ~/.kube/config | grep "current-context:" | sed -e "s/current-context: .*\(gke-[^_]*\).*\(search-.*\)/\1 \2/; s/current-context: .*\(gke-[^_]*\).*\(kafka-gke.*\)/\1 \2/")
+      CONTEXT=$(kubectl config current-context 2>/dev/null)
     else
       CONTEXT=""
     fi
