@@ -501,6 +501,7 @@ install_pacman_packages() {
     xdg-desktop-portal
     dunst
     thermald
+    ghostty
   )
 
   if ask_yn "Install base packages (${#pacman_packages[@]} packages)?"; then
