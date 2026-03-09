@@ -576,11 +576,11 @@ manual_setup_packages() {
     Install Anki: https://docs.ankiweb.net/platform/linux/installing.html
     $ tar xaf anki-launcher-25.09-linux.tar.zst
     # Install with prefix
-    PREFIX=\"$HOME/.local\" ./install.sh
+    PREFIX=\"\$HOME/.local\" ./install.sh
     # Update anki.desktop to have the local paths
-      Exec=/home/ssubramaniyam/.local/bin/anki %f
-      TryExec=/home/ssubramaniyam/.local/bin/anki
-    PREFIX=\"/home/ssubramaniyam/.local\" ./install.sh
+      Exec=\$HOME/.local/bin/anki %f
+      TryExec=\$HOME/.local/bin/anki
+    PREFIX=\"\$HOME/.local\" ./install.sh
   "
   read -r -p "Press Enter to continue..."
 
