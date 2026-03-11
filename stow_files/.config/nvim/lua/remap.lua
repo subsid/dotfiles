@@ -154,3 +154,11 @@ map("n", "<leader>?", "<Cmd>Telescope frecency<CR>")
 map("n", "<leader>h", tb.command_history, {})
 map("n", "<leader><leader>h", tb.help_tags, {})
 
+function CopyPathToClipboard()
+  local path = vim.fn.expand('%:p')
+  vim.fn.setreg('+', path)
+  print('Copied: ' .. path)
+end
+
+map('n', '<leader>C', CopyPathToClipboard, { desc = 'Copy file path to clipboard' })
+
