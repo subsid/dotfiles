@@ -72,7 +72,13 @@ return {
   },
   -- Markdown preview
   {
-    'shime/vim-livedown',
+      "iamcco/markdown-preview.nvim",
+      cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+      build = "cd app && yarn install",
+      init = function()
+        vim.g.mkdp_filetypes = { "markdown" }
+      end,
+      ft = { "markdown" },
   },
   -- Github Copilot
   -- {
@@ -82,6 +88,12 @@ return {
   -- SudaRead and SudaWrite
   {
     'lambdalisue/suda.vim',
+  },
+  {
+    "supermaven-inc/supermaven-nvim",
+    config = function()
+      require("supermaven-nvim").setup({})
+    end,
   },
 }
 

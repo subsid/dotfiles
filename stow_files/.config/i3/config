@@ -128,7 +128,7 @@ set $ws5 "5"
 set $ws6 "6"
 set $ws7 "7"
 set $ws8 "8: Anki"
-set $ws9 "9: Slack"
+set $ws9 "9: LLM Chat"
 set $ws10 "10: RSS"
 
 # switch to workspace
@@ -273,12 +273,12 @@ bindsym $alt+F10 exec "py3-cmd click --button 3 pomodoro"
 ## Workspace settings
 
 ## Run "xprop | grep WM_CLASS | awk '{ print $4 }'" in shell and click on application for class information
-assign [class="Gnome-terminal"] $ws1
+assign [class="alacritty"] $ws1
 assign [class="jetbrains-idea"] $ws1
 # assign [class="Google-chrome"] $ws2
 assign [class="Emacs"] $ws3
+assign [class="Com.gitlab.newsflash"] $ws7
 assign [class="Anki"] $ws8
-assign [class="Slack"] $ws9
+assign [class="LLM-Chat"] $ws9
 assign [class="discord"] $ws9
-assign [class="Com.gitlab.newsflash"] $ws10
 
