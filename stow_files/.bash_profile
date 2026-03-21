@@ -107,3 +107,5 @@ if [[ ! $TMUX && -t 0 && $TERM_PROGRAM != vscode ]]; then
   ta auto
 fi
 export ORG_PAGES_DIR=~/Dropbox/notes/org_roam_v2/pages
+
+. "$HOME/.local/share/../bin/env"

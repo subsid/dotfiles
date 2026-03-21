@@ -16,6 +16,7 @@ g.NERDSpaceDelims=1
 o.timeoutlen = 1000
 o.updatetime = 200
 o.scrolloff = 8
+o.wrap = true
 -- o.autochdir = true
 
 -- add cfilter package for quickfix

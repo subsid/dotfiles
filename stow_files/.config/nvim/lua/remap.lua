@@ -150,6 +150,7 @@ map("n", "<leader>td", ":Telescope lsp_document_symbols<CR>", { desc = "[Search]
 map("n", "<leader>tw", ":Telescope lsp_workspace_symbols<CR>", { desc = "[W]orkspace [S]ymbols" })
 map("n", "<leader>tr", ":Telescope lsp_references<CR>", { desc = "LSP [R]efereces" })
 map("n", "<leader>b", tb.buffers, {})
+map("n", "<leader>m", tb.marks, {})
 map("n", "<leader>?", "<Cmd>Telescope frecency<CR>")
 map("n", "<leader>h", tb.command_history, {})
 map("n", "<leader><leader>h", tb.help_tags, {})
