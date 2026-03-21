@@ -29,6 +29,8 @@
 - Read files before editing them
 - Only create documentation/README files when explicitly requested
 - Never be overly proactive with file creation
+- Avoid over-engineering: only make changes directly requested or clearly necessary
+- Don't add error handling, comments, or type annotations to code you didn't change
 
 ### Commit Practices
 - Only create commits when explicitly requested
