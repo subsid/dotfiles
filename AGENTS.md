@@ -1,185 +1,166 @@
-# AGENTS.md - Dotfiles Repository Guidelines
+# AGENTS.md - dotfiles repository guidance
 
-## Repository Overview
+## Overview
 
-Personal dotfiles for Arch Linux, managed with [GNU Stow](https://www.gnu.org/software/stow/). The `stow_files/` directory contains all configuration files that get symlinked into `~`.
+This repo manages personal Arch Linux dotfiles using GNU Stow.
+Most edits happen under `stow_files/`, then symlink into `~`.
 
-## Build/Test/Lint Commands
+- Stow source of truth: `stow_files/`
+- Global OpenCode config: `stow_files/.config/opencode/`
+- Global Claude config: `stow_files/.claude/` (symlinked to opencode files)
 
-### Stow Commands (Primary Workflow)
+## Rules discovered in repo
+
+- No `.cursorrules` found.
+- No `.cursor/rules/` directory found.
+- No `.github/copilot-instructions.md` found.
+
+If any are added later, treat them as higher-priority constraints than this file.
+
+## Build, lint, and test commands
+
+## Core workflow (stow)
+
 ```bash
-# Apply all dotfiles (symlink into ~)
+# Apply dotfiles into $HOME
 stow -t ~ stow_files
 
-# Remove symlinks
+# Recreate links after edits
+stow -R -t ~ stow_files
+
+# Remove links
 stow -D -t ~ stow_files
 
-# Adopt existing files (first-time setup on a machine)
+# First-time setup on a machine with preexisting files
 stow -t ~ stow_files --adopt
-
-# Restow after changes (recreates symlinks)
-stow -R -t ~ stow_files
 ```
 
-### Testing Changes
-There's no automated test framework. Test manually:
-1. Apply changes: `stow -R -t ~ stow_files`
-2. Reload shell: `source ~/.bash_profile` or open a new terminal
-3. Verify the config is loaded correctly
-4. Check for errors in the shell startup
+## Linting
 
-For scripts, run them directly and verify output:
 ```bash
-bash -x scripts/keyboard_remap.sh  # Debug mode
-```
-
-### Linting (Recommended Tools)
-```bash
-# Install shellcheck for shell script linting
-sudo pacman -S shellcheck
-
-# Install shfmt for shell formatting
-sudo pacman -S shfmt
-
-# Run shellcheck on a script
+# Shell lint (single file)
 shellcheck scripts/keyboard_remap.sh
 
-# Format with shfmt
+# Shell lint (all local scripts)
+shellcheck scripts/*.sh
+
+# Format shell scripts in place
 shfmt -i 2 -w scripts/*.sh
+
+# Fast syntax check for one script
+bash -n stow_files/.config/tmux/tmux-sessionizer.sh
 ```
 
-### Setup Script
-`my-arch-setup` is an interactive installer. Use flags to run specific steps:
+## Tests
+
+There is no single global test runner for this repository.
+Use file-specific/manual verification depending on what changed.
+
 ```bash
-./my-arch-setup --help              # Show all flags
-./my-arch-setup --setup-nvim        # Install Neovim
-./my-arch-setup --setup-i3          # Setup i3 window manager
-./my-arch-setup --install-pacman-packages  # Install base packages
+# Main tmux sessionizer test suite
+bash stow_files/.config/tmux/test_tmux-sessionizer.sh
+
+# "Single test" equivalent in this repo: run one script check directly
+bash -n stow_files/.config/tmux/tmux-sessionizer.sh
+shellcheck stow_files/.config/tmux/tmux-sessionizer.sh
+
+# Debug-run one script
+bash -x scripts/keyboard_remap.sh
 ```
 
-## Adding New Dotfiles
+Notes:
+- `scripts/rofi*` directories are git submodules/upstream projects.
+- Do not rewrite upstream test systems unless explicitly requested.
 
-1. Create the file in `stow_files/` mirroring its home directory structure
-2. Use `stow -R -t ~ stow_files` to apply the new symlink
-3. Commit the file to the repo
+## Manual verification checklist
 
-**Example:** To add `~/.config/tool/config.toml`:
-```bash
-mkdir -p stow_files/.config/tool
-vim stow_files/.config/tool/config.toml
-stow -R -t ~ stow_files
-git add stow_files/.config/tool/config.toml
-git commit -m "Add tool config"
-```
+After changing dotfiles, run:
 
-## Shell Script Conventions
+1. `stow -R -t ~ stow_files`
+2. Reload shell (`source ~/.bash_profile`) or open a new terminal.
+3. Verify the changed behavior in the target tool (bash, tmux, nvim, i3, etc.).
+4. Check startup output for warnings/errors.
 
-### Shebang & Error Handling
-```bash
-#!/usr/bin/env bash
-set -euo pipefail
-```
+## Style guide
 
-### Colors and Output
-```bash
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-BLUE='\033[0;34m'
-NC='\033[0m' # No Color
+## General
 
-info() { echo -e "${BLUE}[INFO]${NC} $*"; }
-success() { echo -e "${GREEN}[SUCCESS]${NC} $*"; }
-warn() { echo -e "${YELLOW}[WARN]${NC} $*"; }
-err() { echo -e "${RED}[ERROR]${NC} $*" >&2; }
-```
+- Keep changes minimal and scoped to the task.
+- Prefer editing existing files over creating new ones.
+- Keep machine-local secrets/settings out of tracked files.
+- Do not commit credentials, tokens, or host-specific private paths.
 
-### Command Existence Check
+## Bash style
+
+- Shebang: `#!/usr/bin/env bash`
+- Strict mode for scripts: `set -euo pipefail`
+- Indentation: 2 spaces
+- Function names: `snake_case`
+- Global/env names: `UPPER_CASE`
+- Local variables inside functions: `local var_name`
+- Prefer `$(...)` over backticks
+- Always quote variables: `"$var"`
+- Use arrays for package lists and argument-safe iteration
+- Add comments only for non-obvious behavior
+
+Example patterns used in this repo:
+
 ```bash
 cmd_exists() { command -v "$1" &>/dev/null; }
+local packages=(git base-devel)
+sudo pacman -S --needed "${packages[@]}"
 ```
 
-### Quoting & Arrays
-- Always quote variables: `"$variable"`
-- Quote command substitutions: `"$(command)"`
-- Use arrays: `local packages=(pkg1 pkg2 pkg3); sudo pacman -S "${packages[@]}"`
+## Lua (Neovim) style
 
-## Code Style
+- Match existing indentation in the file (2 or 4 spaces).
+- Require/import modules at top-level locals when practical.
+- Use descriptive names (`opts`, `map`, `plugin`, `tb`).
+- Keep plugin config blocks grouped by feature.
+- For keymaps, include `desc` when adding new mappings.
 
-### Bash
-- Indent with 2 spaces
-- Use `local` for function variables
-- Prefer `$(command)` over backticks
-- Use meaningful UPPER_CASE variable names for globals/env vars
-- Chain dependent commands with `&&`
-- Add comments for non-obvious logic
+## Imports and dependencies
 
-### Lua (Neovim Config)
-- Indent with 2 or 4 spaces (match existing file)
-- Use descriptive variable names
-- Group related mappings/plugins together
-- Add desc for keymaps: `{ desc = "[D]escription" }`
+- Bash: use `source` only for known dotfiles or controlled script fragments.
+- Lua: avoid adding new plugin dependencies unless requested.
+- Prefer existing utilities/functions over introducing new abstractions.
 
-### Git Commit Messages
-- Use imperative mood: "Add feature", "Fix bug"
-- Keep under 72 characters
-- Prefix with context when useful: `[nvim]`, `[tmux]`, `[shell]`
+## Types and data handling
 
-**Examples:**
-```
-Add supermaven, markdown preview
-[nvim] Helper cmd to copy current path to clipboard
-Update git completions
-Remove work-specific references and hardcoded paths
-```
+- Bash has no static types: guard assumptions explicitly.
+- Treat external command output as untrusted input; quote and sanitize.
+- Avoid mixed/implicit formats when editing structured files (JSON/Lua).
+- Keep JSON valid (double quotes, no trailing commas).
 
-## Repository Structure
+## Error handling
 
-```
-dotfiles/
-├── AGENTS.md                    # This file
-├── README.md                    # Project documentation
-├── my-arch-setup               # Arch Linux setup script (interactive)
-├── my-ubuntu-setup             # Ubuntu setup script
-├── scripts/                    # Utility scripts
-│   ├── keyboard_remap.sh       # Keyboard remapping daemon
-│   ├── pactl_volume.sh         # Volume control helper
-│   └── rofi-*/                 # Rofi launcher scripts
-└── stow_files/                 # All dotfiles (stow source)
-    ├── .aliases                # Shell aliases
-    ├── .bash_profile           # Bash profile (loads other files)
-    ├── .bashrc                 # Bash RC
-    ├── .exports                # Environment variables
-    ├── .functions              # Shell functions
-    ├── .path                   # PATH additions
-    ├── .bash_prompt            # PS1 prompt
-    ├── .gitconfig              # Git configuration
-    ├── .git-completion.bash    # Git completions
-    ├── .claude/                # Claude Code config (symlinked to opencode)
-    ├── .config/
-    │   ├── nvim/               # Neovim (Lua config)
-    │   ├── tmux/               # tmux configuration
-    │   ├── opencode/           # OpenCode config (canonical)
-    │   ├── i3/                 # i3 window manager
-    │   ├── alacritty/          # Terminal emulator
-    │   └── ...
-    └── bin/                    # Scripts in PATH
-```
+- Fail fast in scripts that automate setup (`set -euo pipefail`).
+- Return non-zero on failures and print actionable error messages.
+- Use small helper functions (`info`, `warn`, `err`) for consistent output.
 
-## AI Tool Config
+## Naming conventions
 
-Claude Code and OpenCode share the same instruction file and commands via stow symlinks:
-- `~/.claude/CLAUDE.md` → `stow_files/.claude/CLAUDE.md` (symlink) → `stow_files/.config/opencode/AGENTS.md`
-- `~/.claude/commands` → `stow_files/.claude/commands` (symlink) → `stow_files/.config/opencode/commands/`
+- Scripts/files: lowercase with hyphen or underscore, consistent with directory.
+- Bash functions: `verb_object` style when possible (`setup_php`, `cmd_exists`).
+- Git commits: imperative mood, concise, optionally scoped (`[nvim]`, `[tmux]`).
 
-Edit the canonical files in `stow_files/.config/opencode/` and both tools see the changes.
+## Git and change hygiene
 
-## Git Configuration
+- Check `git status` and `git diff` before committing.
+- Keep unrelated changes in separate commits.
+- Do not force-push or use `--no-verify` unless explicitly requested.
+- Do not amend prior commits unless explicitly requested.
 
-Local git config overrides go in `~/.gitconfig.local` (gitignored). Never commit secrets or machine-specific settings to the main `.gitconfig`.
+## Submodules and boundaries
 
-## Notes
+Submodules configured in `.gitmodules` include rofi/rofi-emoji/rofi-pass/etc.
 
-- Keep `~/.extra` for API keys (GPG-encrypt, never commit)
-- Use `git submodule init && git submodule update` after cloning
-- The `my-arch-setup` script requires an Arch-based system with `yay` available
+- Treat submodule code as upstream unless the task explicitly targets it.
+- Prefer changes in `stow_files/` and first-party scripts.
+
+## Key paths
+
+- Repository guide (this file): `AGENTS.md`
+- README: `README.md`
+- Setup script: `my-arch-setup`
+- Canonical OpenCode agent config: `stow_files/.config/opencode/AGENTS.md`
