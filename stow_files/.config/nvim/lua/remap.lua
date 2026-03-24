@@ -163,3 +163,13 @@ end
 
 map('n', '<leader>C', CopyPathToClipboard, { desc = 'Copy file path to clipboard' })
 
+function CopyPathAndSelectionToClipboard()
+  local path = vim.fn.expand('%:p')
+  local selection = vim.getVisualSelection()
+  local text = '@' .. path .. '\n\n' .. selection
+  vim.fn.setreg('+', text)
+  print('Copied: ' .. path .. ' + selection')
+end
+
+map('v', '<leader>C', CopyPathAndSelectionToClipboard, { desc = 'Copy @filepath + visual selection to clipboard' })
+
