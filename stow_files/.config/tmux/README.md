@@ -14,6 +14,7 @@ Inspired by:
 - 🏷️  Custom session naming with smart defaults
 - 🧹 Session killing from the fuzzy finder
 - 🐛 Debug mode for troubleshooting
+- 📂 Open current directory in a new session with `--current`
 
 ## Usage
 
@@ -49,6 +50,7 @@ PROJECTS=(
 
 ### Command Line Options
 
+- `-c, --current` - Open current directory in a new session
 - `-d, --debug` - Enable debug output
 - `-h, --help` - Show help message
 
@@ -57,6 +59,9 @@ PROJECTS=(
 ```bash
 # Run normally
 ts
+
+# Open current directory in a new session
+tsd
 
 # Run with debug output
 ~/.config/tmux/tmux-sessionizer.sh --debug
@@ -103,4 +108,5 @@ Shell alias in `~/.aliases`:
 
 ```bash
 alias ts="~/.config/tmux/tmux-sessionizer.sh"
+alias tsd="~/.config/tmux/tmux-sessionizer.sh --current"
 ```

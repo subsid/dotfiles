@@ -3,6 +3,7 @@ set -euo pipefail
 
 # Configuration
 DEBUG=false
+OPEN_CURRENT=false
 
 # Parse command line flags
 while [[ $# -gt 0 ]]; do
@@ -11,10 +12,15 @@ while [[ $# -gt 0 ]]; do
             DEBUG=true
             shift
             ;;
+        -c|--current)
+            OPEN_CURRENT=true
+            shift
+            ;;
         -h|--help)
             echo "Usage: $(basename "$0") [OPTIONS]"
             echo ""
             echo "Options:"
+            echo "  -c, --current  Open current directory in a new session"
             echo "  -d, --debug    Enable debug output"
             echo "  -h, --help     Show this help message"
             exit 0
@@ -299,6 +305,14 @@ prompt_custom_path() {
         # Don't echo anything to stdout - return empty
     fi
 }
+
+# Open current directory directly
+if [[ "$OPEN_CURRENT" == true ]]; then
+    dir_name="$(basename "$PWD")"
+    session_name=$(sanitize_session_name "$dir_name")
+    connect_session "" "$session_name" "$PWD"
+    exit 0
+fi
 
 # Main loop
 while true; do

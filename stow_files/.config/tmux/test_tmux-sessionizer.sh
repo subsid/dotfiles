@@ -116,6 +116,7 @@ test_script_help() {
     output=$("$SESSIONIZER" --help 2>&1 || true)
     
     assert_contains "$output" "Usage:" "Help should show usage"
+    assert_contains "$output" "--current" "Help should mention current flag"
     assert_contains "$output" "--debug" "Help should mention debug flag"
     assert_contains "$output" "--help" "Help should mention help flag"
 }
@@ -166,6 +167,33 @@ test_debug_flag() {
     fi
 }
 
+test_current_flag() {
+    echo ""
+    echo "=== Testing current flag ==="
+    
+    # Test that script accepts current flag without error (combined with --help)
+    if "$SESSIONIZER" --current --help &>/dev/null; then
+        TESTS_RUN=$((TESTS_RUN + 1))
+        TESTS_PASSED=$((TESTS_PASSED + 1))
+        echo -e "${GREEN}✓${NC} Current flag is accepted"
+    else
+        TESTS_RUN=$((TESTS_RUN + 1))
+        TESTS_FAILED=$((TESTS_FAILED + 1))
+        echo -e "${RED}✗${NC} Current flag caused error"
+    fi
+
+    # Test short form
+    if "$SESSIONIZER" -c --help &>/dev/null; then
+        TESTS_RUN=$((TESTS_RUN + 1))
+        TESTS_PASSED=$((TESTS_PASSED + 1))
+        echo -e "${GREEN}✓${NC} Short current flag (-c) is accepted"
+    else
+        TESTS_RUN=$((TESTS_RUN + 1))
+        TESTS_FAILED=$((TESTS_FAILED + 1))
+        echo -e "${RED}✗${NC} Short current flag (-c) caused error"
+    fi
+}
+
 test_unknown_flag() {
     echo ""
     echo "=== Testing unknown flag handling ==="
@@ -213,6 +241,9 @@ test_keybinding_documentation() {
         TESTS_FAILED=$((TESTS_FAILED + 1))
         echo -e "${RED}✗${NC} ctrl-n is used but should be avoided"
     fi
+
+    # Check that --current flag is documented
+    assert_contains "$script_content" "--current" "Script should document --current flag"
 }
 
 # Print summary
@@ -250,6 +281,7 @@ main() {
     test_script_executable
     test_script_help
     test_debug_flag
+    test_current_flag
     test_unknown_flag
     test_sanitize_session_name
     test_rename_function_exists
