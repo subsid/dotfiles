@@ -2,7 +2,7 @@
   "$schema": "https://opencode.ai/tui.json",
   "keybinds": {
     "leader": "ctrl+o",
-    "app_exit": "ctrl+d,<leader>q",
+    "app_exit": "ctrl+q,<leader>q",
     "editor_open": "<leader>e",
     "theme_list": "<leader>t",
     "sidebar_toggle": "<leader>b",

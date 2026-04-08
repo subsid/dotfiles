@@ -53,12 +53,6 @@ M.config = function()
       { name = "luasnip" },
       { name = "buffer", keyword_length = 3 },
       { name = "path" },
-      {
-        name = "cmdline",
-        option = {
-          ignore_cmds = { "Man", "!" },
-        },
-      },
     }),
     snippets = {
       expand = function(args)
