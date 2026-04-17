@@ -1,5 +1,5 @@
 local function map(m, k, v, opts)
-  vim.keymap.set(m, k, v, opts)
+	vim.keymap.set(m, k, v, opts)
 end
 
 map("n", "<leader><leader>f", "<Plug>(easymotion-overwin-f)")
@@ -47,16 +47,16 @@ map("n", "<leader>n", ":set nohlsearch<CR>")
 map("x", "<leader>p", '"_dP')
 
 -- Leap keymap
-map({'n', 'x'}, 's', '<Plug>(leap)')
-map('n', 'S', '<Plug>(leap-from-window)')
-map('o', 's', '<Plug>(leap-forward)')
-map('o', 'S', '<Plug>(leap-backward)')
+map({ "n", "x" }, "s", "<Plug>(leap)")
+map("n", "S", "<Plug>(leap-from-window)")
+map("o", "s", "<Plug>(leap-forward)")
+map("o", "S", "<Plug>(leap-backward)")
 
 function StripTrailingWhitespaces()
-  local view = vim.fn.winsaveview()
-  vim.cmd([[keepp %s/\s\+$//e]])
-  vim.cmd("update")
-  vim.fn.winrestview(view)
+	local view = vim.fn.winsaveview()
+	vim.cmd([[keepp %s/\s\+$//e]])
+	vim.cmd("update")
+	vim.fn.winrestview(view)
 end
 
 -- Strip trailing whitespaces
@@ -81,22 +81,22 @@ vim.cmd([[
 ]])
 
 function NumberToggle()
-  if vim.o.relativenumber == true then
-    vim.o.relativenumber = false
-  else
-    vim.o.relativenumber = true
-  end
+	if vim.o.relativenumber == true then
+		vim.o.relativenumber = false
+	else
+		vim.o.relativenumber = true
+	end
 end
 
 function TogglePaste()
-  if vim.o.paste == true then
-    vim.o.paste = false
-    -- Automatically gets disabled when toggling from paste mode.
-    -- https://stackoverflow.com/questions/37957844/set-expandtab-in-vimrc-not-taking-effect
-    vim.o.expandtab = true
-  else
-    vim.o.paste = true
-  end
+	if vim.o.paste == true then
+		vim.o.paste = false
+		-- Automatically gets disabled when toggling from paste mode.
+		-- https://stackoverflow.com/questions/37957844/set-expandtab-in-vimrc-not-taking-effect
+		vim.o.expandtab = true
+	else
+		vim.o.paste = true
+	end
 end
 
 -- Toggle relative numbering
@@ -111,40 +111,40 @@ map("n", "<leader>S", ':lua require("plugins.luasnip").config()<CR>')
 local tb = require("telescope.builtin")
 
 function vim.getVisualSelection()
-  vim.cmd('noau normal! "vy"')
-  local text = vim.fn.getreg("v")
-  vim.fn.setreg("v", {})
+	vim.cmd('noau normal! "vy"')
+	local text = vim.fn.getreg("v")
+	vim.fn.setreg("v", {})
 
-  text = string.gsub(text, "\n", "")
-  if #text > 0 then
-    return text
-  else
-    return ""
-  end
+	text = string.gsub(text, "\n", "")
+	if #text > 0 then
+		return text
+	else
+		return ""
+	end
 end
 
 local topts = { noremap = true, silent = true }
 
 map("n", "<leader>ts", ":Telescope current_buffer_fuzzy_find<cr>", topts)
 map("v", "<leader>ts", function()
-  local text = vim.getVisualSelection()
-  tb.current_buffer_fuzzy_find({ default_text = text })
+	local text = vim.getVisualSelection()
+	tb.current_buffer_fuzzy_find({ default_text = text })
 end, topts)
 
 -- map("n", "<leader>a", ":Telescope live_grep<cr>", topts)
 map("n", "<leader>a", ":Telescope live_grep_args<CR>")
 map("n", "<leader>A", ":Telescope live_grep_args search_dirs={vim.fn.expand('%:h')}", topts)
 map("v", "<leader>a", function()
-  local text = vim.getVisualSelection()
-  tb.live_grep({ default_text = text })
+	local text = vim.getVisualSelection()
+	tb.live_grep({ default_text = text })
 end, topts)
 
 map("n", "<leader>sf", ":Telescope find_files<CR>", { desc = "[S]earch [F]iles" })
 map(
-  "n",
-  "<leader><leader>sf",
-  ":Telescope find_files no_ignore=true hidden=true search_dirs={vim.fn.expand('%:h')}",
-  { desc = "Custom [S]earch [F]iles" }
+	"n",
+	"<leader><leader>sf",
+	":Telescope find_files no_ignore=true hidden=true search_dirs={vim.fn.expand('%:h')}",
+	{ desc = "Custom [S]earch [F]iles" }
 )
 map("n", "<leader>td", ":Telescope lsp_document_symbols<CR>", { desc = "[Search] [D]ocument" })
 map("n", "<leader>tw", ":Telescope lsp_workspace_symbols<CR>", { desc = "[W]orkspace [S]ymbols" })
@@ -156,20 +156,19 @@ map("n", "<leader>h", tb.command_history, {})
 map("n", "<leader><leader>h", tb.help_tags, {})
 
 function CopyPathToClipboard()
-  local path = vim.fn.expand('%:p')
-  vim.fn.setreg('+', path)
-  print('Copied: ' .. path)
+	local path = vim.fn.expand("%:p")
+	vim.fn.setreg("+", path)
+	print("Copied: " .. path)
 end
 
-map('n', '<leader>C', CopyPathToClipboard, { desc = 'Copy file path to clipboard' })
+map("n", "<leader>C", CopyPathToClipboard, { desc = "Copy file path to clipboard" })
 
 function CopyPathAndSelectionToClipboard()
-  local path = vim.fn.expand('%:p')
-  local selection = vim.getVisualSelection()
-  local text = '@' .. path .. '\n\n' .. selection
-  vim.fn.setreg('+', text)
-  print('Copied: ' .. path .. ' + selection')
+	local path = vim.fn.expand("%:p")
+	local selection = vim.getVisualSelection()
+	local text = "@" .. path .. "\n\n" .. selection
+	vim.fn.setreg("+", text)
+	print("Copied: " .. path .. " + selection")
 end
 
-map('v', '<leader>C', CopyPathAndSelectionToClipboard, { desc = 'Copy @filepath + visual selection to clipboard' })
-
+map("v", "<leader>C", CopyPathAndSelectionToClipboard, { desc = "Copy @filepath + visual selection to clipboard" })
