@@ -68,3 +68,7 @@
     gpgsign = true
 [include]
     path = ~/.gitconfig.local
+[init]
+	defaultBranch = main
+[credential]
+	helper = store
