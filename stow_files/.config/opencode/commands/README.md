@@ -2,30 +2,7 @@
 
 This directory contains custom slash commands for OpenCode.
 
-## Available Commands
-
-### `/reflect` - Continuous Improvement Loop
-
-A meta-command that implements a "reflect and improve" practice for AI-assisted coding.
-
-**When to use:**
-- After completing a major task or feature
-- At the end of a coding session
-- When you want to improve your AI workflow
-
-**What it does:**
-1. Reviews recent chat and commit history
-2. Asks what went well and what was frustrating
-3. Reflects on instruction clarity and workflow gaps
-4. Proposes actionable improvements (new commands, skills, or documentation)
-5. Implements agreed-upon improvements immediately
-
-**Example usage:**
-```
-/reflect
-```
-
-This creates a continuous improvement loop where your AI-assisted coding workflow gets better every week.
+The `/reflect` workflow has been moved to `~/.agents/skills/reflect/` as an [Agent Skills](https://agentskills.io) skill, shared across all compliant agents (pi, Claude Code, etc.).
 
 ## Creating New Commands
 

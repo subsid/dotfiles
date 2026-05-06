@@ -1,0 +1,11 @@
+{
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash /home/sidsub/.claude/statusline-command.sh"
+  },
+  "editorMode": "vim"
+}

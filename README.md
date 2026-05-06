@@ -9,7 +9,7 @@ Personal dotfiles for Arch Linux, managed with [GNU Stow](https://www.gnu.org/so
 - **Terminal**: Alacritty, tmux (with sessionizer script)
 - **WM**: i3 with py3status, dunst, rofi
 - **Git**: gitconfig with aliases and diff tooling
-- **AI**: Claude Code (`~/.claude/`) and opencode (`~/.config/opencode/`) config and AGENTS.md
+- **AI**: Shared agent config (`~/.agents/`) for pi, Claude Code, and OpenCode — AGENTS.md + Agent Skills (reflect)
 
 ## Setup
 
