@@ -27,7 +27,17 @@ Use `--adopt` when setting up for the first time on a machine that already has s
 stow -t ~ stow_files --adopt
 ```
 
-### 2. Arch Linux setup script
+### 2. Verify symlink integrity
+
+Run `scripts/stow-verify` to validate all symlinks — both inside `stow_files/` and the stow-managed links in `~`. It checks that relative symlinks resolve within `stow_files/` and that stowed links point to readable files.
+
+```bash
+./scripts/stow-verify
+```
+
+Run this whenever you add or reorganize symlinks, or right before `stow -R`.
+
+### 3. Arch Linux setup script
 
 `./my-arch-setup` is an interactive script that installs and configures everything from scratch. Run with no arguments for the full setup, or pass a specific flag to run just one step.
 

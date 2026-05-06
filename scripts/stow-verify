@@ -1,0 +1,83 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# stow-verify — validate symlinks in stow_files/ and stow-managed links in ~
+
+DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+STOW_DIR="$DOTFILES/stow_files"
+TARGET="$HOME"
+
+# Colors
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m'
+
+issues=0
+
+info()  { echo -e "  ${GREEN}✓${NC} $*"; }
+warn()  { echo -e "  ${YELLOW}⚠${NC} $*"; }
+err()   { echo -e "  ${RED}✗${NC} $*"; issues=$((issues + 1)); }
+
+# ── 1. Check for broken symlinks inside stow_files/ ──
+
+echo "Checking symlinks inside stow_files/ ..."
+
+while IFS= read -r link; do
+  if [ -e "$link" ]; then
+    info "ok: $(realpath --relative-to="$DOTFILES" "$link")"
+  else
+    target=$(readlink "$link")
+    err "broken: $(realpath --relative-to="$DOTFILES" "$link")  →  $target"
+  fi
+done < <(find "$STOW_DIR" -type l)
+
+# ── 2. Check that relative internal symlinks resolve inside stow_files/ ──
+#     (absolute symlinks are deliberate external references, skip them)
+
+echo ""
+echo "Checking that relative symlinks stay inside stow_files/ ..."
+
+while IFS= read -r link; do
+  link_target=$(readlink "$link")
+  # Skip absolute symlinks — they're intentional external refs
+  if [[ "$link_target" == /* ]]; then
+    info "external: $(realpath --relative-to="$DOTFILES" "$link")  →  $link_target"
+    continue
+  fi
+  resolved=$(readlink -f "$link" 2>/dev/null) || true
+  if [[ "$resolved" != "$STOW_DIR"/* ]]; then
+    rel_link=$(realpath --relative-to="$DOTFILES" "$link")
+    rel_resolved=$(realpath --relative-to="$DOTFILES" "$resolved" 2>/dev/null || echo "$resolved")
+    err "escapes stow_files: $rel_link  →  $rel_resolved"
+  fi
+done < <(find "$STOW_DIR" -type l)
+
+# ── 3. Check stow-managed links in ~ actually resolve ──
+
+echo ""
+echo "Checking stow-managed links in ~ ..."
+
+while IFS= read -r link; do
+  # Only check links pointing into stow_files (stow-managed)
+  link_target=$(readlink "$link" 2>/dev/null) || continue
+  if [[ "$link_target" != *"stow_files"* ]]; then
+    continue
+  fi
+
+  if [ -e "$link" ]; then
+    info "ok: ${link#$TARGET/}"
+  else
+    err "broken: ${link#$TARGET/}  →  $link_target"
+  fi
+done < <(find "$TARGET" -maxdepth 6 -type l 2>/dev/null)
+
+# ── Summary ──
+
+echo ""
+if [ "$issues" -eq 0 ]; then
+  echo -e "${GREEN}All checks passed.${NC}"
+else
+  echo -e "${RED}${issues} issue(s) found.${NC}"
+  exit 1
+fi
