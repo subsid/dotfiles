@@ -165,9 +165,9 @@ create_session() {
     # Create second window (terminal)
     tmux new-window -t "$session_name:" -c "$session_path" -n "terminal"
 
-    # Create third window (opencode)
-    tmux new-window -t "$session_name:" -c "$session_path" -n "opencode"
-    tmux send-keys -t "$session_name:opencode" "opencode ." C-m
+    # Create third window (pi)
+    tmux new-window -t "$session_name:" -c "$session_path" -n "pi"
+    tmux send-keys -t "$session_name:pi" "pi" C-m
 
     # Switch to first window
     tmux select-window -t "$session_name:nvim"
