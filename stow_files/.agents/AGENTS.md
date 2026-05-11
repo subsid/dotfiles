@@ -24,6 +24,11 @@
 - Focus on technical accuracy over validation
 - No emojis unless explicitly requested
 
+### Subagent Usage
+- For any codebase exploration task (finding files, tracing dependencies,
+  understanding architecture, searching for patterns), delegate to the
+  `explore` subagent. Do not run grep/find/read directly for exploration.
+
 ### Code Changes
 - Always prefer editing existing files over creating new ones
 - Read files before editing them
