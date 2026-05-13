@@ -3,11 +3,10 @@
     "commit": "",
     "pr": ""
   },
-  "model": "opus",
   "statusLine": {
     "type": "command",
     "command": "bash /home/sidsub/.claude/statusline-command.sh"
   },
-  "editorMode": "vim",
-  "effortLevel": "high"
+  "effortLevel": "high",
+  "editorMode": "vim"
 }
