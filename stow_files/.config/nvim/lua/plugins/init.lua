@@ -79,6 +79,34 @@ return {
         vim.g.mkdp_filetypes = { "markdown" }
         vim.g.mkdp_auto_close = 0
       end,
+      config = function(plugin)
+        local routes_path = plugin.dir .. "/app/routes.js"
+        if vim.fn.filereadable(routes_path) ~= 1 then
+          return
+        end
+
+        local routes = table.concat(vim.fn.readfile(routes_path), "\n")
+        if routes:find("Refreshable /<bufnr> redirect", 1, true) then
+          return
+        end
+
+        local redirect_route = [[
+// Refreshable /<bufnr> redirect. The client rewrites /page/:number to
+// /:number after load, but the server only serves /page/:number by default.
+use((req, res, next) => {
+  if (/^\/\d+$/.test(req.asPath)) {
+    res.statusCode = 302
+    res.setHeader('Location', `/page${req.asPath}`)
+    return res.end()
+  }
+  next()
+})
+]]
+        local patched, count = routes:gsub("// /page/:number\n", redirect_route .. "\n// /page/:number\n", 1)
+        if count > 0 then
+          vim.fn.writefile(vim.split(patched, "\n", { plain = true }), routes_path)
+        end
+      end,
       ft = { "markdown" },
   },
   -- Github Copilot
