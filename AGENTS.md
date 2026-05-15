@@ -6,8 +6,17 @@ This repo manages personal Arch Linux dotfiles using GNU Stow.
 Most edits happen under `stow_files/`, then symlink into `~`.
 
 - Stow source of truth: `stow_files/`
-- Global OpenCode config: `stow_files/.config/opencode/`
-- Global Claude config: `stow_files/.claude/` (symlinked to opencode files)
+- Shared agent config: `stow_files/.agents/`
+- Global Claude config: `stow_files/.claude/`
+- Global Pi config: `stow_files/.pi/agent/`
+
+Agent config layout:
+- Canonical shared instructions: `stow_files/.agents/AGENTS.md`
+- Claude instructions: `stow_files/.claude/CLAUDE.md` -> `../.agents/AGENTS.md`
+- Pi instructions: `stow_files/.pi/agent/AGENTS.md` -> `../../.agents/AGENTS.md`
+- Shared skills: `stow_files/.agents/skills/`
+- Claude skills: `stow_files/.claude/skills/*` symlink to shared skills
+- Pi also reads skills from `~/.agents/skills/` directly
 
 ## Rules discovered in repo
 
@@ -57,6 +66,9 @@ There is no single global test runner for this repository.
 Use file-specific/manual verification depending on what changed.
 
 ```bash
+# Verify stow symlinks and stow-managed home links
+./scripts/stow-verify
+
 # Main tmux sessionizer test suite
 bash stow_files/.config/tmux/test_tmux-sessionizer.sh
 
@@ -76,10 +88,12 @@ Notes:
 
 After changing dotfiles, run:
 
-1. `stow -R -t ~ stow_files`
-2. Reload shell (`source ~/.bash_profile`) or open a new terminal.
-3. Verify the changed behavior in the target tool (bash, tmux, nvim, i3, etc.).
-4. Check startup output for warnings/errors.
+1. `./scripts/stow-verify`
+2. `stow -R -t ~ stow_files`
+3. `./scripts/stow-verify` again when changing symlinks or stow-managed paths.
+4. Reload shell (`source ~/.bash_profile`) or open a new terminal.
+5. Verify the changed behavior in the target tool (bash, tmux, nvim, i3, Claude, Pi, etc.).
+6. Check startup output for warnings/errors.
 
 ## Style guide
 
@@ -163,4 +177,8 @@ Submodules configured in `.gitmodules` include rofi/rofi-emoji/rofi-pass/etc.
 - Repository guide (this file): `AGENTS.md`
 - README: `README.md`
 - Setup script: `my-arch-setup`
-- Canonical OpenCode agent config: `stow_files/.config/opencode/AGENTS.md`
+- Stow verifier: `scripts/stow-verify`
+- Canonical shared agent config: `stow_files/.agents/AGENTS.md`
+- Shared skills: `stow_files/.agents/skills/`
+- Claude config: `stow_files/.claude/`
+- Pi config: `stow_files/.pi/agent/`

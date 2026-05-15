@@ -9,7 +9,7 @@ Inspired by:
 ## Features
 
 - 🔍 Fuzzy search through existing sessions and project directories
-- 🎯 Automatic session creation with 3 default windows (nvim, terminal, opencode)
+- 🎯 Automatic session creation with 3 default windows (nvim, terminal, pi)
 - 📁 Support for base directories, individual projects, and custom paths
 - 🏷️  Custom session naming with smart defaults
 - 🧹 Session killing from the fuzzy finder
@@ -84,7 +84,7 @@ Run the test suite:
 2. **Session Creation**: New sessions automatically get 3 windows:
    - Window 1: `nvim` - Opens neovim
    - Window 2: `terminal` - Clean terminal
-   - Window 3: `opencode` - Runs `opencode .`
+   - Window 3: `pi` - Runs `pi`
 3. **Session Naming**: 
    - Existing sessions: Connect immediately
    - New sessions: Prompt for name (default is directory basename)
