@@ -8,5 +8,6 @@
     "command": "bash /home/sidsub/.claude/statusline-command.sh"
   },
   "effortLevel": "high",
+  "theme": "dark",
   "editorMode": "vim"
 }
