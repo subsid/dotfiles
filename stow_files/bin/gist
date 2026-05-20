@@ -1,0 +1,112 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Depends on GitHub CLI (`gh`) with gist access configured:
+#   gh auth login
+#   gh auth refresh -s gist
+
+PUBLIC=false
+EXT=""
+NAME=""
+DESC=""
+FILE=""
+
+usage() {
+  cat <<'EOF'
+Usage: gist [options] [file]
+       gist [options] < file
+
+Create a GitHub gist from a file or stdin.
+
+Options:
+  -e, --ext EXT       Set file extension, e.g. py or .md
+  -n, --name NAME     Set filename basename
+  -p, --public        Create a public gist (default: secret)
+  -t, --title TITLE   Set gist description/title
+  -d, --desc DESC     Set gist description/title
+  -h, --help          Show this help
+
+Examples:
+  gist script.py -t "Python snippet"
+  cat notes.md | gist --public -n notes -e md
+EOF
+}
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    -e|--ext)
+      EXT="${2#.}"
+      shift 2
+      ;;
+    -n|--name)
+      NAME="$2"
+      shift 2
+      ;;
+    -p|--public)
+      PUBLIC=true
+      shift
+      ;;
+    -t|--title|-d|--desc)
+      DESC="$2"
+      shift 2
+      ;;
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    -*)
+      usage >&2
+      exit 1
+      ;;
+    *)
+      if [[ -n "$FILE" ]]; then
+        echo "gist: only one input file is supported" >&2
+        exit 1
+      fi
+      FILE="$1"
+      shift
+      ;;
+  esac
+done
+
+if ! command -v gh >/dev/null 2>&1; then
+  echo "gist: gh is required. Install GitHub CLI and run: gh auth refresh -s gist" >&2
+  exit 1
+fi
+
+if [[ -n "$FILE" && ! -r "$FILE" ]]; then
+  echo "gist: cannot read file: $FILE" >&2
+  exit 1
+fi
+
+if [[ -z "$FILE" && -t 0 ]]; then
+  usage >&2
+  exit 1
+fi
+
+if [[ -n "$NAME" ]]; then
+  FILENAME="$NAME"
+elif [[ -n "$FILE" ]]; then
+  FILENAME="$(basename "$FILE")"
+else
+  FILENAME="gist"
+fi
+
+if [[ -n "$EXT" ]]; then
+  FILENAME="${FILENAME%.*}.$EXT"
+fi
+
+ARGS=(gist create --filename "$FILENAME")
+if [[ "$PUBLIC" == true ]]; then
+  ARGS+=(--public)
+fi
+if [[ -n "$DESC" ]]; then
+  ARGS+=(--desc "$DESC")
+fi
+ARGS+=(-)
+
+if [[ -n "$FILE" ]]; then
+  gh "${ARGS[@]}" < "$FILE"
+else
+  gh "${ARGS[@]}"
+fi
