@@ -24,10 +24,22 @@ const SAFE_BASH_PATTERNS = [
 	/^\s*stat\b/,
 	/^\s*tree\b/,
 	/^\s*eza\b/,
-	/^\s*git\s+(status|log|diff|show|branch)\b/i,
-	/^\s*npm\s+(list|ls|view|info|search|outdated|audit)\b/i,
+	/^\s*(realpath|readlink|dirname|basename|du|df|id|whoami|groups|env|printenv|uname)\b/,
+	/^\s*git\s+(status|log|diff|show|branch|ls-files|grep|blame|rev-parse)\b/i,
+	/^\s*git\s+remote\s+-v\b/i,
+	/^\s*git\s+submodule\s+status\b/i,
+	/^\s*npm\s+(list|ls|view|info|search|outdated|audit|explain)\b/i,
 	/^\s*yarn\s+(list|info|why|audit)\b/i,
 	/^\s*pnpm\s+(list|ls|info|why|audit)\b/i,
+	/^\s*cargo\s+tree\b/i,
+	/^\s*go\s+list\b/i,
+	/^\s*pip3?\s+(show|list)\b/i,
+	/^\s*bundle\s+list\b/i,
+	/^\s*(jq|yq)\b/,
+	/^\s*(node|npm|pnpm|yarn|python|python3|pip|pip3|ruby|bundle|rustc|cargo)\s+(--version|-v)\b/i,
+	/^\s*go\s+version\b/i,
+	/^\s*java\s+-version\b/i,
+	/^\s*lua\s+(-v|--version)\b/i,
 ];
 
 interface PlanModeState {
@@ -157,14 +169,25 @@ export default function planModeExtension(pi: ExtensionAPI): void {
 		},
 	});
 
+	function togglePlanMode(ctx: ExtensionContext): void {
+		if (enabled) {
+			disablePlanMode(ctx);
+		} else {
+			enablePlanMode(ctx);
+		}
+	}
+
+	pi.registerShortcut("alt+p", {
+		description: "Toggle read-only plan mode",
+		handler: async (ctx) => {
+			togglePlanMode(ctx);
+		},
+	});
+
 	pi.registerShortcut("ctrl+alt+p", {
 		description: "Toggle read-only plan mode",
 		handler: async (ctx) => {
-			if (enabled) {
-				disablePlanMode(ctx);
-			} else {
-				enablePlanMode(ctx);
-			}
+			togglePlanMode(ctx);
 		},
 	});
 
