@@ -445,7 +445,7 @@ setup_ledger() {
 
 install_aur_packages() {
   if ensure_yay; then
-    local aur_packages=(libappindicator brave-bin man-db bash-completion signal-desktop virtualbox timeshift jq entr ttf-hack-nerd vlc-plugins-all)
+    local aur_packages=(libappindicator brave-bin man-db bash-completion virtualbox timeshift jq entr ttf-hack-nerd vlc-plugins-all)
     if ask_yn "Install (${#aur_packages[@]} packages) from AUR?"; then
       yay -S --needed "${aur_packages[@]}"
     fi
@@ -617,6 +617,21 @@ manual_setup_packages() {
   info "
     systemctl --user restart xdg-desktop-portal.service
     systemctl --user restart xdg-desktop-portal-gtk.service
+  "
+
+  info "=== Install Signal desktop using AppImage ==="
+  info "Download from https://signal.org/download/"
+  info "Save AppImage to ~/.local/share/AppImage"
+  info "Create a desktop file using the format 
+    [Desktop Entry]
+    Name=Signal
+    Comment=Private messaging from your desktop
+    Exec=/home/YOURUSER/Applications/Signal.AppImage --no-sandbox %U
+    Icon=signal
+    Terminal=false
+    Type=Application
+    Categories=Network;InstantMessaging;
+    StartupWMClass=Signal
   "
 
   success "Manual setup instructions complete"
