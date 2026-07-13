@@ -8,6 +8,8 @@
     "command": "bash /home/sidsub/.claude/statusline-command.sh"
   },
   "effortLevel": "high",
+  "tui": "fullscreen",
   "theme": "dark",
-  "editorMode": "vim"
+  "editorMode": "vim",
+  "model": "claude-opus-4-7"
 }
