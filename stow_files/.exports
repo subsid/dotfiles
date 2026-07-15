@@ -48,3 +48,7 @@ export FZF_DEFAULT_COMMAND='fd --strip-cwd-prefix -H'
 
 # Conda errors - https://stackoverflow.com/questions/78439730/openssl-3-0s-legacy-provider-failed-to-load
 export CRYPTOGRAPHY_OPENSSL_NO_LEGACY=1
+
+# Claude code settings
+# Fix tmux scrolling issues - https://github.com/anthropics/claude-code/issues/56881
+export CLAUDE_CODE_DISABLE_ALTERNATE_SCREEN=1
