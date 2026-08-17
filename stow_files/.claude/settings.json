@@ -3,13 +3,14 @@
     "commit": "",
     "pr": ""
   },
+  "model": "claude-opus-4-7",
   "statusLine": {
     "type": "command",
     "command": "bash /home/sidsub/.claude/statusline-command.sh"
   },
   "effortLevel": "high",
   "tui": "fullscreen",
+  "skipDangerousModePermissionPrompt": true,
   "theme": "dark",
-  "editorMode": "vim",
-  "model": "claude-opus-4-7"
+  "editorMode": "vim"
 }
