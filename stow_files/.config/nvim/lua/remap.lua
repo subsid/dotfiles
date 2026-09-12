@@ -143,7 +143,7 @@ map("n", "<leader>sf", ":Telescope find_files<CR>", { desc = "[S]earch [F]iles" 
 map(
 	"n",
 	"<leader><leader>sf",
-	":Telescope find_files no_ignore=true hidden=true search_dirs={vim.fn.expand('%:h')}",
+	":Telescope find_files no_ignore=true hidden=true search_dirs={vim.fn.expand('%:h'),\".\"}",
 	{ desc = "Custom [S]earch [F]iles" }
 )
 map("n", "<leader>td", ":Telescope lsp_document_symbols<CR>", { desc = "[Search] [D]ocument" })
